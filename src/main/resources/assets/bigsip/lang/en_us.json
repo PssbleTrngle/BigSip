@@ -1,0 +1,15 @@
+{
+  "item.bigsip.gapes": "Grapes",
+  "item.bigsip.apple_juice": "Apple Juice",
+  "item.bigsip.tomato_juice": "Tomato Juice",
+  "item.bigsip.carrot_juice": "Carrot Juice",
+  "item.bigsip.beer": "Jug of Beer",
+  "item.bigsip.wine_bottle": "Bottle of Wine",
+  "item.bigsip.wine_glass": "Glass of Wine",
+  "item.bigsip.dark_beer": "Jug of Guinness",
+
+  "effect.bigsip.drunk": "Drunk",
+
+  "command.bigsip.persistent": "%s's persistent alcohol level is %s",
+  "command.bigsip.current": "%s's current alcohol level is %s"
+}

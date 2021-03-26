@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "texture": "bigsip:item/tomato_juice"
+    "layer0": "bigsip:item/tomato_juice"
   }
 }

@@ -86,7 +86,9 @@ dependencies {
     minecraft "net.minecraftforge:forge:${config.mc_version}-${config.forge_version}"
 
     fg.deobf(implementation("thedarkcolour:kotlinforforge:${config.kotlin_for_forge_version}"))
-    fg.deobf(implementation("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}"))
+
+    fg.deobf(compile("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}"))
+    //fg.deobf("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}")
 }
 
 compileKotlin {
@@ -109,7 +111,7 @@ jar {
                 "Specification-Vendor"    : "bigsipsareus",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : "${version}",
+                "Implementation-Version"  : "${config.mod_version}",
                 "Implementation-Vendor"   : "bigsipsareus",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])

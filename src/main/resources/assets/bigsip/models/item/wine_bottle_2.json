@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bigsip:item/grapes"
+    "layer0": "bigsip:item/wine_bottle_2"
   }
 }
