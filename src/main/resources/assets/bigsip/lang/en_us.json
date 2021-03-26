@@ -1,12 +1,19 @@
 {
   "item.bigsip.gapes": "Grapes",
   "item.bigsip.apple_juice": "Apple Juice",
+  "item.bigsip.apple_juice_bucket": "Bucket of Apple Juice",
   "item.bigsip.tomato_juice": "Tomato Juice",
+  "item.bigsip.tomato_juice_bucket": "Bucket of Tomato Juice",
   "item.bigsip.carrot_juice": "Carrot Juice",
+  "item.bigsip.carrot_juice_bucket": "Bucket of Carrot Juice",
   "item.bigsip.beer": "Jug of Beer",
+  "item.bigsip.beer_bucket": "Jug Bucket of of Beer",
   "item.bigsip.wine_bottle": "Bottle of Wine",
+  "item.bigsip.wine_bottle_bucket": "Bottle Bucket of of Wine",
   "item.bigsip.wine_glass": "Glass of Wine",
+  "item.bigsip.wine_glass_bucket": "Glass Bucket of of Wine",
   "item.bigsip.dark_beer": "Jug of Guinness",
+  "item.bigsip.dark_beer_bucket": "Jug Bucket of of Guinness",
 
   "effect.bigsip.drunk": "Drunk",
 

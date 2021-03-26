@@ -4,6 +4,10 @@ import com.possible_triangle.bigsip.effect.DrunkEffect
 import com.possible_triangle.bigsip.fluid.Juice
 import com.possible_triangle.bigsip.item.Alcohol
 import com.possible_triangle.bigsip.item.Drink
+import net.minecraft.block.AbstractBlock
+import net.minecraft.block.Blocks
+import net.minecraft.block.FlowingFluidBlock
+import net.minecraft.fluid.FlowingFluid
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.BucketItem
 import net.minecraft.item.Item
@@ -51,11 +55,13 @@ object Content {
         val item = ITEMS.registerObject(id, itemSupplier)
 
         lateinit var bucket: ObjectHolderDelegate<Item>
-        lateinit var source: ObjectHolderDelegate<Fluid>
-        lateinit var flowing: ObjectHolderDelegate<Fluid>
+        lateinit var source: ObjectHolderDelegate<FlowingFluid>
+        lateinit var flowing: ObjectHolderDelegate<FlowingFluid>
 
         source = FLUIDS.registerObject(id) { Juice(id, true, bucket::get, flowing::get, source::get) }
         flowing = FLUIDS.registerObject(id) { Juice(id, false, bucket::get, flowing::get, source::get) }
+
+        BLOCKS.registerObject(id) { FlowingFluidBlock(flowing::get, AbstractBlock.Properties.copy(Blocks.WATER)) }
 
         bucket = ITEMS.registerObject("${id}_bucket") {
             BucketItem(
