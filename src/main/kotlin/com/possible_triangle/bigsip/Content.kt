@@ -44,15 +44,16 @@ object Content {
     val CARROT_JUICE by withFluid("carrot_juice") { Drink(4, 0.5F) }
     val TOMATO_JUICE by withFluid("tomato_juice") { Drink(4, 0.5F) }
 
-    val WINE_BOTTLE by withFluid("wine_bottle") { Alcohol(4, 0F, 5, uses = 3) }
+    val WINE_BOTTLE by withFluid("wine", "wine_bottle") { Alcohol(4, 0F, 5, uses = 3) }
     val BEER by withFluid("beer") { Alcohol(4, 0.2F, 6, uses = 2) }
     val DARK_BEER by withFluid("dark_beer") { Alcohol(4, 0.2F, 12, uses = 2) }
 
     private fun <I : Item> withFluid(
         id: String,
-        itemSupplier: () -> I
+        itemId: String = id,
+        itemSupplier: () -> I,
     ): ReadOnlyProperty<Any?, ItemAndFluid<I>> {
-        val item = ITEMS.registerObject(id, itemSupplier)
+        val item = ITEMS.registerObject(itemId, itemSupplier)
 
         lateinit var bucket: ObjectHolderDelegate<Item>
         lateinit var source: ObjectHolderDelegate<FlowingFluid>
