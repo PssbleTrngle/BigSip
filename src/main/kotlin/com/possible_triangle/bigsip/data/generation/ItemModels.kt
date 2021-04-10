@@ -7,12 +7,13 @@ import net.minecraft.item.BucketItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.model.generators.ItemModelProvider
+import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder
 import net.minecraftforge.common.data.ExistingFileHelper
 
 class ItemModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
     ItemModelProvider(generator, BigSip.MOD_ID, fileHelper) {
 
-    fun loc(name: ResourceLocation, map: (String) -> String): ResourceLocation {
+    private fun loc(name: ResourceLocation, map: (String) -> String): ResourceLocation {
         return ResourceLocation(name.namespace, map(name.path))
     }
 
@@ -28,6 +29,8 @@ class ItemModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
 
                 when {
                     item is BucketItem -> {
+                        withExistingParent(name.path, ResourceLocation("forge:item/bucket_drip"))
+                            .customLoader { a, b -> DynamicBucketModelBuilder.begin(a, b).fluid(item.fluid) }
                     }
                     stack.isDamageableItem -> {
 

@@ -19,8 +19,8 @@ class Juice(
 ) : ForgeFlowingFluid(
     Properties(
         still, flowing, FluidAttributes.builder(
-            ResourceLocation(BigSip.MOD_ID, "${name}_still"),
-            ResourceLocation(BigSip.MOD_ID, "${name}_flowing"),
+            ResourceLocation(BigSip.MOD_ID, "fluid/${name}_still"),
+            ResourceLocation(BigSip.MOD_ID, "fluid/${name}_flow"),
         ).viscosity(viscosity)
     ).explosionResistance(100F).bucket(bucket)
 ) {

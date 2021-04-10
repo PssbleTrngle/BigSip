@@ -11,6 +11,7 @@ object DataGenerators {
     fun registerGenerators(event: GatherDataEvent) {
         if(event.includeClient()) {
             event.generator.addProvider(ItemModels(event.generator, event.existingFileHelper))
+            event.generator.addProvider(BlockModels(event.generator, event.existingFileHelper))
         }
     }
 

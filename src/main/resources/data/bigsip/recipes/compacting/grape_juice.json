@@ -1,0 +1,21 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/grapes"
+    },
+    {
+      "tag": "forge:fruits/grapes"
+    },
+    {
+      "tag": "forge:fruits/grapes"
+    }
+  ],
+  "results": [
+
+    {
+      "fluid": "bigsip:grape_juice",
+      "amount": 100
+    }
+  ]
+}

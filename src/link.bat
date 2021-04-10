@@ -3,4 +3,5 @@ mklink /J "./generated/resources/data/bigsip/loot_tables" "./main/resources/data
 mklink /J "./generated/resources/data/bigsip/advancements" "./main/resources/data/bigsip/advancements"
 
 mklink /J "./generated/resources/assets/bigsip/models/item" "./main/resources/assets/bigsip/models/item"
+mklink /J "./generated/resources/assets/bigsip/models/block" "./main/resources/assets/bigsip/models/block"
 mklink /J "./generated/resources/assets/bigsip/blockstates" "./main/resources/assets/bigsip/blockstates"

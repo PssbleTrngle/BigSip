@@ -5,13 +5,13 @@
       "item": "minecraft:glass_bottle"
     },
     {
-      "fluid": "bigsip:wine",
-      "amount": 750
+      "fluid": "bigsip:carrot_juice",
+      "amount": 250
     }
   ],
   "results": [
     {
-      "item": "bigsip:wine_bottle"
+      "item": "bigsip:carrot_juice"
     }
   ]
 }

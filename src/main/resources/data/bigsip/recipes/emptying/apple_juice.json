@@ -1,0 +1,17 @@
+{
+  "type": "create:emptying",
+  "results": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:apple_juice",
+      "amount": 250
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "bigsip:apple_juice"
+    }
+  ]
+}

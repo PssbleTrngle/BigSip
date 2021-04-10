@@ -1,0 +1,361 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "age": "0"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_0"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "0"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_0",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "0"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_0",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "0"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_0",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "0"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_0",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "age": "1"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_1"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "1"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_1",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "1"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_1",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "1"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_1",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "1"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_1",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "age": "2"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_2"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "2"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_2",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "2"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_2",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "2"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_2",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "2"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_2",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "age": "3"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_3"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "3"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_3",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "3"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_3",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "3"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_3",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "3"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_3",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "age": "4"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_4"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "4"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_4",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "4"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_4",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "4"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_4",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "4"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_4",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "age": "5"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_5"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "5"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_5",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "5"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_5",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "5"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_5",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "5"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_5",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "age": "6"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_mid_6"
+      }
+    },
+    {
+      "when": {
+        "north": "true",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_6",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_6",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_6",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true",
+        "age": "6"
+      },
+      "apply": {
+        "model": "bigsip:block/grapes_side_6",
+        "y": 90,
+        "uvlock": true
+      }
+    }
+  ]
+}

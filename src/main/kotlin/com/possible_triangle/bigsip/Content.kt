@@ -1,12 +1,10 @@
 package com.possible_triangle.bigsip
 
+import com.possible_triangle.bigsip.block.GrapeCrop
 import com.possible_triangle.bigsip.effect.DrunkEffect
 import com.possible_triangle.bigsip.fluid.Juice
 import com.possible_triangle.bigsip.item.Alcohol
 import com.possible_triangle.bigsip.item.Drink
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Blocks
-import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.fluid.FlowingFluid
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.BucketItem
@@ -39,10 +37,12 @@ object Content {
     val DRUNK by EFFECTS.registerObject("drunk") { DrunkEffect() }
 
     val GRAPES by ITEMS.registerObject("grapes") { Item(Properties) }
+    val GRAPE_SAPLING by ITEMS.registerObject("grape_sapling") { Item(Properties) }
+    val GRAPE_CROP by BLOCKS.registerObject("grapes") { GrapeCrop() }
 
     val APPLE_JUICE by withFluid("apple_juice") { Drink(4, 0.5F) }
     val CARROT_JUICE by withFluid("carrot_juice") { Drink(4, 0.5F) }
-    val TOMATO_JUICE by withFluid("tomato_juice") { Drink(4, 0.5F) }
+    val GRAPE_JUICE by withFluid("grape_juice") { Drink(4, 0.5F) }
 
     val WINE_BOTTLE by withFluid("wine", "wine_bottle") { Alcohol(4, 0F, 5, uses = 3) }
     val BEER by withFluid("beer") { Alcohol(4, 0.2F, 6, uses = 2) }
@@ -60,9 +60,9 @@ object Content {
         lateinit var flowing: ObjectHolderDelegate<FlowingFluid>
 
         source = FLUIDS.registerObject(id) { Juice(id, true, bucket::get, flowing::get, source::get) }
-        flowing = FLUIDS.registerObject(id) { Juice(id, false, bucket::get, flowing::get, source::get) }
+        flowing = FLUIDS.registerObject("${id}_flow") { Juice(id, false, bucket::get, flowing::get, source::get) }
 
-        BLOCKS.registerObject(id) { FlowingFluidBlock(flowing::get, AbstractBlock.Properties.copy(Blocks.WATER)) }
+        //BLOCKS.registerObject(id) { FlowingFluidBlock(source::get, AbstractBlock.Properties.copy(Blocks.WATER)) }
 
         bucket = ITEMS.registerObject("${id}_bucket") {
             BucketItem(
