@@ -21,7 +21,7 @@ class GrapeCrop : CropsBlock(Properties.copy(Blocks.CARROTS)) {
 
     companion object {
         val PROPERTY_BY_DIRECTION = SixWayBlock.PROPERTY_BY_DIRECTION.filter { it.key.axis.isHorizontal }
-        private val SHAPE = box(0.0, 0.0, 0.0, 16.0, 20.0, 16.0)
+        private val SHAPE = box(2.0, 0.0, 2.0, 14.0, 24.0, 14.0)
     }
 
     override fun createBlockStateDefinition(builder: StateContainer.Builder<Block, BlockState>) {
@@ -38,9 +38,9 @@ class GrapeCrop : CropsBlock(Properties.copy(Blocks.CARROTS)) {
         val fullyGrown = age == 7
         return if (!fullyGrown && player.getItemInHand(hand).item === Items.BONE_MEAL) {
             ActionResultType.PASS
-        } else if (age > 1) {
+        } else if (age >= 5) {
             val j = 1 + world.random.nextInt(2)
-            popResource(world, pos, ItemStack(Content.GRAPES, j + if (fullyGrown) 1 else 0))
+            popResource(world, pos, ItemStack(Content.GRAPES, j + (age - 4)))
             world.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 0.8f + world.random.nextFloat() * 0.4f)
             world.setBlock(pos, state.setValue(AGE, 4), 2)
             ActionResultType.sidedSuccess(world.isClientSide)

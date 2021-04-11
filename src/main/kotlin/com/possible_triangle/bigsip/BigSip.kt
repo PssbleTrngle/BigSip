@@ -2,6 +2,8 @@ package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.alcohol.AlcoholHelper
 import com.possible_triangle.bigsip.command.AlcoholCommand
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraft.item.ItemModelsProperties
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.event.RegisterCommandsEvent
@@ -27,11 +29,15 @@ object BigSip {
         }
 
         MOD_BUS.addListener { _: FMLClientSetupEvent ->
+
             Content.ITEMS.getEntries().mapNotNull { it.get() }.forEach {
                 ItemModelsProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _ ->
                     stack.damageValue.toFloat()
                 }
             }
+
+            RenderTypeLookup.setRenderLayer(Content.GRAPE_CROP, RenderType.cutout())
+
         }
 
     }

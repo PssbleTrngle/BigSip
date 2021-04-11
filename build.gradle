@@ -87,8 +87,8 @@ dependencies {
 
     fg.deobf(implementation("thedarkcolour:kotlinforforge:${config.kotlin_for_forge_version}"))
 
-    fg.deobf(compile("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}"))
-    //fg.deobf("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}")
+    //fg.deobf(compile("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}"))
+    fg.deobf("curse.maven:tough-as-nails-246391:${config.tough_as_nails_version}")
 }
 
 compileKotlin {
