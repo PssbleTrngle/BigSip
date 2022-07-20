@@ -2,9 +2,9 @@ package com.possible_triangle.bigsip.network
 
 import com.electronwill.nightconfig.toml.TomlFormat
 import com.possible_triangle.bigsip.config.Configs
-import net.minecraft.network.PacketBuffer
-import net.minecraftforge.fml.network.NetworkDirection
-import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraftforge.network.NetworkDirection
+import net.minecraftforge.network.NetworkEvent
 import java.io.ByteArrayInputStream
 import java.util.function.Supplier
 
@@ -12,11 +12,11 @@ import java.util.function.Supplier
 class SyncConfigMessage(private val configData: ByteArray) {
 
     companion object {
-        fun encode(message: SyncConfigMessage, buf: PacketBuffer) {
+        fun encode(message: SyncConfigMessage, buf: FriendlyByteBuf) {
             buf.writeByteArray(message.configData)
         }
 
-        fun decode(buf: PacketBuffer): SyncConfigMessage {
+        fun decode(buf: FriendlyByteBuf): SyncConfigMessage {
             return SyncConfigMessage(buf.readByteArray())
         }
 

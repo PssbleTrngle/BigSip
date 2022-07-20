@@ -1,10 +1,10 @@
 package com.possible_triangle.bigsip.fluid
 
 import com.possible_triangle.bigsip.BigSip
-import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.FluidState
-import net.minecraft.item.Item
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.FluidState
 import net.minecraftforge.fluids.FluidAttributes
 import net.minecraftforge.fluids.ForgeFlowingFluid
 import java.util.function.Supplier

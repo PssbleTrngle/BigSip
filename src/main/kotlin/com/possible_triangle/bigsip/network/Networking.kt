@@ -1,10 +1,10 @@
 package com.possible_triangle.bigsip.network
 
 import com.possible_triangle.bigsip.BigSip
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.util.ResourceLocation
-import net.minecraftforge.fml.network.NetworkRegistry
-import net.minecraftforge.fml.network.PacketDistributor
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerPlayer
+import net.minecraftforge.network.NetworkRegistry
+import net.minecraftforge.network.PacketDistributor
 
 
 object Networking {
@@ -27,7 +27,7 @@ object Networking {
         )
     }
 
-    fun sendTo(message: Any, player: ServerPlayerEntity) {
+    fun sendTo(message: Any, player: ServerPlayer) {
         channel.send(PacketDistributor.PLAYER.with { player }, message)
     }
 

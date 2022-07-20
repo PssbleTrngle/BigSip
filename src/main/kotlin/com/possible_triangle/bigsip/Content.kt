@@ -1,32 +1,33 @@
 package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.block.GrapeCrop
-import com.possible_triangle.bigsip.effect.DrunkEffect
+import com.possible_triangle.bigsip.effect.DizzinessEffect
 import com.possible_triangle.bigsip.fluid.Juice
 import com.possible_triangle.bigsip.item.Alcohol
 import com.possible_triangle.bigsip.item.Drink
-import net.minecraft.fluid.FlowingFluid
-import net.minecraft.fluid.Fluid
-import net.minecraft.item.BucketItem
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.Items
+import net.minecraft.world.item.BucketItem
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.material.FlowingFluid
+import net.minecraft.world.level.material.Fluid
+import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
-import thedarkcolour.kotlinforforge.forge.KDeferredRegister
+import net.minecraftforge.registries.RegistryObject
 import thedarkcolour.kotlinforforge.forge.MOD_BUS
-import thedarkcolour.kotlinforforge.forge.ObjectHolderDelegate
+import thedarkcolour.kotlinforforge.forge.registerObject
 import kotlin.properties.ReadOnlyProperty
 
 object Content {
 
-    private val TAB = ItemGroup.TAB_FOOD!!
+    private val TAB = CreativeModeTab.TAB_FOOD
     val Properties: Item.Properties
         get() = Item.Properties().tab(TAB)
 
-    val ITEMS = KDeferredRegister(ForgeRegistries.ITEMS, BigSip.MOD_ID)
-    private val BLOCKS = KDeferredRegister(ForgeRegistries.BLOCKS, BigSip.MOD_ID)
-    private val EFFECTS = KDeferredRegister(ForgeRegistries.POTIONS, BigSip.MOD_ID)
-    private val FLUIDS = KDeferredRegister(ForgeRegistries.FLUIDS, BigSip.MOD_ID)
+    val ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BigSip.MOD_ID)
+    private val BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BigSip.MOD_ID)
+    private val EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BigSip.MOD_ID)
+    private val FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BigSip.MOD_ID)
 
     fun register() {
         listOf(ITEMS, BLOCKS, EFFECTS, FLUIDS).forEach {
@@ -34,7 +35,7 @@ object Content {
         }
     }
 
-    val DRUNK by EFFECTS.registerObject("drunk") { DrunkEffect() }
+    val DIZZYNESS by EFFECTS.registerObject("dizziness") { DizzinessEffect() }
 
     val GRAPES by ITEMS.registerObject("grapes") { Item(Properties) }
     val GRAPE_SAPLING by ITEMS.registerObject("grape_sapling") { Item(Properties) }
@@ -55,23 +56,23 @@ object Content {
     ): ReadOnlyProperty<Any?, ItemAndFluid<I>> {
         val item = ITEMS.registerObject(itemId, itemSupplier)
 
-        lateinit var bucket: ObjectHolderDelegate<Item>
-        lateinit var source: ObjectHolderDelegate<FlowingFluid>
-        lateinit var flowing: ObjectHolderDelegate<FlowingFluid>
+        lateinit var bucket: RegistryObject<Item>
+        lateinit var source: RegistryObject<FlowingFluid>
+        lateinit var flowing: RegistryObject<FlowingFluid>
 
-        source = FLUIDS.registerObject(id) { Juice(id, true, bucket::get, flowing::get, source::get) }
-        flowing = FLUIDS.registerObject("${id}_flow") { Juice(id, false, bucket::get, flowing::get, source::get) }
+        source = FLUIDS.register(id) { Juice(id, true, bucket::get, flowing::get, source::get) }
+        flowing = FLUIDS.register("${id}_flow") { Juice(id, false, bucket::get, flowing::get, source::get) }
 
         //BLOCKS.registerObject(id) { FlowingFluidBlock(source::get, AbstractBlock.Properties.copy(Blocks.WATER)) }
 
-        bucket = ITEMS.registerObject("${id}_bucket") {
+        bucket = ITEMS.register("${id}_bucket") {
             BucketItem(
-                source,
-                Item.Properties().tab(ItemGroup.TAB_MISC).craftRemainder(Items.BUCKET).stacksTo(1)
+                { source.get() },
+                Item.Properties().tab(CreativeModeTab.TAB_MISC).craftRemainder(Items.BUCKET).stacksTo(1)
             )
         }
 
-        return ReadOnlyProperty { _, _ -> ItemAndFluid(item.get(), source.get(), bucket.get()) }
+        return ReadOnlyProperty { a, p -> ItemAndFluid(item.getValue(a, p), source.get(), bucket.get()) }
     }
 
     data class ItemAndFluid<I : Item>(

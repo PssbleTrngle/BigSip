@@ -3,10 +3,10 @@ package com.possible_triangle.bigsip.data.generation
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
 import com.possible_triangle.bigsip.block.GrapeCrop
-import net.minecraft.block.CropsBlock
+import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
-import net.minecraft.util.Direction
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.CropBlock
 import net.minecraftforge.client.model.generators.BlockStateProvider
 import net.minecraftforge.common.data.ExistingFileHelper
 import kotlin.math.floor
@@ -89,7 +89,7 @@ class BlockModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
 
             multipart.part().modelFile(mid)
                 .addModel()
-                .condition(CropsBlock.AGE, age + 1)
+                .condition(CropBlock.AGE, age + 1)
 
             GrapeCrop.PROPERTY_BY_DIRECTION.forEach { (dir, prop) ->
                 multipart.part().modelFile(side)
@@ -97,7 +97,7 @@ class BlockModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
                     .uvLock(true)
                     .addModel()
                     .condition(prop, true)
-                    .condition(CropsBlock.AGE, age + 1)
+                    .condition(CropBlock.AGE, age + 1)
             }
 
         }

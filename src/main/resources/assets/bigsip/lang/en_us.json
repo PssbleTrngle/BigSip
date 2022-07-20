@@ -27,7 +27,7 @@
   "fluid.bigsip.beer": "Beer",
   "fluid.bigsip.dark_beer": "Guinness",
 
-  "effect.bigsip.drunk": "Drunk",
+  "effect.bigsip.dizziness": "Dizziness",
 
   "command.bigsip.persistent": "%s's persistent alcohol level is %s",
   "command.bigsip.current": "%s's current alcohol level is %s"

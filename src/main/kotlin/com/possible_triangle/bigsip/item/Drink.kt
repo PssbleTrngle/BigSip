@@ -2,31 +2,27 @@ package com.possible_triangle.bigsip.item
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.compat.ModCompat
+import com.possible_triangle.bigsip.compat.TANCompat.canDrink
+import com.possible_triangle.bigsip.compat.TANCompat.handleThirst
 import com.possible_triangle.bigsip.config.Configs
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.item.UseAction
-import net.minecraft.potion.EffectInstance
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.stats.Stats
-import net.minecraft.util.ActionResult
-import net.minecraft.util.DrinkHelper
-import net.minecraft.util.Hand
-import net.minecraft.world.World
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.*
+import net.minecraft.world.level.Level
 import net.minecraftforge.fml.common.Mod
-import toughasnails.api.potion.TANEffects
-import toughasnails.api.thirst.ThirstHelper
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 open class Drink(
-    private val thirst: Int,
-    private val hydration: Float,
-    private val poisonChance: Float = 0.0F,
-    private val canAlwaysDrink: Boolean = false,
+    val thirst: Int,
+    val hydration: Float,
+    val poisonChance: Float = 0.0F,
+    val canAlwaysDrink: Boolean = false,
     container: Item? = Items.GLASS_BOTTLE,
     uses: Int = 1,
 ) : Item(createProperties(uses, container)) {
@@ -42,15 +38,18 @@ open class Drink(
         }
     }
 
-    override fun getUseAnimation(p_77661_1_: ItemStack): UseAction {
-        return UseAction.DRINK
+    override fun getUseAnimation(stack: ItemStack): UseAnim {
+        return UseAnim.DRINK
     }
 
-    override fun use(world: World, player: PlayerEntity, hand: Hand): ActionResult<ItemStack> {
-        return if (ThirstHelper.canDrink(player, canAlwaysDrink || Configs.SERVER.CAN_ALWAYS_DRINK_ALCOHOL.get()))
-            DrinkHelper.useDrink(world, player, hand)
+    override fun use(world: Level, player: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
+        val canDrink = ModCompat.runIfLoaded(ModCompat.Mod.TAN) {
+            canDrink(player)
+        } ?: true
+        return if (canDrink)
+            ItemUtils.startUsingInstantly(world, player, hand)
         else
-            ActionResult.pass(player.getItemInHand(hand))
+            InteractionResultHolder.pass(player.getItemInHand(hand))
     }
 
     override fun getUseDuration(stack: ItemStack): Int {
@@ -61,18 +60,15 @@ open class Drink(
         return Configs.SERVER.ENCHANTABLE_DRINKS.get()
     }
 
-    override fun finishUsingItem(stack: ItemStack, world: World, entity: LivingEntity): ItemStack {
-        if (entity !is PlayerEntity) return stack
+    override fun finishUsingItem(stack: ItemStack, world: Level, entity: LivingEntity): ItemStack {
+        if (entity !is Player) return stack
 
-        if (entity is ServerPlayerEntity) {
+        if (entity is ServerPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(entity, stack)
         }
 
-        val thirst = ThirstHelper.getThirst(entity)
-        thirst.addThirst(this.thirst)
-        thirst.addHydration(this.hydration)
-        if (entity.level.random.nextFloat() < this.poisonChance) {
-            entity.addEffect(EffectInstance(TANEffects.THIRST, 600))
+        ModCompat.runIfLoaded(ModCompat.Mod.TAN) {
+            handleThirst(entity)
         }
 
         entity.awardStat(Stats.ITEM_USED[this])

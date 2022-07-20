@@ -3,15 +3,15 @@ package com.possible_triangle.bigsip.command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.context.CommandContext
 import com.possible_triangle.bigsip.alcohol.AlcoholHelper
-import net.minecraft.command.CommandSource
-import net.minecraft.command.Commands.argument
-import net.minecraft.command.Commands.literal
-import net.minecraft.command.arguments.EntityArgument
-import net.minecraft.util.text.TranslationTextComponent
+import net.minecraft.commands.CommandSourceStack
+import net.minecraft.commands.Commands.argument
+import net.minecraft.commands.Commands.literal
+import net.minecraft.commands.arguments.EntityArgument
+import net.minecraft.network.chat.TranslatableComponent
 
 object AlcoholCommand {
 
-    fun register(dispatcher: CommandDispatcher<CommandSource>) {
+    fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
             literal("alcohol")
                 .then(literal("get").then(
@@ -23,17 +23,17 @@ object AlcoholCommand {
         )
     }
 
-    private fun getCurrent(ctx: CommandContext<CommandSource>): Int {
+    private fun getCurrent(ctx: CommandContext<CommandSourceStack>): Int {
         val player = EntityArgument.getPlayer(ctx, "player")
         val value = player.getCapability(AlcoholHelper.ALCOHOL_LEVEL).map { it.current }.orElse(0)
-        ctx.source.sendSuccess(TranslationTextComponent("command.bigsip.current", player.name, value), false)
+        ctx.source.sendSuccess(TranslatableComponent("command.bigsip.current", player.name, value), false)
         return value
     }
 
-    private fun getPersistent(ctx: CommandContext<CommandSource>): Int {
+    private fun getPersistent(ctx: CommandContext<CommandSourceStack>): Int {
         val player = EntityArgument.getPlayer(ctx, "player")
         val value = player.getCapability(AlcoholHelper.ALCOHOL_LEVEL).map { it.persistent }.orElse(0F)
-        ctx.source.sendSuccess(TranslationTextComponent("command.bigsip.persistent", player.name, value), false)
+        ctx.source.sendSuccess(TranslatableComponent("command.bigsip.persistent", player.name, value), false)
         return value.toInt()
     }
 

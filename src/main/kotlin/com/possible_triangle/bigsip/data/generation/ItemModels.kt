@@ -3,9 +3,9 @@ package com.possible_triangle.bigsip.data.generation
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
 import net.minecraft.data.DataGenerator
-import net.minecraft.item.BucketItem
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.world.item.BucketItem
+import net.minecraft.world.item.ItemStack
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.client.model.generators.ItemModelProvider
 import net.minecraftforge.client.model.generators.loaders.DynamicBucketModelBuilder
 import net.minecraftforge.common.data.ExistingFileHelper

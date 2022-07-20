@@ -2,20 +2,22 @@ package com.possible_triangle.bigsip.alcohol
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
-import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.util.ResourceLocation
+import net.minecraft.core.Direction
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.common.capabilities.CapabilityInject
 import net.minecraftforge.common.capabilities.CapabilityManager
+import net.minecraftforge.common.capabilities.CapabilityToken
+import net.minecraftforge.common.capabilities.ICapabilityProvider
+import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.TickEvent
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
-import toughasnails.util.capability.SimpleCapabilityProvider
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.round
@@ -23,17 +25,12 @@ import kotlin.math.round
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 object AlcoholHelper {
 
-    @CapabilityInject(AlcoholLevel::class)
-    lateinit var ALCOHOL_LEVEL: Capability<AlcoholLevel>
-
-    fun init() {
-        CapabilityManager.INSTANCE.register(AlcoholLevel::class.java, AlcoholLevel) { AlcoholLevel() }
-    }
+    val ALCOHOL_LEVEL = CapabilityManager.get(object : CapabilityToken<AlcoholLevel>() {})
 
     fun applyAlcohol(entity: LivingEntity, percentage: Int) {
         if (percentage > 0) with(entity) {
 
-            val level = activeEffectsMap[Content.DRUNK]?.amplifier?.plus(1) ?: 0
+            val level = activeEffectsMap[Content.DIZZYNESS]?.amplifier?.plus(1) ?: 0
             val multiplier = 1F - level.times(0.2F)
 
             modifyLevel(entity) {
@@ -43,7 +40,9 @@ object AlcoholHelper {
                 val applyLevel = it.current / 9000
                 val resistance = min(12 * 20, it.persistent.div(6000).toInt())
 
-                if (applyLevel > level) addEffect(EffectInstance(Content.DRUNK, 20 * 15 - resistance, applyLevel - 1))
+                if (applyLevel > level) addEffect(MobEffectInstance(Content.DIZZYNESS,
+                    20 * 15 - resistance,
+                    applyLevel - 1))
             }
 
         }
@@ -55,10 +54,16 @@ object AlcoholHelper {
 
     @SubscribeEvent
     fun onAttachCapabilities(event: AttachCapabilitiesEvent<Entity>) {
-        if (event.`object` is PlayerEntity) {
+        if (event.`object` is Player) {
+            val alcoholLevel = LazyOptional.of { AlcoholLevel() }
             event.addCapability(
                 ResourceLocation(BigSip.MOD_ID, "alcohol_level"),
-                SimpleCapabilityProvider(ALCOHOL_LEVEL, AlcoholLevel())
+                object : ICapabilityProvider {
+                    override fun <T : Any?> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
+                        return if (cap == ALCOHOL_LEVEL) alcoholLevel.cast()
+                        else LazyOptional.empty<T>()
+                    }
+                }
             )
         }
     }
