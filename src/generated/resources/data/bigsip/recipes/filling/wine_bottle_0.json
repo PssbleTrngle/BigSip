@@ -1,0 +1,21 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:wine",
+      "nbt": {},
+      "amount": 750
+    }
+  ],
+  "results": [
+    {
+      "item": "bigsip:wine_bottle",
+      "nbt": {
+        "Damage": 0
+      }
+    }
+  ]
+}

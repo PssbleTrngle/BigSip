@@ -1,15 +1,14 @@
 package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.block.GrapeCrop
+import com.possible_triangle.bigsip.block.MaturingBarrel
+import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
 import com.possible_triangle.bigsip.effect.DizzinessEffect
 import com.possible_triangle.bigsip.fluid.Juice
 import com.possible_triangle.bigsip.item.Alcohol
 import com.possible_triangle.bigsip.item.Drink
-import net.minecraft.world.item.BucketItem
-import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
-import net.minecraft.world.level.material.FlowingFluid
+import net.minecraft.world.item.*
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
@@ -26,39 +25,48 @@ object Content {
 
     val ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BigSip.MOD_ID)
     private val BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BigSip.MOD_ID)
+    private val TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, BigSip.MOD_ID)
     private val EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BigSip.MOD_ID)
     private val FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BigSip.MOD_ID)
 
     fun register() {
-        listOf(ITEMS, BLOCKS, EFFECTS, FLUIDS).forEach {
+        listOf(FLUIDS, ITEMS, BLOCKS, TILES, EFFECTS).forEach {
             it.register(MOD_BUS)
         }
     }
 
     val DIZZYNESS by EFFECTS.registerObject("dizziness") { DizzinessEffect() }
 
+    val BARREL by BLOCKS.registerObject("maturing_barrel") { MaturingBarrel() }
+    val BARREL_ITEM by ITEMS.registerObject("maturing_barrel") { BlockItem(BARREL, Properties) }
+    val BARREL_TILE by TILES.registerObject("maturing_barrel") {
+        BlockEntityType.Builder.of(::MaturingBarrelTile, BARREL).build(null)
+    }
+
     val GRAPES by ITEMS.registerObject("grapes") { Item(Properties) }
     val GRAPE_SAPLING by ITEMS.registerObject("grape_sapling") { Item(Properties) }
     val GRAPE_CROP by BLOCKS.registerObject("grapes") { GrapeCrop() }
 
-    val APPLE_JUICE by withFluid("apple_juice") { Drink(4, 0.5F) }
-    val CARROT_JUICE by withFluid("carrot_juice") { Drink(4, 0.5F) }
-    val GRAPE_JUICE by withFluid("grape_juice") { Drink(4, 0.5F) }
+    val APPLE_JUICE = withFluid("apple_juice") { Drink(it, 4, 0.5F) }
+    val CARROT_JUICE = withFluid("carrot_juice") { Drink(it, 4, 0.5F) }
+    val GRAPE_JUICE = withFluid("grape_juice") { Drink(it, 4, 0.5F) }
 
-    val WINE_BOTTLE by withFluid("wine", "wine_bottle") { Alcohol(4, 0F, 5, uses = 3) }
-    val BEER by withFluid("beer") { Alcohol(4, 0.2F, 6, uses = 2) }
-    val DARK_BEER by withFluid("dark_beer") { Alcohol(4, 0.2F, 12, uses = 2) }
+    val WINE_BOTTLE by withFluid("wine", "wine_bottle") { Alcohol(it, 4, 0F, 5, uses = 3) }
+    val BEER by withFluid("beer") { Alcohol(it, 4, 0.2F, 6, uses = 2) }
+    val DARK_BEER by withFluid("dark_beer") { Alcohol(it, 4, 0.2F, 12, uses = 2) }
 
-    private fun <I : Item> withFluid(
+    val DRINKS
+        get() = ITEMS.entries.mapNotNull { it.get() }.filterIsInstance<Drink>()
+
+    private fun <I : Drink> withFluid(
         id: String,
         itemId: String = id,
-        itemSupplier: () -> I,
-    ): ReadOnlyProperty<Any?, ItemAndFluid<I>> {
-        val item = ITEMS.registerObject(itemId, itemSupplier)
+        itemSupplier: (() -> Fluid) -> I,
+    ): ReadOnlyProperty<Any?, I> {
 
         lateinit var bucket: RegistryObject<Item>
-        lateinit var source: RegistryObject<FlowingFluid>
-        lateinit var flowing: RegistryObject<FlowingFluid>
+        lateinit var source: RegistryObject<Fluid>
+        lateinit var flowing: RegistryObject<Fluid>
 
         source = FLUIDS.register(id) { Juice(id, true, bucket::get, flowing::get, source::get) }
         flowing = FLUIDS.register("${id}_flow") { Juice(id, false, bucket::get, flowing::get, source::get) }
@@ -72,13 +80,9 @@ object Content {
             )
         }
 
-        return ReadOnlyProperty { a, p -> ItemAndFluid(item.getValue(a, p), source.get(), bucket.get()) }
+        return ITEMS.registerObject(itemId) {
+            itemSupplier { source.get() }
+        }
     }
-
-    data class ItemAndFluid<I : Item>(
-        val item: I,
-        val fluid: Fluid,
-        val bucket: Item,
-    )
 
 }

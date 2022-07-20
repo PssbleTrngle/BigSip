@@ -1,0 +1,19 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "bigsip:wine_bottle",
+      "nbt": "{Damage:0}"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:wine",
+      "amount": 750
+    }
+  ]
+}

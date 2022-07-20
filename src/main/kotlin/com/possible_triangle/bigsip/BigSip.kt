@@ -1,13 +1,18 @@
 package com.possible_triangle.bigsip
 
-import com.possible_triangle.bigsip.alcohol.AlcoholLevel
+import com.possible_triangle.bigsip.alcohol.IAlcoholLevel
 import com.possible_triangle.bigsip.command.AlcoholCommand
+import com.simibubi.create.content.logistics.block.vault.ItemVaultCTBehaviour
+import com.simibubi.create.foundation.data.CreateRegistrate
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent
 import net.minecraftforge.event.RegisterCommandsEvent
+import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -26,7 +31,7 @@ object BigSip {
 
         MOD_BUS.addListener { _: FMLClientSetupEvent ->
             ItemBlockRenderTypes.setRenderLayer(Content.GRAPE_CROP, RenderType.cutout())
-            Content.ITEMS.entries.mapNotNull { it.get() }.forEach {
+            Content.DRINKS.forEach {
                 ItemProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _, _ ->
                     stack.damageValue.toFloat()
                 }
@@ -34,7 +39,7 @@ object BigSip {
         }
 
         MOD_BUS.addListener { event: RegisterCapabilitiesEvent ->
-            event.register(AlcoholLevel::class.java)
+            event.register(IAlcoholLevel::class.java)
         }
 
     }
@@ -42,6 +47,17 @@ object BigSip {
     @SubscribeEvent
     fun registerCommands(event: RegisterCommandsEvent) {
         AlcoholCommand.register(event.dispatcher)
+    }
+
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+    object ModEvent {
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        fun registerCTM(event: RegistryEvent.Register<Block>) {
+            val barrel = event.registry.getValue(ResourceLocation(MOD_ID, "maturing_barrel"))
+            CreateRegistrate.connectedTextures<Block> { ItemVaultCTBehaviour() }.accept(barrel)
+        }
+
     }
 
 }

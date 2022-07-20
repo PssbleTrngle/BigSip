@@ -15,16 +15,18 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.*
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.fml.common.Mod
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 open class Drink(
+    val getFluid: () -> Fluid,
     val thirst: Int,
     val hydration: Float,
     val poisonChance: Float = 0.0F,
     val canAlwaysDrink: Boolean = false,
     container: Item? = Items.GLASS_BOTTLE,
-    uses: Int = 1,
+    val uses: Int = 1,
 ) : Item(createProperties(uses, container)) {
 
     private companion object {

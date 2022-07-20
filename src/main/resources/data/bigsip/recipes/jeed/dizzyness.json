@@ -1,0 +1,17 @@
+{
+  "type": "jeed:effect_provider",
+  "effect": {
+    "id": "bigsip:dizziness"
+  },
+  "providers": [
+    {
+      "item": "bigsip:wine_bottle"
+    },
+    {
+      "item": "bigsip:beer"
+    },
+    {
+      "item": "bigsip:dark_beer"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "axis=x,large=false": {
+      "model": "bigsip:block/maturing_barrel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z,large=false": {
+      "model": "bigsip:block/maturing_barrel",
+      "x": 90
+    },
+    "axis=x,large=true": {
+      "model": "bigsip:block/maturing_barrel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=z,large=true": {
+      "model": "bigsip:block/maturing_barrel",
+      "x": 90
+    }
+  }
+}

@@ -3,15 +3,17 @@ package com.possible_triangle.bigsip.data.generation
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
 import com.possible_triangle.bigsip.block.GrapeCrop
+import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock
 import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.CropBlock
 import net.minecraftforge.client.model.generators.BlockStateProvider
+import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.common.data.ExistingFileHelper
 import kotlin.math.floor
 
-class BlockModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
+class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) :
     BlockStateProvider(generator, BigSip.MOD_ID, fileHelper) {
 
     private fun loc(name: ResourceLocation, map: (String) -> String): ResourceLocation {
@@ -19,11 +21,27 @@ class BlockModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
     }
 
     override fun registerStatesAndModels() {
+        grapes()
+        barrel()
+    }
+
+    private fun barrel() {
+        val id = Content.BARREL.registryName ?: return
+        //val model = models().getExistingFile(ResourceLocation(id.namespace, "block/" + id.path))
+        val model = models().withExistingParent(id.path, ResourceLocation("block/barrel"))
+
+        getVariantBuilder(Content.BARREL).forAllStates { state ->
+            ConfiguredModel.builder().modelFile(model)
+                .rotationY(if (state.getValue(ItemVaultBlock.HORIZONTAL_AXIS) === Direction.Axis.X) 90 else 0)
+                .rotationX(90)
+                .build()
+        }
+    }
+
+    private fun grapes() {
 
         val name = Content.GRAPE_CROP.registryName!!
-
         val offset = 6F
-
         val multipart = getMultipartBuilder(Content.GRAPE_CROP)
 
         val ages = 0 until 7

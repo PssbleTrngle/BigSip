@@ -1,0 +1,17 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:beer",
+      "amount": 500
+    }
+  ],
+  "results": [
+    {
+      "item": "bigsip:beer"
+    }
+  ]
+}

@@ -6,15 +6,17 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluid
 
 class Alcohol(
+    getFluid: () -> Fluid,
     thirst: Int,
     hydration: Float,
     private val percentage: Int,
     canAlwaysDrink: Boolean = false,
     container: Item? = Items.GLASS_BOTTLE,
     uses: Int = 1,
-) : Drink(thirst, hydration, percentage / 10F, canAlwaysDrink, container, uses) {
+) : Drink(getFluid, thirst, hydration, percentage / 10F, canAlwaysDrink, container, uses) {
 
     override fun finishUsingItem(stack: ItemStack, world: Level, entity: LivingEntity): ItemStack {
         AlcoholHelper.applyAlcohol(entity, percentage)

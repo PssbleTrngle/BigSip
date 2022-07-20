@@ -1,0 +1,19 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "bigsip:carrot_juice",
+      "nbt": "{Damage:0}"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:carrot_juice",
+      "amount": 250
+    }
+  ]
+}
