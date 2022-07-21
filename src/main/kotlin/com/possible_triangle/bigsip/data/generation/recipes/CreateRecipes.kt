@@ -2,9 +2,11 @@ package com.possible_triangle.bigsip.data.generation.recipes
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.AllRecipeTypes
 import com.simibubi.create.content.contraptions.fluids.actors.FillingRecipe
 import com.simibubi.create.content.contraptions.processing.EmptyingRecipe
+import com.simibubi.create.content.contraptions.processing.ProcessingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo
@@ -16,7 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraftforge.common.crafting.PartialNBTIngredient
 
 fun ingredient(stack: ItemStack): Ingredient {
-    return if(stack.tag?.isEmpty == false) PartialNBTIngredient.of(stack.item, stack.orCreateTag)
+    return if (stack.tag?.isEmpty == false) PartialNBTIngredient.of(stack.item, stack.orCreateTag)
     else Ingredient.of(stack)
 }
 
@@ -25,9 +27,7 @@ object CreateRecipes {
     fun register(generator: DataGenerator) {
         val filling = Filling(generator)
         val emptying = Emptying(generator)
-
-        generator.addProvider(filling)
-        generator.addProvider(emptying)
+        val maturing = Maturing(generator)
 
         val perPour = 250
 
@@ -60,32 +60,32 @@ object CreateRecipes {
             }
         }
 
+        maturing.create("wine") {
+            it.require(Content.GRAPE_JUICE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
+                .output(Content.WINE_BOTTLE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
+        }
 
     }
 }
 
-private class Filling(generator: DataGenerator) : ProcessingRecipeGen(generator) {
-    override fun getRecipeType(): IRecipeTypeInfo {
-        return AllRecipeTypes.FILLING
+private open class Gen<T : ProcessingRecipe<*>>(private val type: IRecipeTypeInfo, generator: DataGenerator) :
+    ProcessingRecipeGen(generator) {
+    override fun getRecipeType() = type
+
+    init {
+        generator.addProvider(this)
     }
 
     fun create(
         name: String,
-        transform: (ProcessingRecipeBuilder<FillingRecipe>) -> ProcessingRecipeBuilder<FillingRecipe>,
+        transform: (ProcessingRecipeBuilder<T>) -> ProcessingRecipeBuilder<T>,
     ): GeneratedRecipe {
         return super.create(ResourceLocation(BigSip.MOD_ID, name), transform)
     }
 }
 
-private class Emptying(generator: DataGenerator) : ProcessingRecipeGen(generator) {
-    override fun getRecipeType(): IRecipeTypeInfo {
-        return AllRecipeTypes.EMPTYING
-    }
+private class Filling(generator: DataGenerator) : Gen<FillingRecipe>(AllRecipeTypes.FILLING, generator)
 
-    fun create(
-        name: String,
-        transform: (ProcessingRecipeBuilder<EmptyingRecipe>) -> ProcessingRecipeBuilder<EmptyingRecipe>,
-    ): GeneratedRecipe {
-        return super.create(ResourceLocation(BigSip.MOD_ID, name), transform)
-    }
-}
+private class Emptying(generator: DataGenerator) : Gen<EmptyingRecipe>(AllRecipeTypes.EMPTYING, generator)
+
+private class Maturing(generator: DataGenerator) : Gen<MaturingRecipe>(MaturingRecipe.INFO, generator)

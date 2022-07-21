@@ -1,5 +1,6 @@
 package com.possible_triangle.bigsip
 
+import com.possible_triangle.bigsip.BigSip.MOD_ID
 import com.possible_triangle.bigsip.block.GrapeCrop
 import com.possible_triangle.bigsip.block.MaturingBarrel
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
@@ -7,7 +8,12 @@ import com.possible_triangle.bigsip.effect.DizzinessEffect
 import com.possible_triangle.bigsip.fluid.Juice
 import com.possible_triangle.bigsip.item.Alcohol
 import com.possible_triangle.bigsip.item.Drink
+import com.possible_triangle.bigsip.recipe.MaturingRecipe
+import com.simibubi.create.content.contraptions.processing.ProcessingRecipeSerializer
+import net.minecraft.core.Registry
 import net.minecraft.world.item.*
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.registries.DeferredRegister
@@ -23,14 +29,16 @@ object Content {
     val Properties: Item.Properties
         get() = Item.Properties().tab(TAB)
 
-    val ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BigSip.MOD_ID)
-    private val BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BigSip.MOD_ID)
-    private val TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, BigSip.MOD_ID)
-    private val EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BigSip.MOD_ID)
-    private val FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, BigSip.MOD_ID)
+    val ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID)
+    private val BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID)
+    private val TILES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MOD_ID)
+    private val EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MOD_ID)
+    private val FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MOD_ID)
+    private val RECIPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, MOD_ID)
+    private val RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID)
 
     fun register() {
-        listOf(FLUIDS, ITEMS, BLOCKS, TILES, EFFECTS).forEach {
+        listOf(FLUIDS, ITEMS, BLOCKS, TILES, EFFECTS, RECIPES, RECIPE_SERIALIZERS).forEach {
             it.register(MOD_BUS)
         }
     }
@@ -43,13 +51,22 @@ object Content {
         BlockEntityType.Builder.of(::MaturingBarrelTile, BARREL).build(null)
     }
 
+    val MATURING_RECIPE = RECIPES.register(MaturingRecipe.ID) { createRecipeType<MaturingRecipe>(MaturingRecipe.ID) }
+    val MATURING_RECIPE_SERIALIZER by RECIPE_SERIALIZERS.registerObject(MaturingRecipe.ID) { ProcessingRecipeSerializer(::MaturingRecipe) }
+
+    private fun <T : Recipe<*>> createRecipeType(id: String): RecipeType<T> {
+        return object : RecipeType<T> {
+            override fun toString() = "${MOD_ID}:$id"
+        }
+    }
+
     val GRAPES by ITEMS.registerObject("grapes") { Item(Properties) }
     val GRAPE_SAPLING by ITEMS.registerObject("grape_sapling") { Item(Properties) }
     val GRAPE_CROP by BLOCKS.registerObject("grapes") { GrapeCrop() }
 
-    val APPLE_JUICE = withFluid("apple_juice") { Drink(it, 4, 0.5F) }
-    val CARROT_JUICE = withFluid("carrot_juice") { Drink(it, 4, 0.5F) }
-    val GRAPE_JUICE = withFluid("grape_juice") { Drink(it, 4, 0.5F) }
+    val APPLE_JUICE by withFluid("apple_juice") { Drink(it, 4, 0.5F) }
+    val CARROT_JUICE by withFluid("carrot_juice") { Drink(it, 4, 0.5F) }
+    val GRAPE_JUICE by withFluid("grape_juice") { Drink(it, 4, 0.5F) }
 
     val WINE_BOTTLE by withFluid("wine", "wine_bottle") { Alcohol(it, 4, 0F, 5, uses = 3) }
     val BEER by withFluid("beer") { Alcohol(it, 4, 0.2F, 6, uses = 2) }
