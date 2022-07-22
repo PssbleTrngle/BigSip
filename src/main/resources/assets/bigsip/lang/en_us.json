@@ -33,5 +33,6 @@
   "command.bigsip.persistent": "%s's persistent alcohol level is %s",
   "command.bigsip.current": "%s's current alcohol level is %s",
 
-  "bigsip.recipe.maturing": "Maturing"
+  "bigsip.recipe.maturing": "Maturing",
+  "bigsip.recipe.maturing.time": "%s"
 }

@@ -1,5 +1,6 @@
 package com.possible_triangle.bigsip
 
+import com.jozufozu.flywheel.core.PartialModel
 import com.possible_triangle.bigsip.BigSip.MOD_ID
 import com.possible_triangle.bigsip.block.GrapeCrop
 import com.possible_triangle.bigsip.block.MaturingBarrel
@@ -59,6 +60,7 @@ object Content {
     val BARREL_CT_SIDE = createBarrelCT("side")
     val BARREL_CT_TOP = createBarrelCT("top")
     val BARREL_CT_BOTTOM = createBarrelCT("bottom")
+    val BARREL_MULTIBLOCK = PartialModel(ResourceLocation(MOD_ID, "block/multiblock_maturing_barrel"))
 
     private fun createBarrelCT(side: String): CTSpriteShiftEntry {
         return CTSpriteShifter.getCT(AllCTTypes.CROSS, ResourceLocation(MOD_ID, "block/maturing_barrel_$side"), ResourceLocation(MOD_ID,"block/maturing_barrel_${side}_connected"));
