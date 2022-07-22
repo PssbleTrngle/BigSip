@@ -2,7 +2,7 @@ package com.possible_triangle.bigsip.recipe
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Content
-import com.possible_triangle.bigsip.block.tile.IMaturingActor
+import com.possible_triangle.bigsip.block.tile.IMaturingContainer
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo
@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 
-class MaturingRecipe(params: ProcessingRecipeParams) : ProcessingRecipe<IMaturingActor>(INFO, params) {
+class MaturingRecipe(params: ProcessingRecipeParams) : ProcessingRecipe<IMaturingContainer>(INFO, params) {
 
     companion object {
         const val ID = "maturing"
@@ -35,7 +35,7 @@ class MaturingRecipe(params: ProcessingRecipeParams) : ProcessingRecipe<IMaturin
 
     override fun getMaxFluidOutputCount(): Int = 1
 
-    override fun matches(barrel: IMaturingActor, world: Level): Boolean {
+    override fun matches(barrel: IMaturingContainer, world: Level): Boolean {
         val fluid = barrel.getFluid()
         if(fluid.isEmpty) return false
         return fluidIngredients.all { ingredient ->

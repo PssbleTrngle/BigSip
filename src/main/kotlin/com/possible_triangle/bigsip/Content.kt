@@ -10,7 +10,11 @@ import com.possible_triangle.bigsip.item.Alcohol
 import com.possible_triangle.bigsip.item.Drink
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeSerializer
+import com.simibubi.create.foundation.block.connected.AllCTTypes
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry
+import com.simibubi.create.foundation.block.connected.CTSpriteShifter
 import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.*
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
@@ -49,6 +53,15 @@ object Content {
     val BARREL_ITEM by ITEMS.registerObject("maturing_barrel") { BlockItem(BARREL, Properties) }
     val BARREL_TILE by TILES.registerObject("maturing_barrel") {
         BlockEntityType.Builder.of(::MaturingBarrelTile, BARREL).build(null)
+    }
+
+    val BARREL_CT_FRONT = createBarrelCT("front")
+    val BARREL_CT_SIDE = createBarrelCT("side")
+    val BARREL_CT_TOP = createBarrelCT("top")
+    val BARREL_CT_BOTTOM = createBarrelCT("bottom")
+
+    private fun createBarrelCT(side: String): CTSpriteShiftEntry {
+        return CTSpriteShifter.getCT(AllCTTypes.CROSS, ResourceLocation(MOD_ID, "block/maturing_barrel_$side"), ResourceLocation(MOD_ID,"block/maturing_barrel_${side}_connected"));
     }
 
     val MATURING_RECIPE = RECIPES.register(MaturingRecipe.ID) { createRecipeType<MaturingRecipe>(MaturingRecipe.ID) }

@@ -1,5 +1,5 @@
 d07b4eecc35083fbfa07c2663febc9a6fc06fdb5 assets/bigsip/blockstates/grapes.json
-14b362fa8ace04ece62cd70c3490694ee0ccff9e assets/bigsip/blockstates/maturing_barrel.json
+5834dfb6ea93a969e5c42fe60fd1d0df3db4c4e6 assets/bigsip/blockstates/maturing_barrel.json
 0dc1321f82fff349ec7260ee342565d4afda50c2 assets/bigsip/models/block/grapes_mid_0.json
 0dc1321f82fff349ec7260ee342565d4afda50c2 assets/bigsip/models/block/grapes_mid_1.json
 0dc1321f82fff349ec7260ee342565d4afda50c2 assets/bigsip/models/block/grapes_mid_2.json
@@ -14,7 +14,6 @@ d07b4eecc35083fbfa07c2663febc9a6fc06fdb5 assets/bigsip/blockstates/grapes.json
 00b28804ebce03b701c09c6180cb4b0be581fbad assets/bigsip/models/block/grapes_side_4.json
 00b28804ebce03b701c09c6180cb4b0be581fbad assets/bigsip/models/block/grapes_side_5.json
 00b28804ebce03b701c09c6180cb4b0be581fbad assets/bigsip/models/block/grapes_side_6.json
-f1663f5b1cc61772e6ad3191a19c5daa31ee1ad8 assets/bigsip/models/block/maturing_barrel.json
 65acb40839091285bb822cad8e761e52859ef953 assets/bigsip/models/item/apple_juice.json
 edbde8b4942eae7d87c676bff0a280f5e9d44266 assets/bigsip/models/item/apple_juice_bucket.json
 c8b0079e6cc8cfc5c7a5153ad474aee889ae1d20 assets/bigsip/models/item/beer.json
@@ -36,6 +35,9 @@ ba90666829477992a6101487c19b0117195b8234 assets/bigsip/models/item/dark_beer_buc
 2aa7dec77235f5dc645001d9a899b65aa673b012 assets/bigsip/models/item/wine_bottle_1.json
 ac42cfcc63a0c7e211f2375ff33bcd80928ce0ab assets/bigsip/models/item/wine_bottle_2.json
 30ee2aeeab75b8ef42c7b074ce6014922849a76b assets/bigsip/models/item/wine_bucket.json
+817917f20a71a0a9ee9ea1f66a996c19d6c6bd2c data/bigsip/recipes/compacting/apple.json
+6078c088b656c0261484a01dc175aa1c1f15eb24 data/bigsip/recipes/compacting/carrot.json
+01a8027f8f134bce99a5ec33e3d885138599cd62 data/bigsip/recipes/compacting/grapes.json
 16093c5d7a4217e5b3ff05edcac0e1dec82526cd data/bigsip/recipes/emptying/apple_juice.json
 371040e74b7921e53daac2795a44a100c113a6b8 data/bigsip/recipes/emptying/beer_0.json
 573ead04036421d93c44f1e30460dcb678d9221a data/bigsip/recipes/emptying/beer_1.json

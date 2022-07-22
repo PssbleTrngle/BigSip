@@ -5,7 +5,7 @@ import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.wrench.IWrenchable
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.HORIZONTAL_AXIS
-import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
+//import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
 import com.simibubi.create.foundation.block.ITE
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.StateDefinition
 class MaturingBarrel : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<MaturingBarrelTile>, IWrenchable {
 
     init {
-        this.registerDefaultState(this.defaultBlockState().setValue(LARGE, false))
+        //this.registerDefaultState(this.defaultBlockState().setValue(LARGE, false))
     }
 
     override fun getTileEntityClass(): Class<MaturingBarrelTile> {
@@ -36,7 +36,8 @@ class MaturingBarrel : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<Maturin
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        builder.add(HORIZONTAL_AXIS, LARGE)
+        //builder.add(HORIZONTAL_AXIS, LARGE)
+        builder.add(HORIZONTAL_AXIS)
         super.createBlockStateDefinition(builder)
     }
 
@@ -70,7 +71,8 @@ class MaturingBarrel : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<Maturin
                 ConnectivityHandler.splitMulti(tile)
                 tile.removeController(true)
             }
-            state.setValue(LARGE, false) as BlockState
+            state
+            //state.setValue(LARGE, false) as BlockState
         } else state
         return super.onWrenched(updatedState, context)
     }

@@ -10,12 +10,15 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo
+import net.minecraft.core.Registry
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraftforge.common.crafting.PartialNBTIngredient
+import net.minecraftforge.fluids.FluidStack
 
 fun ingredient(stack: ItemStack): Ingredient {
     return if (stack.tag?.isEmpty == false) PartialNBTIngredient.of(stack.item, stack.orCreateTag)
@@ -25,9 +28,10 @@ fun ingredient(stack: ItemStack): Ingredient {
 object CreateRecipes {
 
     fun register(generator: DataGenerator) {
-        val filling = Filling(generator)
-        val emptying = Emptying(generator)
-        val maturing = Maturing(generator)
+        val filling = Gen<FillingRecipe>(AllRecipeTypes.FILLING, generator)
+        val emptying = Gen<EmptyingRecipe>(AllRecipeTypes.EMPTYING, generator)
+        val maturing = Gen<MaturingRecipe>(MaturingRecipe.INFO, generator)
+        val compacting = Gen<MaturingRecipe>(AllRecipeTypes.COMPACTING, generator)
 
         val perPour = 250
 
@@ -65,6 +69,22 @@ object CreateRecipes {
                 .output(Content.WINE_BOTTLE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
         }
 
+        val juices = mapOf(
+            "grapes" to Content.GRAPE_JUICE,
+            "apple" to Content.APPLE_JUICE,
+            "carrot" to Content.CARROT_JUICE,
+        )
+
+        val sugar = Items.SUGAR
+        juices.forEach { (fruit, juice) ->
+            val tag = TagKey.create(Registry.ITEM_REGISTRY, ResourceLocation("forge", "fruits/$fruit"))
+            compacting.create(fruit) {
+                it.output(FluidStack(juice.getFluid(), 250))
+                    .require(tag)
+                    .require(sugar)
+            }
+        }
+
     }
 }
 
@@ -83,9 +103,3 @@ private open class Gen<T : ProcessingRecipe<*>>(private val type: IRecipeTypeInf
         return super.create(ResourceLocation(BigSip.MOD_ID, name), transform)
     }
 }
-
-private class Filling(generator: DataGenerator) : Gen<FillingRecipe>(AllRecipeTypes.FILLING, generator)
-
-private class Emptying(generator: DataGenerator) : Gen<EmptyingRecipe>(AllRecipeTypes.EMPTYING, generator)
-
-private class Maturing(generator: DataGenerator) : Gen<MaturingRecipe>(MaturingRecipe.INFO, generator)

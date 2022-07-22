@@ -27,13 +27,12 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
 
     private fun barrel() {
         val id = Content.BARREL.registryName ?: return
-        //val model = models().getExistingFile(ResourceLocation(id.namespace, "block/" + id.path))
-        val model = models().withExistingParent(id.path, ResourceLocation("block/barrel"))
+        val model = models().getExistingFile(ResourceLocation(id.namespace, "block/" + id.path))
+        //val model = models().withExistingParent(id.path, ResourceLocation("block/barrel"))
 
         getVariantBuilder(Content.BARREL).forAllStates { state ->
             ConfiguredModel.builder().modelFile(model)
                 .rotationY(if (state.getValue(ItemVaultBlock.HORIZONTAL_AXIS) === Direction.Axis.X) 90 else 0)
-                .rotationX(90)
                 .build()
         }
     }

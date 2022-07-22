@@ -1,8 +1,8 @@
 package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.alcohol.IAlcoholLevel
+import com.possible_triangle.bigsip.block.MaturingBarrelCT
 import com.possible_triangle.bigsip.command.AlcoholCommand
-import com.simibubi.create.content.logistics.block.vault.ItemVaultCTBehaviour
 import com.simibubi.create.foundation.data.CreateRegistrate
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
@@ -55,7 +55,7 @@ object BigSip {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun registerCTM(event: RegistryEvent.Register<Block>) {
             val barrel = event.registry.getValue(ResourceLocation(MOD_ID, "maturing_barrel"))
-            CreateRegistrate.connectedTextures<Block> { ItemVaultCTBehaviour() }.accept(barrel)
+            CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(Content.BARREL) } }.accept(barrel)
         }
 
     }

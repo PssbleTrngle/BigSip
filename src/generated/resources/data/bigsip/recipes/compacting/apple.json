@@ -1,0 +1,17 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/apple"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "bigsip:apple_juice",
+      "amount": 250
+    }
+  ]
+}

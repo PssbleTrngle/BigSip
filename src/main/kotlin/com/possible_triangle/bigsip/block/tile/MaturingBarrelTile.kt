@@ -1,10 +1,9 @@
 package com.possible_triangle.bigsip.block.tile
 
+//import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
 import com.possible_triangle.bigsip.Content
-import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation
-import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
 import com.simibubi.create.foundation.fluid.SmartFluidTank
 import com.simibubi.create.foundation.tileEntity.IMultiTileContainer
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity
@@ -15,8 +14,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.TextComponent
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.Container
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
@@ -26,16 +23,6 @@ import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 import net.minecraftforge.fluids.capability.templates.FluidTank
-import net.minecraftforge.items.ItemStackHandler
-import net.minecraftforge.items.wrapper.RecipeWrapper
-
-interface IMaturingActor : Container {
-    fun getFluid(): FluidStack
-}
-
-abstract class MaturingActor : IMaturingActor, RecipeWrapper(ItemStackHandler(0)) {
-
-}
 
 class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Content.BARREL_TILE, pos, state),
     IMultiTileContainer.Fluid, IHaveGoggleInformation {
@@ -46,6 +33,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
 
     private val tank = SmartFluidTank(LITERS, ::onFluidChanged)
     private var fluidCapability = LazyOptional.of<FluidTank> { tank }
+    private var maturingCapability = LazyOptional.of<IMaturingActor> { actor }
     private var controllerPos: BlockPos? = null
     private var updateConnectivity = false
     private var radius = 1
@@ -54,23 +42,24 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
     private var syncCooldown = 0
     private var queuedSync = false
     private var forceFluidLevelUpdate = false
-    private var progress: IProgress = ControllerProgress()
     private val actor = object : MaturingActor() {
         override fun getFluid() = tank.fluid
+        override fun setFluid(value: FluidStack) {
+            tank.fluid = value
+        }
+
+        override fun onChange() {
+            setChanged()
+            sendData()
+        }
     }
 
     init {
         refreshCapability()
     }
 
-    private fun potentialRecipe(): MaturingRecipe? {
-        val world = level
-        if (world !is ServerLevel || !isController) return null
-        val recipes = world.recipeManager.getRecipesFor(Content.MATURING_RECIPE.get(), actor, world)
-        return recipes.firstOrNull()
-    }
-
     private fun onFluidChanged(fluid: FluidStack) {
+        if (isController) actor.onFluidChanged(fluid)
         if (hasLevel() && !level!!.isClientSide) {
             setChanged()
             sendData()
@@ -97,17 +86,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
 
         if (updateConnectivity) updateConnectivity()
 
-        if (isController) {
-            if (progress.get() >= tank.fluidAmount) {
-                potentialRecipe()?.let { recipe ->
-                    tank.fluid = recipe.fluidResults.first().copy().also {
-                        it.amount = tank.fluidAmount
-                    }
-                }
-            } else {
-                progress.tick()
-            }
-        }
+        if (isController) actor.tick(level ?: return)
 
     }
 
@@ -127,8 +106,9 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
             controllerPos = NbtUtils.readBlockPos(compound.getCompound("Controller"))
         }
 
+        actor.read(compound)
+
         if (isController) {
-            progress.set(compound.getInt("ProcessedAmount"))
             radius = compound.getInt("Size")
             length = compound.getInt("Length")
             tank.capacity = totalTankSize * LITERS
@@ -162,9 +142,10 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
             compound.put("LastKnownPos", NbtUtils.writeBlockPos(lastPos!!))
         }
 
+        actor.write(compound)
+
         if (isController) {
             compound.put("TankContent", tank.writeToNBT(CompoundTag()))
-            compound.putInt("ProcessedAmount", progress.get())
             compound.putInt("Size", radius)
             compound.putInt("Length", length)
         } else {
@@ -199,37 +180,39 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
         return if (controllerTE == null) {
             false
         } else {
+            val fluidCapability = controllerTE.getCapability(FLUID_HANDLER_CAPABILITY)
+            val fluidAmount = controllerTE.fluidCapability.map { it.fluid.amount }.orElse(0)
+            val progress = controllerTE.maturingCapability.map { it.getProgress() }.orElse(0)
+
             if (tooltip is MutableList) {
-                val text = if (isController) "Controller"
-                else controllerPos?.let {
-                    "Controller: ${it.x}/${it.y}/${it.z}"
-                }
-                tooltip.add(TextComponent(IHaveGoggleInformation.spacing + text))
-                fluidCapability.filter { !it.isEmpty }.ifPresent {
-                    val progress = (progress.get().toFloat() / tank.fluidAmount.toFloat() * 100).toInt()
-                    tooltip.add(TextComponent(IHaveGoggleInformation.spacing + "Progress: $progress%"))
+                if (progress > 0) {
+                    val percentage = (progress.toFloat() / fluidAmount.toFloat() * 100).toInt()
+                    tooltip.add(TextComponent(IHaveGoggleInformation.spacing + "Progress: $percentage%"))
                 }
             }
-            this.containedFluidTooltip(tooltip, isPlayerSneaking, controllerTE.getCapability(FLUID_HANDLER_CAPABILITY))
+            this.containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability)
         }
     }
 
     private fun refreshCapability() {
         val controllerTE = getControllerTE<MaturingBarrelTile>()
-        val oldCapability = fluidCapability
+        val oldFluidCapability = fluidCapability
+        val oldMaturingCapability = maturingCapability
 
         fluidCapability = LazyOptional.of {
             if (isController) tank
             else controllerTE?.tank ?: FluidTank(0)
         }
+        oldFluidCapability.invalidate()
 
-        progress = if (isController) ControllerProgress()
-        else if (controllerTE != null) {
-            val controllerProgress = controllerTE.progress
-            IProgress { controllerProgress.get() }
-        } else IProgress { 0 }
+        maturingCapability = LazyOptional.of {
+            if (isController) actor
+            else controllerTE?.actor ?: IMaturingActor { -1 }
+        }
 
-        oldCapability.invalidate()
+        maturingCapability = if (isController) LazyOptional.of { actor }
+        else controllerTE?.actor?.let { LazyOptional.of { it } } ?: LazyOptional.empty()
+        oldMaturingCapability.invalidate()
     }
 
     override fun <T> getControllerTE(): T? where T : BlockEntity, T : IMultiTileContainer {
@@ -249,6 +232,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
 
     private fun invalidate() {
         fluidCapability.invalidate()
+        maturingCapability.invalidate()
         setChanged()
         sendData()
     }
@@ -278,11 +262,11 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
 
         this.onFluidChanged(tank.fluid)
 
-        if (blockState.`is`(Content.BARREL)) {
-            blockState.setValue(LARGE, false).also {
-                getLevel()!!.setBlock(worldPosition, it, 22)
-            }
-        }
+        //if (blockState.`is`(Content.BARREL)) {
+        //    blockState.setValue(LARGE, false).also {
+        //        getLevel()!!.setBlock(worldPosition, it, 22)
+        //    }
+        //}
 
         invalidate()
     }
@@ -294,9 +278,9 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
     }
 
     override fun notifyMultiUpdated() {
-        if (blockState.`is`(Content.BARREL)) {
-            level!!.setBlock(this.blockPos, blockState.setValue(LARGE, radius > 2) as BlockState, 6)
-        }
+        //if (blockState.`is`(Content.BARREL)) {
+        //    level!!.setBlock(this.blockPos, blockState.setValue(LARGE, radius > 2) as BlockState, 6)
+        //}
 
         fluidCapability.invalidate()
         setChanged()
@@ -308,7 +292,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Con
 
     override fun getMaxLength(axis: Direction.Axis, length: Int): Int {
         return if (axis == Direction.Axis.Y) maxWidth
-        else length * 2
+        else 1 + length
     }
 
     override fun getMaxWidth(): Int = 2
