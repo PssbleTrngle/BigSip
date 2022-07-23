@@ -1,7 +1,9 @@
 package com.possible_triangle.bigsip.data.generation
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.Registration
+import com.possible_triangle.bigsip.modules.Grapes
+import com.possible_triangle.bigsip.modules.MaturingBarrel
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BucketItem
@@ -19,15 +21,15 @@ class ItemModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
 
     override fun registerModels() {
         val base = mcLoc("item/generated")
-        val basicItems = Content.DRINKS + Content.GRAPES
+        val basicItems = Registration.DRINKS + Grapes.GRAPES
 
-        val blocks = listOf(Content.BARREL)
+        val blocks = listOf(MaturingBarrel.BARREL)
         blocks.forEach { block ->
             val name = block.registryName ?: return
             withExistingParent(name.path, ResourceLocation(name.namespace, "block/${name.path}"))
         }
 
-        Content.ITEMS.entries.map { it.get() }.filterIsInstance<BucketItem>().forEach { item ->
+        Registration.ITEMS.entries.map { it.get() }.filterIsInstance<BucketItem>().forEach { item ->
             val name = item.registryName ?: return
             withExistingParent(name.path, ResourceLocation("forge", "item/bucket_drip")).customLoader { a, b ->
                 DynamicBucketModelBuilder.begin(a, b).fluid(item.fluid)

@@ -9,10 +9,10 @@ import net.minecraftforge.fluids.FluidAttributes
 import net.minecraftforge.fluids.ForgeFlowingFluid
 import java.util.function.Supplier
 
-class Juice(
+class ModFluid(
     name: String,
     private val source: Boolean,
-    bucket: () -> Item,
+    bucket: (() -> Item)?,
     flowing: Supplier<Fluid>,
     still: Supplier<Fluid>,
     viscosity: Int = 300

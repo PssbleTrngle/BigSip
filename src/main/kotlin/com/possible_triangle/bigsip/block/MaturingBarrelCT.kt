@@ -1,7 +1,10 @@
 package com.possible_triangle.bigsip.block
 
-import com.possible_triangle.bigsip.Content
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
+import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_BOTTOM
+import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_FRONT
+import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_SIDE
+import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_TOP
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.HORIZONTAL_AXIS
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry
@@ -20,13 +23,13 @@ class MaturingBarrelCT(private val isBarrel: (BlockState) -> Boolean) : Connecte
         //val small = !state.getValue(LARGE)
 
         return if (direction.axis === axis) {
-            Content.BARREL_CT_FRONT
+            BARREL_CT_FRONT
         } else if (direction == Direction.UP) {
-            Content.BARREL_CT_TOP
+            BARREL_CT_TOP
         } else if (direction == Direction.DOWN) {
-            Content.BARREL_CT_BOTTOM
+            BARREL_CT_BOTTOM
         } else {
-            Content.BARREL_CT_SIDE
+            BARREL_CT_SIDE
         }
     }
 

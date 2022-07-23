@@ -1,6 +1,6 @@
 package com.possible_triangle.bigsip.block.tile
 
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.modules.MaturingBarrel
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -9,20 +9,30 @@ import net.minecraft.world.level.Level
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.items.ItemStackHandler
 import net.minecraftforge.items.wrapper.RecipeWrapper
-import kotlin.math.max
 
-fun interface IMaturingActor {
-    fun getProgress(): Int
+interface IMaturingActor {
+    val progress: Int
+    val progressPercentage: Float
 }
 
 interface IMaturingContainer : IMaturingActor, Container {
     fun getFluid(): FluidStack
 }
 
-abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandler(0)) {
-    private var progress = 0
+private const val checkEveryTicks = 60
 
-    override fun getProgress(): Int = progress
+abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandler(0)) {
+    final override var progress = 0
+        private set
+
+    val requiredDuration get() = recipe?.processingDuration ?: clientRequiredDuration
+
+    override val progressPercentage
+        get() = requiredDuration?.let {
+            progress.toFloat() / it.toFloat()
+        } ?: 0F
+
+    private var clientRequiredDuration: Int? = null
 
     abstract fun setFluid(value: FluidStack)
 
@@ -31,7 +41,7 @@ abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandle
     private var recipe: MaturingRecipe? = null
 
     private fun potentialRecipe(world: ServerLevel): MaturingRecipe? {
-        val recipes = world.recipeManager.getRecipesFor(Content.MATURING_RECIPE.get(), this, world)
+        val recipes = world.recipeManager.getRecipesFor(MaturingBarrel.MATURING_RECIPE.get(), this, world)
         return recipes.firstOrNull()
     }
 
@@ -49,22 +59,24 @@ abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandle
 
     fun tick(world: Level) {
         val fluidAmount = getFluid().amount
-        val currentRecipe = recipe
-        val shouldProgress = world.gameTime % 60 == 0L
+        val shouldProgress = world.gameTime % checkEveryTicks == 0L
 
         if (world is ServerLevel) {
             if (shouldProgress) {
                 recipe = potentialRecipe(world)
             }
 
+            val currentRecipe = recipe
             if (currentRecipe != null) {
-                if (progress >= fluidAmount) {
+                if (progress >= currentRecipe.processingDuration) {
+
                     setFluid(currentRecipe.fluidResults.first().copy().also {
                         it.amount = fluidAmount
                     })
                     resetProgress()
+
                 } else if (shouldProgress) {
-                    progress += max(1, fluidAmount / 100)
+                    progress += checkEveryTicks
                     onChange()
                 }
             } else if (progress > 0) {
@@ -73,11 +85,13 @@ abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandle
         }
     }
 
-    fun read(compound: CompoundTag) {
+    fun read(compound: CompoundTag, clientPacket: Boolean) {
         progress = compound.getInt("ProcessedAmount")
+        if (clientPacket) clientRequiredDuration = compound.getInt("RequiredDuration")
     }
 
-    fun write(compound: CompoundTag) {
+    fun write(compound: CompoundTag, clientPacket: Boolean) {
         compound.putInt("ProcessedAmount", progress)
+        if (clientPacket) compound.putInt("RequiredDuration", recipe?.processingDuration ?: 0)
     }
 }

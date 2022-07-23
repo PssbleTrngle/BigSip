@@ -1,22 +1,28 @@
 package com.possible_triangle.bigsip.compat.jei
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.Registration
+import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.Module
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
+import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.ingredients.subtypes.UidContext
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
+import mezz.jei.api.runtime.IJeiRuntime
 import net.minecraft.client.Minecraft
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.Container
+import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraftforge.fluids.FluidStack
 
 
 @JeiPlugin
@@ -34,7 +40,10 @@ class JEIPlugin : IModPlugin {
         val minecraft = Minecraft.getInstance()
         val world = minecraft.level!!
 
-        fun <C : Container, T : Recipe<C>> IRecipeRegistration.addRecipes(category: CreateRecipeCategory<T>, type: RecipeType<T>) {
+        fun <C : Container, T : Recipe<C>> IRecipeRegistration.addRecipes(
+            category: CreateRecipeCategory<T>,
+            type: RecipeType<T>,
+        ) {
             val recipes = world.recipeManager.getAllRecipesFor(type)
             addRecipes(category.recipeType, recipes)
         }
@@ -44,15 +53,32 @@ class JEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        registration.addRecipeCatalyst(ItemStack(Content.BARREL_ITEM), MaturingCategory.recipeType)
+        registration.addRecipeCatalyst(ItemStack(MaturingBarrel.BARREL_ITEM), MaturingCategory.recipeType)
     }
 
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
-        Content.DRINKS.forEach {
+        Registration.DRINKS.forEach {
             registration.registerSubtypeInterpreter(it) { stack, ctx ->
                 if (ctx == UidContext.Recipe) ""
                 else stack.damageValue.toString()
             }
+        }
+    }
+
+    override fun onRuntimeAvailable(runtime: IJeiRuntime) {
+        Module.HIDDEN_ITEMS.map(::ItemStack).takeIf { it.isNotEmpty() }?.let { hidden ->
+            runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM, hidden)
+        }
+
+        val buckets = Registration.ITEMS.entries.map { it.get() }.filterIsInstance<BucketItem>()
+        Module.HIDDEN_FLUIDS.takeIf { it.isNotEmpty() }?.let { hidden ->
+            val stacks = hidden.map { FluidStack(it, 1) }
+            runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.FLUID, stacks)
+        }
+
+        val hiddenBuckets = buckets.filter {  Module.HIDDEN_FLUIDS.contains(it.fluid) }.map(::ItemStack)
+        if (hiddenBuckets.isNotEmpty()) {
+            runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM, hiddenBuckets)
         }
     }
 

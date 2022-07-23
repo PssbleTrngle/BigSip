@@ -1,8 +1,9 @@
 package com.possible_triangle.bigsip.data.generation
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.Content
 import com.possible_triangle.bigsip.block.GrapeCrop
+import com.possible_triangle.bigsip.modules.Grapes
+import com.possible_triangle.bigsip.modules.MaturingBarrel
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock
 import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
@@ -26,11 +27,11 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
     }
 
     private fun barrel() {
-        val id = Content.BARREL.registryName ?: return
+        val id = MaturingBarrel.BARREL.registryName ?: return
         val model = models().getExistingFile(ResourceLocation(id.namespace, "block/" + id.path))
         //val model = models().withExistingParent(id.path, ResourceLocation("block/barrel"))
 
-        getVariantBuilder(Content.BARREL).forAllStates { state ->
+        getVariantBuilder(MaturingBarrel.BARREL).forAllStates { state ->
             ConfiguredModel.builder().modelFile(model)
                 .rotationY(if (state.getValue(ItemVaultBlock.HORIZONTAL_AXIS) === Direction.Axis.X) 90 else 0)
                 .build()
@@ -39,9 +40,9 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
 
     private fun grapes() {
 
-        val name = Content.GRAPE_CROP.registryName!!
+        val name = Grapes.GRAPE_CROP.registryName!!
         val offset = 6F
-        val multipart = getMultipartBuilder(Content.GRAPE_CROP)
+        val multipart = getMultipartBuilder(Grapes.GRAPE_CROP)
 
         val ages = 0 until 7
         ages.forEach { age ->

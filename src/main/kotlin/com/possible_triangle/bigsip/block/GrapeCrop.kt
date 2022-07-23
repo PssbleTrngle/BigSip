@@ -1,6 +1,6 @@
 package com.possible_triangle.bigsip.block
 
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.modules.Grapes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.sounds.SoundEvents
@@ -45,7 +45,7 @@ class GrapeCrop : CropBlock(Properties.copy(Blocks.CARROTS)) {
         pos: BlockPos?,
         player: Player?
     ): ItemStack {
-        return ItemStack(Content.GRAPE_SAPLING)
+        return ItemStack(Grapes.GRAPE_SAPLING)
     }
 
     override fun use(state: BlockState, world: Level, pos: BlockPos, player: Player, hand: InteractionHand, hit: BlockHitResult): InteractionResult {
@@ -55,7 +55,7 @@ class GrapeCrop : CropBlock(Properties.copy(Blocks.CARROTS)) {
             InteractionResult.PASS
         } else if (age >= 5) {
             val j = 1 + world.random.nextInt(2)
-            popResource(world, pos, ItemStack(Content.GRAPES, j + (age - 4)))
+            popResource(world, pos, ItemStack(Grapes.GRAPES, j + (age - 4)))
             world.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0f, 0.8f + world.random.nextFloat() * 0.4f)
             world.setBlock(pos, state.setValue(AGE, 4), 2)
             InteractionResult.sidedSuccess(world.isClientSide)
@@ -67,7 +67,7 @@ class GrapeCrop : CropBlock(Properties.copy(Blocks.CARROTS)) {
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         return PROPERTY_BY_DIRECTION.map { (direction, prop) -> prop to ctx.clickedPos.relative(direction) }
             .map { (key, pos) -> key to ctx.level.getBlockState(pos) }
-            .map { (key, block) -> key to block.`is`(Content.GRAPE_CROP) }
+            .map { (key, block) -> key to block.`is`(Grapes.GRAPE_CROP) }
             .fold(super.getStateForPlacement(ctx)!!) { state, (prop, value) ->
                 state.setValue(prop, value)
             }
@@ -75,9 +75,9 @@ class GrapeCrop : CropBlock(Properties.copy(Blocks.CARROTS)) {
 
     override fun updateShape(state: BlockState, direction: Direction, neighbour: BlockState, world: LevelAccessor, pos: BlockPos, neighbourPos: BlockPos): BlockState {
         val superState = super.updateShape(state, direction, neighbour, world, pos, neighbourPos)
-        return if (superState.`is`(Content.GRAPE_CROP) && direction.axis.plane == Direction.Plane.HORIZONTAL) superState.setValue(
+        return if (superState.`is`(Grapes.GRAPE_CROP) && direction.axis.plane == Direction.Plane.HORIZONTAL) superState.setValue(
             PROPERTY_BY_DIRECTION[direction],
-            neighbour.`is`(Content.GRAPE_CROP)
+            neighbour.`is`(Grapes.GRAPE_CROP)
         ) else superState
     }
 

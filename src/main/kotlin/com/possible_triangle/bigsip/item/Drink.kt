@@ -1,7 +1,7 @@
 package com.possible_triangle.bigsip.item
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.Registration
 import com.possible_triangle.bigsip.compat.ModCompat
 import com.possible_triangle.bigsip.compat.TANCompat.canDrink
 import com.possible_triangle.bigsip.compat.TANCompat.handleThirst
@@ -31,7 +31,7 @@ open class Drink(
 
     private companion object {
         fun createProperties(uses: Int, container: Item?): Properties {
-            return with(Content.Properties) {
+            return with(Registration.Properties) {
                 if (container != null) craftRemainder(container)
                 if (uses > 1) durability(uses).setNoRepair()
                 else stacksTo(16)

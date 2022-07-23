@@ -1,11 +1,15 @@
 package com.possible_triangle.bigsip.data.generation.recipes
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.Registration
+import com.possible_triangle.bigsip.modules.Alcohol
+import com.possible_triangle.bigsip.modules.Juices
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
+import com.simibubi.create.AllItems
 import com.simibubi.create.AllRecipeTypes
 import com.simibubi.create.content.contraptions.fluids.actors.FillingRecipe
 import com.simibubi.create.content.contraptions.processing.EmptyingRecipe
+import com.simibubi.create.content.contraptions.processing.HeatCondition
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen
@@ -17,6 +21,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.material.Fluids
 import net.minecraftforge.common.crafting.PartialNBTIngredient
 import net.minecraftforge.fluids.FluidStack
 
@@ -32,10 +37,11 @@ object CreateRecipes {
         val emptying = Gen<EmptyingRecipe>(AllRecipeTypes.EMPTYING, generator)
         val maturing = Gen<MaturingRecipe>(MaturingRecipe.INFO, generator)
         val compacting = Gen<MaturingRecipe>(AllRecipeTypes.COMPACTING, generator)
+        val mixing = Gen<MaturingRecipe>(AllRecipeTypes.MIXING, generator)
 
         val perPour = 250
 
-        Content.DRINKS.forEach { drink ->
+        Registration.DRINKS.forEach { drink ->
             val id = drink.registryName ?: return@forEach
 
             fun withDamage(damage: Int): ItemStack {
@@ -65,14 +71,15 @@ object CreateRecipes {
         }
 
         maturing.create("wine") {
-            it.require(Content.GRAPE_JUICE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
-                .output(Content.WINE_BOTTLE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
+            it.require(Juices.GRAPE_JUICE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
+                .output(Alcohol.WINE_BOTTLE.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
+                .duration(20 * 60 * 10)
         }
 
         val juices = mapOf(
-            "grapes" to Content.GRAPE_JUICE,
-            "apple" to Content.APPLE_JUICE,
-            "carrot" to Content.CARROT_JUICE,
+            "grapes" to Juices.GRAPE_JUICE,
+            "apple" to Juices.APPLE_JUICE,
+            "carrot" to Juices.CARROT_JUICE,
         )
 
         val sugar = Items.SUGAR
@@ -81,8 +88,27 @@ object CreateRecipes {
             compacting.create(fruit) {
                 it.output(FluidStack(juice.getFluid(), 250))
                     .require(tag)
+                    .require(tag)
+                    .require(tag)
+                    .require(tag)
                     .require(sugar)
             }
+        }
+
+        mixing.create("mash") {
+            it.output(Alcohol.MASH.get(), 1000)
+                .require(AllItems.WHEAT_FLOUR.get())
+                .require(AllItems.WHEAT_FLOUR.get())
+                .require(Alcohol.HOP)
+                .require(Items.BROWN_MUSHROOM)
+                .require(Fluids.WATER, 1000)
+                .requiresHeat(HeatCondition.HEATED)
+        }
+
+        maturing.create("beer") {
+            it.output(Alcohol.BEER.getFluid(), MaturingRecipe.DISPLAY_AMOUNT)
+                .require(Alcohol.MASH.get(), MaturingRecipe.DISPLAY_AMOUNT)
+                .duration(20 * 60 * 10)
         }
 
     }

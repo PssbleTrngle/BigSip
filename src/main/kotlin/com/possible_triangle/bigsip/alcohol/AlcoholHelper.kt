@@ -1,7 +1,8 @@
 package com.possible_triangle.bigsip.alcohol
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.Content
+import com.possible_triangle.bigsip.config.Configs
+import com.possible_triangle.bigsip.modules.Alcohol
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.Entity
@@ -24,9 +25,11 @@ object AlcoholHelper {
     val ALCOHOL_LEVEL = CapabilityManager.get(object : CapabilityToken<IAlcoholLevel>() {})!!
 
     fun applyAlcohol(entity: LivingEntity, percentage: Int) {
+        if (!Configs.SERVER.ENABLE_ALCOHOL.get()) return
+
         if (percentage > 0) with(entity) {
 
-            val level = activeEffectsMap[Content.DIZZYNESS]?.amplifier?.plus(1) ?: 0
+            val level = activeEffectsMap[Alcohol.DIZZYNESS]?.amplifier?.plus(1) ?: 0
             val multiplier = 1F - level.times(0.2F)
 
             modifyLevel(entity) {
@@ -36,7 +39,7 @@ object AlcoholHelper {
                 val applyLevel = current / 9000
                 val resistance = min(12 * 20, persistent.div(6000).toInt())
 
-                if (applyLevel > level) addEffect(MobEffectInstance(Content.DIZZYNESS,
+                if (applyLevel > level) addEffect(MobEffectInstance(Alcohol.DIZZYNESS,
                     20 * 15 - resistance,
                     applyLevel - 1))
             }
@@ -45,7 +48,9 @@ object AlcoholHelper {
     }
 
     private fun modifyLevel(entity: LivingEntity, func: IAlcoholLevel.() -> Unit) {
+        if (!Configs.SERVER.ENABLE_ALCOHOL.get()) return
         entity.getCapability(ALCOHOL_LEVEL).ifPresent { func(it) }
+
     }
 
     @SubscribeEvent

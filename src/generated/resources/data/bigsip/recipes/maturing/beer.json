@@ -2,14 +2,14 @@
   "type": "bigsip:maturing",
   "ingredients": [
     {
-      "fluid": "bigsip:grape_juice",
+      "fluid": "bigsip:mash",
       "nbt": {},
       "amount": 1000
     }
   ],
   "results": [
     {
-      "fluid": "bigsip:wine",
+      "fluid": "bigsip:beer",
       "amount": 1000
     }
   ],

@@ -1,7 +1,7 @@
 package com.possible_triangle.bigsip.block
 
-import com.possible_triangle.bigsip.Content
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
+import com.possible_triangle.bigsip.modules.MaturingBarrel
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.wrench.IWrenchable
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.HORIZONTAL_AXIS
@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 
-class MaturingBarrel : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<MaturingBarrelTile>, IWrenchable {
+class MaturingBarrelBlock : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<MaturingBarrelTile>, IWrenchable {
 
     init {
         //this.registerDefaultState(this.defaultBlockState().setValue(LARGE, false))
@@ -32,7 +32,7 @@ class MaturingBarrel : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<Maturin
     }
 
     override fun getTileEntityType(): BlockEntityType<out MaturingBarrelTile> {
-        return Content.BARREL_TILE
+        return MaturingBarrel.BARREL_TILE
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
@@ -44,7 +44,7 @@ class MaturingBarrel : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<Maturin
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
         if (context.player == null || !context.player!!.isSteppingCarefully) {
             val placedOn = context.level.getBlockState(context.clickedPos.relative(context.clickedFace.opposite))
-            if (placedOn.`is`(Content.BARREL)) {
+            if (placedOn.`is`(MaturingBarrel.BARREL)) {
                 val axis = placedOn.getValue(HORIZONTAL_AXIS)
                 return defaultBlockState().setValue(HORIZONTAL_AXIS, axis) as BlockState
             }
