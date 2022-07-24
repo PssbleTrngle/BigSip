@@ -2,9 +2,9 @@
   "parent": "minecraft:block/block",
   "textures": {
     "post": "minecraft:block/oak_planks",
-    "lower": "bigsip:block/grapes_4_lower",
-    "particle": "bigsip:block/grapes_4_upper",
-    "upper": "bigsip:block/grapes_4_upper"
+    "lower": "bigsip:block/grapes_7_lower",
+    "particle": "bigsip:block/grapes_7_upper",
+    "upper": "bigsip:block/grapes_7_upper"
   },
   "elements": [
     {

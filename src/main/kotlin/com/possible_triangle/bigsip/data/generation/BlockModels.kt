@@ -41,24 +41,27 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
     private fun grapes() {
 
         val name = Grapes.GRAPE_CROP.registryName!!
-        val offset = 6F
+        val offset = 0F
+        val offset2 = 6F
         val multipart = getMultipartBuilder(Grapes.GRAPE_CROP)
 
-        val ages = 0 until 7
+        val ages = 0 .. 7
         ages.forEach { age ->
 
             val mid = models().withExistingParent("${name.path}_mid_${age}", mcLoc("block/block"))
 
             listOf("lower", "upper").forEachIndexed { i, half ->
-                mid.texture(half, loc(name) { "block/${it}_${age}_${half}" })
-                mid.texture(half, mcLoc("block/vine"))
                 mid.texture("post", mcLoc("block/oak_planks"))
+                val grapeTexture = loc(name) { "block/${it}_${age}_${half}" }
+                //val grapeTexture = mcLoc("block/spruce_planks")
+                mid.texture(half, grapeTexture)
+                mid.texture("particle", grapeTexture)
 
                 val start = 16F * i - 1F
                 val height = if (i == 0) 16F else 6F
-                val end = start + height
-                val postSize = 3F
 
+                val end = start + height
+                val postSize = 2F
                 mid.element()
                     .from(8F - postSize / 2, start, 8F - postSize / 2)
                     .to(8F + postSize / 2, end + 2F, 8F + postSize / 2)
@@ -66,30 +69,30 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
                         face.texture("#post").cullface(dir.opposite)
                         val postStart = floor(8F - postSize / 2)
                         val postEnd = floor(8F + postSize / 2)
-                        if (dir.axis.isHorizontal) face.uvs(postStart, 0F, postEnd, height + 2F)
+                        if (dir.axis.isHorizontal) face.uvs(postStart, 0F, postEnd, height)
                         else face.uvs(postStart, postStart, postEnd, postEnd)
                     }
 
                 val east = mid.element()
-                    .from(offset, start, offset / 2)
-                    .to(offset, end, 16 - offset / 2)
+                    .from(offset2, start, offset / 2)
+                    .to(offset2, start + 16F, 16 - offset / 2)
 
                 val west = mid.element()
-                    .from(16F - offset, start, offset / 2)
-                    .to(16F - offset, end, 16F - offset / 2)
+                    .from(16F - offset2, start, offset / 2)
+                    .to(16F - offset2, start + 16F, 16F - offset / 2)
 
                 val north = mid.element()
-                    .from(offset / 2, start, offset)
-                    .to(16 - offset / 2, end, offset)
+                    .from(offset / 2, start, offset2)
+                    .to(16 - offset / 2, start + 16F, offset2)
 
                 val south = mid.element()
-                    .from(offset / 2, start, 16F - offset)
-                    .to(16 - offset / 2, end, 16F - offset)
+                    .from(offset / 2, start, 16F - offset2)
+                    .to(16 - offset / 2, start + 16F, 16F - offset2)
 
                 listOf(Direction.NORTH, Direction.SOUTH).forEach { dir ->
                     listOf(north, south).forEach {
                         it.face(dir)
-                            .uvs(0F, 0F, 16F - offset, height)
+                            .uvs(0F, 0F, 16F, 16F)
                             .texture("#$half")
                     }
                 }
@@ -97,7 +100,7 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
                 listOf(Direction.EAST, Direction.WEST).forEach { dir ->
                     listOf(east, west).forEach {
                         it.face(dir)
-                            .uvs(0F, 0F, 16F - offset, height)
+                            .uvs(0F, 0F, 16F, 16F)
                             .texture("#$half")
                     }
                 }
@@ -107,7 +110,7 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
 
             multipart.part().modelFile(mid)
                 .addModel()
-                .condition(CropBlock.AGE, age + 1)
+                .condition(CropBlock.AGE, age)
 
             GrapeCrop.PROPERTY_BY_DIRECTION.forEach { (dir, prop) ->
                 multipart.part().modelFile(side)
@@ -115,7 +118,7 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
                     .uvLock(true)
                     .addModel()
                     .condition(prop, true)
-                    .condition(CropBlock.AGE, age + 1)
+                    .condition(CropBlock.AGE, age)
             }
 
         }
