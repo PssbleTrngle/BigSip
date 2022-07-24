@@ -5,6 +5,7 @@ import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Registration
 import com.possible_triangle.bigsip.block.MaturingBarrelBlock
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
+import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeSerializer
 import com.simibubi.create.foundation.block.connected.AllCTTypes
@@ -46,4 +47,5 @@ object MaturingBarrel : Module {
     val MATURING_RECIPE_SERIALIZER by Registration.RECIPE_SERIALIZERS.registerObject(MaturingRecipe.ID) {
         ProcessingRecipeSerializer(::MaturingRecipe)
     }
+
 }

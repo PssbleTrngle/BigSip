@@ -31,6 +31,7 @@ bbf7ea1c69b9aec664f04e723ba944530e370831 assets/bigsip/models/item/dark_beer_1.j
 2c7cf01ecf96f63e183f665bcd6502120a130194 assets/bigsip/models/item/wine_bottle_0.json
 2aa7dec77235f5dc645001d9a899b65aa673b012 assets/bigsip/models/item/wine_bottle_1.json
 ac42cfcc63a0c7e211f2375ff33bcd80928ce0ab assets/bigsip/models/item/wine_bottle_2.json
+5f629a3e5d7b5b9a21eb72a4127141da74abf2f3 data/bigsip/advancements/recipes/food/grape_sapling.json
 9de6ba49885ef1d5ca307b25390cc537b58117a5 data/bigsip/recipes/compacting/apple.json
 8adf3f0ce7c4277adc1ba32c6a874a55e97c3c8c data/bigsip/recipes/compacting/carrot.json
 69dfdf6bc71e3743ab7f140916469efcd9d097c1 data/bigsip/recipes/compacting/grapes.json
@@ -54,6 +55,7 @@ d754ad3b8c25fcc15802e6053e635629e3831564 data/bigsip/recipes/filling/dark_beer_1
 43d9f225c0b29e977c758c8c5ac50d47f16c720d data/bigsip/recipes/filling/wine_bottle_0.json
 4ddc4b73d5bb337759bd03ad7cef7fb096fb9281 data/bigsip/recipes/filling/wine_bottle_1.json
 71b2a5722900bf5d536427ef2b40192af4716b91 data/bigsip/recipes/filling/wine_bottle_2.json
+bf4935fe16e3967a1de8a744b4d277c859f5698a data/bigsip/recipes/grape_sapling.json
 9b02cac3501780330aa4491d4c9db86ad6f43a8c data/bigsip/recipes/maturing/beer.json
 5c4cc2d9bdd386b11d7dd998d16be6916acbfb7d data/bigsip/recipes/maturing/wine.json
 60c3c8f8e207f32b956ab90544589cfaa3d44ae2 data/bigsip/recipes/mixing/mash.json

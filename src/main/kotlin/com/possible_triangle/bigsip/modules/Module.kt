@@ -1,5 +1,7 @@
 package com.possible_triangle.bigsip.modules
 
+import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
+import com.possible_triangle.bigsip.modules.Grapes.generateRecipes
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 
@@ -43,8 +45,14 @@ interface Module {
 
             MODULES.forEach { it.addConditions(builder) }
         }
+
+        fun generateRecipes(builder: RecipeBuilder) {
+            MODULES.forEach { it.generateRecipes(builder) }
+        }
     }
 
     fun addConditions(builder: IConditionBuilder) {}
+
+    fun generateRecipes(builder: RecipeBuilder) {}
 
 }

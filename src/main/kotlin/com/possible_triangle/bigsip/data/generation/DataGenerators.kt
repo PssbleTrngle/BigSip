@@ -1,7 +1,6 @@
 package com.possible_triangle.bigsip.data.generation
 
-import com.possible_triangle.bigsip.data.generation.recipes.CreateRecipes
-import com.possible_triangle.bigsip.data.generation.recipes.VanillaRecipes
+import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent
@@ -17,8 +16,7 @@ object DataGenerators {
         }
 
         if (event.includeServer()) {
-            CreateRecipes.register(event.generator)
-            event.generator.addProvider(VanillaRecipes(event.generator))
+            RecipeBuilder.register(event.generator)
         }
     }
 

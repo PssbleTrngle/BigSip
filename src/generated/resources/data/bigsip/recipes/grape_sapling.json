@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:rods/wooden"
+    },
+    {
+      "item": "bigsip:grapes"
+    }
+  ],
+  "result": {
+    "item": "bigsip:grape_sapling"
+  }
+}

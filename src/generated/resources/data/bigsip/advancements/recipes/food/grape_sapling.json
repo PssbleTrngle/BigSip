@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bigsip:grape_sapling"
+    ]
+  },
+  "criteria": {
+    "has_grapes": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bigsip:grapes"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bigsip:grape_sapling"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_grapes",
+      "has_the_recipe"
+    ]
+  ]
+}
