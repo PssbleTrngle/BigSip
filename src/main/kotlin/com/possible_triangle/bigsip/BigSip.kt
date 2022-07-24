@@ -32,12 +32,12 @@ object BigSip {
     val LOGGER = LogManager.getLogger()!!
 
     init {
-        Registration.register(Grapes, Juices, Alcohol, MaturingBarrel)
+        Registration.register(GrapesModule, JuiceModule, AlcoholModule, MaturingModule)
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configs.SERVER_SPEC)
 
         MOD_BUS.addListener { _: FMLClientSetupEvent ->
-            ItemBlockRenderTypes.setRenderLayer(Grapes.GRAPE_CROP, RenderType.cutout())
+            ItemBlockRenderTypes.setRenderLayer(GrapesModule.GRAPE_CROP, RenderType.cutout())
             Registration.DRINKS.forEach {
                 ItemProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _, _ ->
                     stack.damageValue.toFloat()
@@ -62,7 +62,7 @@ object BigSip {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun registerCTM(event: RegistryEvent.Register<Block>) {
             val barrel = event.registry.getValue(ResourceLocation(MOD_ID, "maturing_barrel"))
-            CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(MaturingBarrel.BARREL) } }.accept(barrel)
+            CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(MaturingModule.BARREL) } }.accept(barrel)
         }
 
         @SubscribeEvent

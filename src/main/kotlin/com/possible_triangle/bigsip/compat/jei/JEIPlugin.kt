@@ -2,8 +2,9 @@ package com.possible_triangle.bigsip.compat.jei
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Registration
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.possible_triangle.bigsip.modules.Module
+import com.possible_triangle.bigsip.modules.ServerLoadingContext
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory
 import mezz.jei.api.IModPlugin
@@ -23,6 +24,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraftforge.fluids.FluidStack
+import net.minecraftforge.server.ServerLifecycleHooks
 
 
 @JeiPlugin
@@ -53,7 +55,7 @@ class JEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        registration.addRecipeCatalyst(ItemStack(MaturingBarrel.BARREL_ITEM), MaturingCategory.recipeType)
+        registration.addRecipeCatalyst(ItemStack(MaturingModule.BARREL_ITEM), MaturingCategory.recipeType)
     }
 
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
@@ -66,17 +68,23 @@ class JEIPlugin : IModPlugin {
     }
 
     override fun onRuntimeAvailable(runtime: IJeiRuntime) {
-        Module.HIDDEN_ITEMS.map(::ItemStack).takeIf { it.isNotEmpty() }?.let { hidden ->
+        val server = ServerLifecycleHooks.getCurrentServer()!!
+        val context = ServerLoadingContext(server)
+
+        val hiddenFluids = Module.hiddenFluids(context)
+        val hiddenItems = Module.hiddenItems(context)
+
+        hiddenItems.map(::ItemStack).takeIf { it.isNotEmpty() }?.let { hidden ->
             runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM, hidden)
         }
 
         val buckets = Registration.ITEMS.entries.map { it.get() }.filterIsInstance<BucketItem>()
-        Module.HIDDEN_FLUIDS.takeIf { it.isNotEmpty() }?.let { hidden ->
+        hiddenFluids.takeIf { it.isNotEmpty() }?.let { hidden ->
             val stacks = hidden.map { FluidStack(it, 1) }
             runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.FLUID, stacks)
         }
 
-        val hiddenBuckets = buckets.filter {  Module.HIDDEN_FLUIDS.contains(it.fluid) }.map(::ItemStack)
+        val hiddenBuckets = buckets.filter {  hiddenFluids.contains(it.fluid) }.map(::ItemStack)
         if (hiddenBuckets.isNotEmpty()) {
             runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM, hiddenBuckets)
         }

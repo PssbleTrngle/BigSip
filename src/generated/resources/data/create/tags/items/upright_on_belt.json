@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "bigsip:apple_juice",
+    "bigsip:grape_juice",
+    "bigsip:wine_bottle",
+    "bigsip:beer",
+    "bigsip:dark_beer"
+  ]
+}

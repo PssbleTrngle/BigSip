@@ -53,17 +53,14 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
 
     fun processing(
         type: IRecipeTypeInfo, name: String,
-        builder: ProcessingRecipeBuilder<ProcessingRecipe<*>>.() -> Unit,
+        builder: ProcessingRecipeBuilder<*>.() -> Unit,
     ) {
         val provider = processingProviders[type] ?: createProcessingProvider(type)
-        provider.create(name) {
-            builder(it)
-            it
-        }
+        provider.create(name, builder)
     }
 
-    fun thermalBottler(name: String, builder: ThermalBottlerRecipeBuilder.() -> Unit) {
-        val recipe = ThermalBottlerRecipeBuilder(name).apply(builder)
+    fun thermal(name: String, type: String, builder: ThermalRecipeBuilder.() -> Unit) {
+        val recipe = ThermalRecipeBuilder(name, type).apply(builder)
         thermalRecipes.add(recipe::build)
     }
 
@@ -89,9 +86,12 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
 
         fun create(
             name: String,
-            transform: (ProcessingRecipeBuilder<ProcessingRecipe<*>>) -> ProcessingRecipeBuilder<ProcessingRecipe<*>>,
+            builder: ProcessingRecipeBuilder<*>.() -> Unit,
         ): GeneratedRecipe {
-            return super.create(ResourceLocation(BigSip.MOD_ID, name), transform)
+            return super.create<ProcessingRecipe<*>>(ResourceLocation(BigSip.MOD_ID, name)) {
+                builder(it)
+                it
+            }
         }
     }
 }

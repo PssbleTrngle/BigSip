@@ -17,6 +17,10 @@
   "item.bigsip.dark_beer": "Jug of Guinness",
   "item.bigsip.dark_beer_bucket": "Bucket of Guinness",
 
+  "item.bigsip.hops": "Hops",
+  "fluid.bigsip.mash": "Mash",
+  "fluid.bigsip.dark_mash": "Dark Mash",
+
   "block.bigsip.grape_sapling": "Grapes",
   "block.bigsip.maturing_barrel": "Maturing Barrel",
 

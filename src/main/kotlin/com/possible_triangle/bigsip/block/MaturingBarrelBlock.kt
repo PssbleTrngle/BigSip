@@ -1,7 +1,7 @@
 package com.possible_triangle.bigsip.block
 
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.wrench.IWrenchable
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.HORIZONTAL_AXIS
@@ -32,7 +32,7 @@ class MaturingBarrelBlock : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<Ma
     }
 
     override fun getTileEntityType(): BlockEntityType<out MaturingBarrelTile> {
-        return MaturingBarrel.BARREL_TILE
+        return MaturingModule.BARREL_TILE
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
@@ -44,7 +44,7 @@ class MaturingBarrelBlock : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<Ma
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
         if (context.player == null || !context.player!!.isSteppingCarefully) {
             val placedOn = context.level.getBlockState(context.clickedPos.relative(context.clickedFace.opposite))
-            if (placedOn.`is`(MaturingBarrel.BARREL)) {
+            if (placedOn.`is`(MaturingModule.BARREL)) {
                 val axis = placedOn.getValue(HORIZONTAL_AXIS)
                 return defaultBlockState().setValue(HORIZONTAL_AXIS, axis) as BlockState
             }

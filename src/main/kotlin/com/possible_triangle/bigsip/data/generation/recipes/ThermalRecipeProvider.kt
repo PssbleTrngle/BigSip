@@ -2,7 +2,6 @@ package com.possible_triangle.bigsip.data.generation.recipes
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.mojang.logging.LogUtils
 import com.possible_triangle.bigsip.BigSip
 import net.minecraft.data.DataGenerator
@@ -12,8 +11,6 @@ import net.minecraft.data.recipes.RecipeProvider
 import java.io.IOException
 import java.nio.file.Path
 import java.util.function.Consumer
-import java.util.function.Supplier
-import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.exists
 import kotlin.io.path.writeText

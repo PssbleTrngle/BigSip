@@ -1,20 +1,48 @@
 package com.possible_triangle.bigsip.modules
 
+import com.possible_triangle.bigsip.data.generation.TagBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
-import com.possible_triangle.bigsip.modules.Grapes.generateRecipes
+import net.minecraft.core.HolderSet
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
+import net.minecraft.server.MinecraftServer
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
+import net.minecraftforge.fml.ModList
+
+interface ILoadingContext {
+    fun <T> getTag(tag: TagKey<T>, registryKey: ResourceKey<Registry<T>>): HolderSet.Named<T>?
+    fun isLoaded(mod: String): Boolean
+    fun <T> tagEmpty(tag: TagKey<T>, registryKey: ResourceKey<Registry<T>>): Boolean {
+        val tag = getTag(tag, registryKey) ?: return true
+        return tag.size() == 0
+    }
+}
+
+class ServerLoadingContext(private val server: MinecraftServer) : ILoadingContext {
+    override fun <T> getTag(tag: TagKey<T>, registryKey: ResourceKey<Registry<T>>): HolderSet.Named<T>? {
+        val registry = server.registryAccess().registryOrThrow(registryKey)
+        return registry.getTag(tag).orElse(null)
+    }
+
+    override fun isLoaded(mod: String): Boolean {
+        return ModList.get().isLoaded(mod)
+    }
+}
 
 interface IConditionBuilder {
-    fun register(item: ItemLike, predicate: () -> Boolean)
-    fun register(fluid: Fluid, predicate: () -> Boolean)
+    fun register(item: ItemLike, predicate: (ILoadingContext) -> Boolean)
+    fun register(fluid: Fluid, predicate: (ILoadingContext) -> Boolean)
 }
 
 class FilteredList<T> {
-    private val _values = arrayListOf<Pair<T, () -> Boolean>>()
-    fun add(value: T, predicate: () -> Boolean) = _values.add(value to predicate)
-    fun clear() = _values.clear()
-    val values get() = _values.filterNot { it.second() }.map { it.first }.toList()
+    private val values = arrayListOf<Pair<T, (ILoadingContext) -> Boolean>>()
+    fun add(value: T, predicate: (ILoadingContext) -> Boolean) = values.add(value to predicate)
+    fun clear() = values.clear()
+    fun getValues(context: ILoadingContext): List<T> {
+        return values.filterNot { it.second(context) }.map { it.first }
+    }
 }
 
 interface Module {
@@ -23,23 +51,23 @@ interface Module {
         private val MODULES = arrayListOf<Module>()
         fun register(module: Module) = MODULES.add(module)
 
-        private val HIDDEN_ITEM_CONDITIONS = FilteredList<ItemLike>()
-        val HIDDEN_ITEMS get() = HIDDEN_ITEM_CONDITIONS.values
+        private val HIDDEN_ITEMS = FilteredList<ItemLike>()
+        fun hiddenItems(context: ILoadingContext) = HIDDEN_ITEMS.getValues(context)
 
-        private val HIDDEN_FLUID_CONDITIONS = FilteredList<Fluid>()
-        val HIDDEN_FLUIDS get() = HIDDEN_FLUID_CONDITIONS.values
+        private val HIDDEN_FLUIDS = FilteredList<Fluid>()
+        fun hiddenFluids(context: ILoadingContext) = HIDDEN_FLUIDS.getValues(context)
 
         fun registerAll() {
-            HIDDEN_ITEM_CONDITIONS.clear()
-            HIDDEN_FLUID_CONDITIONS.clear()
+            HIDDEN_ITEMS.clear()
+            HIDDEN_FLUIDS.clear()
 
             val builder = object : IConditionBuilder {
-                override fun register(item: ItemLike, predicate: () -> Boolean) {
-                    HIDDEN_ITEM_CONDITIONS.add(item, predicate)
+                override fun register(item: ItemLike, predicate: (ILoadingContext) -> Boolean) {
+                    HIDDEN_ITEMS.add(item, predicate)
                 }
 
-                override fun register(fluid: Fluid, predicate: () -> Boolean) {
-                    HIDDEN_FLUID_CONDITIONS.add(fluid, predicate)
+                override fun register(fluid: Fluid, predicate: (ILoadingContext) -> Boolean) {
+                    HIDDEN_FLUIDS.add(fluid, predicate)
                 }
             }
 
@@ -49,10 +77,16 @@ interface Module {
         fun generateRecipes(builder: RecipeBuilder) {
             MODULES.forEach { it.generateRecipes(builder) }
         }
+
+        fun generateTags(builder: TagBuilder) {
+            MODULES.forEach { it.generateTags(builder) }
+        }
     }
 
     fun addConditions(builder: IConditionBuilder) {}
 
     fun generateRecipes(builder: RecipeBuilder) {}
+
+    fun generateTags(builder: TagBuilder) {}
 
 }

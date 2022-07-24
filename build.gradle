@@ -130,15 +130,16 @@ dependencies {
     
     implementation fg.deobf("curse.maven:tough-as-nails-246391:${project.tan_version}")
 
-    implementation fg.deobf("curse.maven:jeed-532286:${project.jeed_version}")
+    runtimeOnly fg.deobf("curse.maven:jeed-532286:${project.jeed_version}")
 
     //implementation fg.deobf("com.teamcofh:cofh_core:${project.mc_version}-${project.cofh_core_version}")
     //implementation fg.deobf("com.teamcofh:thermal_foundation:${project.mc_version}-${project.thermal_foundation_version}")
     //implementation fg.deobf("com.teamcofh:thermal_expansion:${project.mc_version}-${project.thermal_expansion_version}")
 
-    implementation fg.deobf("curse.maven:cofh-core-69162:${project.cofh_core_version}")
-    implementation fg.deobf("curse.maven:thermal-foundation-222880:${project.thermal_foundation_version}")
-    implementation fg.deobf("curse.maven:thermal-expansion-69163:${project.thermal_expansion_version}")
+    runtimeOnly fg.deobf("curse.maven:cofh-core-69162:${project.cofh_core_version}")
+    runtimeOnly fg.deobf("curse.maven:thermal-foundation-222880:${project.thermal_foundation_version}")
+    runtimeOnly fg.deobf("curse.maven:thermal-expansion-69163:${project.thermal_expansion_version}")
+    runtimeOnly fg.deobf("curse.maven:thermal-cultivation-271835:${project.thermal_cultivation_version}")
 
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
 }

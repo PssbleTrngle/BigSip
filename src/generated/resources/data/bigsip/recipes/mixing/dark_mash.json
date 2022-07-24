@@ -1,0 +1,38 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "tag": "bigsip:bitterness_factor"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    },
+    {
+      "tag": "forge:crops/barley"
+    },
+    {
+      "tag": "forge:crops/barley"
+    },
+    {
+      "fluid": "minecraft:water",
+      "nbt": {},
+      "amount": 1000
+    }
+  ],
+  "results": [
+    {
+      "fluid": "bigsip:dark_mash",
+      "amount": 1000
+    }
+  ],
+  "heatRequirement": "heated",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:crops/barley",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ]
+}

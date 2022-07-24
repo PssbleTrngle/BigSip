@@ -1,10 +1,10 @@
 package com.possible_triangle.bigsip.block
 
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
-import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_BOTTOM
-import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_FRONT
-import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_SIDE
-import com.possible_triangle.bigsip.modules.MaturingBarrel.BARREL_CT_TOP
+import com.possible_triangle.bigsip.modules.MaturingModule.BARREL_CT_BOTTOM
+import com.possible_triangle.bigsip.modules.MaturingModule.BARREL_CT_FRONT
+import com.possible_triangle.bigsip.modules.MaturingModule.BARREL_CT_SIDE
+import com.possible_triangle.bigsip.modules.MaturingModule.BARREL_CT_TOP
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.HORIZONTAL_AXIS
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry

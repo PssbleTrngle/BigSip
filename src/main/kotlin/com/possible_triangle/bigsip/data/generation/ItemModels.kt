@@ -2,8 +2,8 @@ package com.possible_triangle.bigsip.data.generation
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Registration
-import com.possible_triangle.bigsip.modules.Grapes
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.GrapesModule
+import com.possible_triangle.bigsip.modules.MaturingModule
 import net.minecraft.data.DataGenerator
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BucketItem
@@ -21,9 +21,9 @@ class ItemModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
 
     override fun registerModels() {
         val base = mcLoc("item/generated")
-        val basicItems = Registration.DRINKS + Grapes.GRAPES
+        val basicItems = Registration.DRINKS + GrapesModule.GRAPES
 
-        val blocks = listOf(MaturingBarrel.BARREL)
+        val blocks = listOf(MaturingModule.BARREL)
         blocks.forEach { block ->
             val name = block.registryName ?: return
             withExistingParent(name.path, ResourceLocation(name.namespace, "block/${name.path}"))

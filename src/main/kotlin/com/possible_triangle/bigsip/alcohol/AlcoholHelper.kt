@@ -2,7 +2,7 @@ package com.possible_triangle.bigsip.alcohol
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.config.Configs
-import com.possible_triangle.bigsip.modules.Alcohol
+import com.possible_triangle.bigsip.modules.AlcoholModule
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.Entity
@@ -29,7 +29,7 @@ object AlcoholHelper {
 
         if (percentage > 0) with(entity) {
 
-            val level = activeEffectsMap[Alcohol.DIZZYNESS]?.amplifier?.plus(1) ?: 0
+            val level = activeEffectsMap[AlcoholModule.DIZZYNESS]?.amplifier?.plus(1) ?: 0
             val multiplier = 1F - level.times(0.2F)
 
             modifyLevel(entity) {
@@ -39,7 +39,7 @@ object AlcoholHelper {
                 val applyLevel = current / 9000
                 val resistance = min(12 * 20, persistent.div(6000).toInt())
 
-                if (applyLevel > level) addEffect(MobEffectInstance(Alcohol.DIZZYNESS,
+                if (applyLevel > level) addEffect(MobEffectInstance(AlcoholModule.DIZZYNESS,
                     20 * 15 - resistance,
                     applyLevel - 1))
             }

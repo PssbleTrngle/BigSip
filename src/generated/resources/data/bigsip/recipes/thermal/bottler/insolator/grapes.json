@@ -1,0 +1,15 @@
+{
+  "type": "thermal:insolator",
+  "ingredients": [
+    {
+      "item": "bigsip:grapes"
+    }
+  ],
+  "result": [
+    {
+      "item": "bigsip:grapes",
+      "count": 1,
+      "chance": 2.5
+    }
+  ]
+}

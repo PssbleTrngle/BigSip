@@ -2,8 +2,8 @@ package com.possible_triangle.bigsip.data.generation
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.block.GrapeCrop
-import com.possible_triangle.bigsip.modules.Grapes
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.GrapesModule
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock
 import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
@@ -27,11 +27,11 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
     }
 
     private fun barrel() {
-        val id = MaturingBarrel.BARREL.registryName ?: return
+        val id = MaturingModule.BARREL.registryName ?: return
         val model = models().getExistingFile(ResourceLocation(id.namespace, "block/" + id.path))
         //val model = models().withExistingParent(id.path, ResourceLocation("block/barrel"))
 
-        getVariantBuilder(MaturingBarrel.BARREL).forAllStates { state ->
+        getVariantBuilder(MaturingModule.BARREL).forAllStates { state ->
             ConfiguredModel.builder().modelFile(model)
                 .rotationY(if (state.getValue(ItemVaultBlock.HORIZONTAL_AXIS) === Direction.Axis.X) 90 else 0)
                 .build()
@@ -40,10 +40,10 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
 
     private fun grapes() {
 
-        val name = Grapes.GRAPE_CROP.registryName!!
+        val name = GrapesModule.GRAPE_CROP.registryName!!
         val offset = 0F
         val offset2 = 6F
-        val multipart = getMultipartBuilder(Grapes.GRAPE_CROP)
+        val multipart = getMultipartBuilder(GrapesModule.GRAPE_CROP)
 
         val ages = 0 .. 7
         ages.forEach { age ->
@@ -58,13 +58,13 @@ class BlockModels(generator: DataGenerator, val fileHelper: ExistingFileHelper) 
                 mid.texture("particle", grapeTexture)
 
                 val start = 16F * i - 1F
-                val height = if (i == 0) 16F else 6F
+                val height = if (i == 0) 16F else 8F
 
                 val end = start + height
                 val postSize = 2F
                 mid.element()
                     .from(8F - postSize / 2, start, 8F - postSize / 2)
-                    .to(8F + postSize / 2, end + 2F, 8F + postSize / 2)
+                    .to(8F + postSize / 2, end, 8F + postSize / 2)
                     .allFaces { dir, face ->
                         face.texture("#post").cullface(dir.opposite)
                         val postStart = floor(8F - postSize / 2)

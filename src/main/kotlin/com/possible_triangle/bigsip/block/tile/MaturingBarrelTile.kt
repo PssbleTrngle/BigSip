@@ -1,7 +1,7 @@
 package com.possible_triangle.bigsip.block.tile
 
 //import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation
 import com.simibubi.create.foundation.fluid.SmartFluidTank
@@ -24,7 +24,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 import net.minecraftforge.fluids.capability.templates.FluidTank
 
-class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(MaturingBarrel.BARREL_TILE, pos, state),
+class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(MaturingModule.BARREL_TILE, pos, state),
     IMultiTileContainer.Fluid, IHaveGoggleInformation {
 
     companion object {

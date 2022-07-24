@@ -2,16 +2,16 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "create:wheat_flour"
-    },
-    {
-      "item": "create:wheat_flour"
-    },
-    {
-      "item": "bigsip:hop"
+      "tag": "bigsip:bitterness_factor"
     },
     {
       "item": "minecraft:brown_mushroom"
+    },
+    {
+      "item": "create:wheat_flour"
+    },
+    {
+      "item": "create:wheat_flour"
     },
     {
       "fluid": "minecraft:water",

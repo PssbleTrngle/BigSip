@@ -3,8 +3,8 @@ package com.possible_triangle.bigsip.compat.jei
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Vector3f
 import com.possible_triangle.bigsip.BigSip.MOD_ID
-import com.possible_triangle.bigsip.modules.Grapes
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.GrapesModule
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics
@@ -20,9 +20,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.TranslatableComponent
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
-object MaturingCategory : CreateRecipeCategory<MaturingRecipe>(doubleItemIcon(MaturingBarrel.BARREL_ITEM, Grapes.GRAPES),
+object MaturingCategory : CreateRecipeCategory<MaturingRecipe>(doubleItemIcon(MaturingModule.BARREL_ITEM, GrapesModule.GRAPES),
     emptyBackground(177, 70)) {
 
     override fun getRecipeClass() = MaturingRecipe::class.java
@@ -70,7 +69,7 @@ object MaturingCategory : CreateRecipeCategory<MaturingRecipe>(doubleItemIcon(Ma
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(-12.5f))
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(-18.5f))
         val scale = 16.0
-        GuiGameElement.of(MaturingBarrel.BARREL_MULTIBLOCK).lighting(AnimatedKinetics.DEFAULT_LIGHTING).scale(scale)
+        GuiGameElement.of(MaturingModule.BARREL_MULTIBLOCK).lighting(AnimatedKinetics.DEFAULT_LIGHTING).scale(scale)
             .render(matrixStack)
         matrixStack.popPose()
     }

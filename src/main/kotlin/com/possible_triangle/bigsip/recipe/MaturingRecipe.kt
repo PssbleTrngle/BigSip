@@ -2,7 +2,7 @@ package com.possible_triangle.bigsip.recipe
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.block.tile.IMaturingContainer
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo
@@ -21,9 +21,9 @@ class MaturingRecipe(params: ProcessingRecipeParams) : ProcessingRecipe<IMaturin
         val INFO = object : IRecipeTypeInfo {
             override fun getId() = ResourceLocation(BigSip.MOD_ID, ID)
 
-            override fun <T : RecipeSerializer<*>> getSerializer(): T = MaturingBarrel.MATURING_RECIPE_SERIALIZER  as T
+            override fun <T : RecipeSerializer<*>> getSerializer(): T = MaturingModule.MATURING_RECIPE_SERIALIZER  as T
 
-            override fun <T : RecipeType<*>> getType(): T = MaturingBarrel.MATURING_RECIPE.get() as T
+            override fun <T : RecipeType<*>> getType(): T = MaturingModule.MATURING_RECIPE.get() as T
         }
     }
 

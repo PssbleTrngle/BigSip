@@ -1,6 +1,6 @@
 package com.possible_triangle.bigsip.block.tile
 
-import com.possible_triangle.bigsip.modules.MaturingBarrel
+import com.possible_triangle.bigsip.modules.MaturingModule
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -41,7 +41,7 @@ abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandle
     private var recipe: MaturingRecipe? = null
 
     private fun potentialRecipe(world: ServerLevel): MaturingRecipe? {
-        val recipes = world.recipeManager.getRecipesFor(MaturingBarrel.MATURING_RECIPE.get(), this, world)
+        val recipes = world.recipeManager.getRecipesFor(MaturingModule.MATURING_RECIPE.get(), this, world)
         return recipes.firstOrNull()
     }
 
