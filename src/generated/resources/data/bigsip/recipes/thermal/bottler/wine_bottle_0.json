@@ -11,7 +11,11 @@
   ],
   "result": [
     {
-      "item": "bigsip:wine_bottle"
+      "id": "bigsip:wine_bottle",
+      "Count": 1,
+      "tag": {
+        "Damage": 0
+      }
     }
   ]
 }

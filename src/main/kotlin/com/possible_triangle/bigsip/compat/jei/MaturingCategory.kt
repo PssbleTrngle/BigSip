@@ -19,6 +19,7 @@ import mezz.jei.api.recipe.RecipeType
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.TranslatableComponent
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 object MaturingCategory : CreateRecipeCategory<MaturingRecipe>(doubleItemIcon(MaturingBarrel.BARREL_ITEM, Grapes.GRAPES),
@@ -58,8 +59,7 @@ object MaturingCategory : CreateRecipeCategory<MaturingRecipe>(doubleItemIcon(Ma
         AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 126, 19)
         renderBarrel(matrixStack)
 
-        val seconds = 100
-        val duration = seconds.seconds
+        val duration = (recipe.processingDuration * 50).milliseconds
         val text = TranslatableComponent("${MOD_ID}.recipe.maturing.time", duration)
         Minecraft.getInstance().font.draw(matrixStack, text, 26.0f, 60.0f, 0xFFFFFF)
     }

@@ -1,0 +1,21 @@
+{
+  "type": "thermal:bottler",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:beer",
+      "amount": 500
+    }
+  ],
+  "result": [
+    {
+      "id": "bigsip:beer",
+      "Count": 1,
+      "tag": {
+        "Damage": 0
+      }
+    }
+  ]
+}

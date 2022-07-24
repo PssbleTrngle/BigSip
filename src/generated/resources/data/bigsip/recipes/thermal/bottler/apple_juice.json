@@ -1,0 +1,18 @@
+{
+  "type": "thermal:bottler",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:apple_juice",
+      "amount": 250
+    }
+  ],
+  "result": [
+    {
+      "id": "bigsip:apple_juice",
+      "Count": 1
+    }
+  ]
+}

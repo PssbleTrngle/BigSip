@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo
 import net.minecraft.advancements.critereon.InventoryChangeTrigger
 import net.minecraft.data.DataGenerator
+import net.minecraft.data.HashCache
 import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.data.recipes.ShapedRecipeBuilder
@@ -36,8 +37,9 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
 
     private val vanillaRecipes = arrayListOf<Consumer<Consumer<FinishedRecipe>>>()
     private val processingProviders = hashMapOf<IRecipeTypeInfo, CustomProcessingGen>()
+    private val thermalRecipes = ThermalRecipeProvider(generator).also(generator::addProvider)
 
-    fun hasItem(item: ItemLike): InventoryChangeTrigger.TriggerInstance = RecipeProvider.has(item)
+    fun hasItem(item: ItemLike): InventoryChangeTrigger.TriggerInstance = has(item)
 
     fun shapeless(output: ItemLike, amount: Int = 1, builder: ShapelessRecipeBuilder.() -> Unit) {
         val recipe = ShapelessRecipeBuilder(output, amount).apply(builder)
@@ -60,6 +62,11 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
         }
     }
 
+    fun thermalBottler(name: String, builder: ThermalBottlerRecipeBuilder.() -> Unit) {
+        val recipe = ThermalBottlerRecipeBuilder(name).apply(builder)
+        thermalRecipes.add(recipe::build)
+    }
+
     private fun createProcessingProvider(type: IRecipeTypeInfo): CustomProcessingGen {
         return CustomProcessingGen(type).also {
             generator.addProvider(it)
@@ -71,6 +78,10 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
         vanillaRecipes.forEach { it.accept(consumer) }
     }
 
+    override fun run(cache: HashCache) {
+        super.run(cache)
+        thermalRecipes.run(cache)
+    }
 
     private inner class CustomProcessingGen(private val type: IRecipeTypeInfo) :
         ProcessingRecipeGen(generator) {

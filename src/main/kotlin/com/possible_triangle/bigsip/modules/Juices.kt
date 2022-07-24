@@ -58,6 +58,12 @@ object Juices : Module {
                     require(ingredient(input))
                 }
 
+                builder.thermalBottler(name) {
+                    output(drink)
+                    require(drink.getFluid(), perPour * pours)
+                    require(input)
+                }
+
                 builder.processing(AllRecipeTypes.EMPTYING, name) {
                     output(Items.GLASS_BOTTLE)
                     output(drink.getFluid(), perPour * pours)

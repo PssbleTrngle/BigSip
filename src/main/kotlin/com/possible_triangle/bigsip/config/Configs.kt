@@ -32,7 +32,8 @@ object Configs {
     @SubscribeEvent
     fun configReload(event: ModConfigEvent.Reloading) {
         if (event.config.type == ModConfig.Type.COMMON) {
-            ServerLifecycleHooks.getCurrentServer().playerList.players.forEach {
+            val server = ServerLifecycleHooks.getCurrentServer() ?: return
+            server.playerList.players.forEach {
                 syncServerConfigs(it)
             }
         }

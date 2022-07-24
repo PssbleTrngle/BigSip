@@ -59,3 +59,13 @@ bf4935fe16e3967a1de8a744b4d277c859f5698a data/bigsip/recipes/grape_sapling.json
 9b02cac3501780330aa4491d4c9db86ad6f43a8c data/bigsip/recipes/maturing/beer.json
 5c4cc2d9bdd386b11d7dd998d16be6916acbfb7d data/bigsip/recipes/maturing/wine.json
 60c3c8f8e207f32b956ab90544589cfaa3d44ae2 data/bigsip/recipes/mixing/mash.json
+321a71dab404b1d9921b2b5e231bd8a2f5a712ea data/bigsip/recipes/thermal/bottler/apple_juice.json
+6f14ce7cf40a1cd536c3df86efde1b082a70a77b data/bigsip/recipes/thermal/bottler/beer_0.json
+f0f59331e52acf90570368ebe6182f61d98f1298 data/bigsip/recipes/thermal/bottler/beer_1.json
+bd2f63e44966e01778e27f312250b933579fc18e data/bigsip/recipes/thermal/bottler/carrot_juice.json
+8344ffbcecd9b49838e7d1ce19ea28f62641dcc3 data/bigsip/recipes/thermal/bottler/dark_beer_0.json
+755453be17c51b582b07ccc876ed2c6908b23c31 data/bigsip/recipes/thermal/bottler/dark_beer_1.json
+f19e47ffeafbb291c0d4ac1f3aa8fddecc47cfde data/bigsip/recipes/thermal/bottler/grape_juice.json
+9169f534f04c689cb311bb844633a2426be57e35 data/bigsip/recipes/thermal/bottler/wine_bottle_0.json
+ad3d9bbaf65124f1ef751630e4224dad95bd4bbb data/bigsip/recipes/thermal/bottler/wine_bottle_1.json
+4ab33f9310600893e26e030dd189b8a5c7b28e81 data/bigsip/recipes/thermal/bottler/wine_bottle_2.json
