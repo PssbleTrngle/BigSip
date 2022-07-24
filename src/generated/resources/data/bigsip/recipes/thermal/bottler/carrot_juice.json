@@ -11,8 +11,8 @@
   ],
   "result": [
     {
-      "id": "bigsip:carrot_juice",
-      "Count": 1
+      "item": "bigsip:carrot_juice",
+      "count": 1
     }
   ]
 }

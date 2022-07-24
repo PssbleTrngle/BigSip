@@ -44,8 +44,10 @@ class ThermalBottlerRecipeBuilder(private val name: String) {
             })
             add("result", JsonArray().apply {
                 outputs.forEach {
-                    val encoded = ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, it)
-                    encoded.result().ifPresent(::add)
+                    add(JsonObject().apply {
+                        addProperty("item", it.item.registryName.toString())
+                        if (it.count > 0) addProperty("count", it.count)
+                    })
                 }
             })
         })

@@ -13,11 +13,8 @@
   ],
   "result": [
     {
-      "id": "bigsip:beer",
-      "Count": 1,
-      "tag": {
-        "Damage": 0
-      }
+      "item": "bigsip:beer",
+      "count": 1
     }
   ]
 }
