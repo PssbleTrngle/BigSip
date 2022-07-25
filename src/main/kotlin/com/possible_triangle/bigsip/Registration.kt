@@ -3,8 +3,11 @@ package com.possible_triangle.bigsip
 import com.possible_triangle.bigsip.BigSip.MOD_ID
 import com.possible_triangle.bigsip.fluid.ModFluid
 import com.possible_triangle.bigsip.item.Drink
-import com.possible_triangle.bigsip.modules.Module
+import com.possible_triangle.bigsip.modules.ModModule
 import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
@@ -34,8 +37,21 @@ object Registration {
     internal val RECIPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, MOD_ID)
     internal val RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID)
 
-    fun register(vararg modules: Module) {
-        modules.forEach { Module.register(it) }
+    fun <T> modTag(name: String, registryKey: ResourceKey<Registry<T>>): TagKey<T> {
+        return TagKey.create(registryKey, ResourceLocation(MOD_ID, name))
+    }
+
+    fun <T> forgeTag(type: String, value: String, registryKey: ResourceKey<Registry<T>>): TagKey<T> {
+        return TagKey.create(registryKey, ResourceLocation("forge", "${type}s/$value"))
+    }
+
+    fun cropTag(value:String) = forgeTag("crop", value, Registry.ITEM_REGISTRY)
+    fun fruitTag(value:String) = forgeTag("fruit", value, Registry.ITEM_REGISTRY)
+    fun juiceTag(value:String) = forgeTag("juice", value, Registry.ITEM_REGISTRY)
+    fun juiceFluidTag(value:String) = forgeTag("juice", value, Registry.FLUID_REGISTRY)
+
+    fun register(vararg modules: ModModule) {
+        modules.forEach { ModModule.register(it) }
         listOf(FLUIDS, ITEMS, BLOCKS, TILES, EFFECTS, RECIPES, RECIPE_SERIALIZERS).forEach {
             it.register(MOD_BUS)
         }
@@ -57,7 +73,7 @@ object Registration {
         var bucketGetter: KFunction0<BucketItem>? = null
 
         source = FLUIDS.register(id) { ModFluid(id, true, bucketGetter, flowing::get, source::get) }
-        flowing = FLUIDS.register("${id}_flow") { ModFluid(id, false,bucketGetter, flowing::get, source::get) }
+        flowing = FLUIDS.register("${id}_flow") { ModFluid(id, false, bucketGetter, flowing::get, source::get) }
 
         //BLOCKS.registerObject(id) { FlowingFluidBlock(source::get, AbstractBlock.Properties.copy(Blocks.WATER)) }
 

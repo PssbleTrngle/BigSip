@@ -13,6 +13,7 @@
   "item.bigsip.beer_bucket": "Bucket of Beer",
   "item.bigsip.wine_bottle": "Bottle of Wine",
   "item.bigsip.wine_glass": "Glass of Wine",
+  "item.bigsip.apple_wine": "Glass of Apple Wine",
   "item.bigsip.wine_bucket": "Bucket of Wine",
   "item.bigsip.dark_beer": "Jug of Guinness",
   "item.bigsip.dark_beer_bucket": "Bucket of Guinness",
@@ -29,6 +30,7 @@
   "fluid.bigsip.carrot_juice": "Carrot Juice",
   "fluid.bigsip.grape_juice": "Grape Juice",
   "fluid.bigsip.wine": "Wine",
+  "fluid.bigsip.apple_wine": "Apple Wine",
   "fluid.bigsip.beer": "Beer",
   "fluid.bigsip.dark_beer": "Guinness",
 
@@ -38,5 +40,6 @@
   "command.bigsip.current": "%s's current alcohol level is %s",
 
   "bigsip.recipe.maturing": "Maturing",
-  "bigsip.recipe.maturing.time": "%s"
+  "bigsip.recipe.maturing.time": "%s",
+  "bigsip.tooltip.alcohol.percentage": "%d %"
 }

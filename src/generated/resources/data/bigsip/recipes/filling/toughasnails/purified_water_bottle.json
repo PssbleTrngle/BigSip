@@ -1,0 +1,17 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluidTag": "bigsip:water/purified",
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "item": "toughasnails:purified_water_bottle"
+    }
+  ]
+}

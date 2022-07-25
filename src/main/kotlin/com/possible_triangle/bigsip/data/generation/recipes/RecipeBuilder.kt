@@ -1,7 +1,7 @@
 package com.possible_triangle.bigsip.data.generation.recipes
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.modules.Module
+import com.possible_triangle.bigsip.modules.ModModule
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipe
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen
@@ -30,7 +30,7 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
     companion object {
         fun register(generator: DataGenerator) {
             val provider = RecipeBuilder(generator)
-            Module.generateRecipes(provider)
+            ModModule.generateRecipes(provider)
             generator.addProvider(provider)
         }
     }

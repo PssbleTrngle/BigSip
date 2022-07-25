@@ -3,7 +3,7 @@ package com.possible_triangle.bigsip.compat.jei
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.Registration
 import com.possible_triangle.bigsip.modules.MaturingModule
-import com.possible_triangle.bigsip.modules.Module
+import com.possible_triangle.bigsip.modules.ModModule
 import com.possible_triangle.bigsip.modules.ServerLoadingContext
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory
@@ -71,8 +71,8 @@ class JEIPlugin : IModPlugin {
         val server = ServerLifecycleHooks.getCurrentServer()!!
         val context = ServerLoadingContext(server)
 
-        val hiddenFluids = Module.hiddenFluids(context)
-        val hiddenItems = Module.hiddenItems(context)
+        val hiddenFluids = ModModule.hiddenFluids(context)
+        val hiddenItems = ModModule.hiddenItems(context)
 
         hiddenItems.map(::ItemStack).takeIf { it.isNotEmpty() }?.let { hidden ->
             runtime.ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM, hidden)

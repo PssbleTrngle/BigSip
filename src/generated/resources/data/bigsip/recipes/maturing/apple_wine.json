@@ -2,15 +2,15 @@
   "type": "bigsip:maturing",
   "ingredients": [
     {
-      "fluidTag": "forge:juices/grapes",
+      "fluidTag": "forge:juices/apple",
       "amount": 1000
     }
   ],
   "results": [
     {
-      "fluid": "bigsip:wine",
+      "fluid": "bigsip:apple_wine",
       "amount": 1000
     }
   ],
-  "processingTime": 12000
+  "processingTime": 7200
 }

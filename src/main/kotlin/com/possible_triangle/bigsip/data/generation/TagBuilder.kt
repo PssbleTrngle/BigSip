@@ -1,7 +1,7 @@
 package com.possible_triangle.bigsip.data.generation
 
 import com.possible_triangle.bigsip.BigSip
-import com.possible_triangle.bigsip.modules.Module
+import com.possible_triangle.bigsip.modules.ModModule
 import net.minecraft.core.Registry
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.tags.TagsProvider
@@ -33,7 +33,7 @@ class TagBuilder private constructor(private val generator: DataGenerator, priva
 
         override fun getName() = "BigSip Tags (${registry.key().location().path})"
 
-        override fun addTags() = Module.generateTags(this@TagBuilder)
+        override fun addTags() = ModModule.generateTags(this@TagBuilder)
     }
 
 }

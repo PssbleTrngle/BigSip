@@ -1,5 +1,6 @@
 package com.possible_triangle.bigsip.modules
 
+import com.possible_triangle.bigsip.compat.ModCompat
 import com.possible_triangle.bigsip.data.generation.TagBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import net.minecraft.core.HolderSet
@@ -7,12 +8,15 @@ import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.fml.ModList
 
 interface ILoadingContext {
     fun <T> getTag(tag: TagKey<T>, registryKey: ResourceKey<Registry<T>>): HolderSet.Named<T>?
+    fun isLoaded(mod: ModCompat.Mod) = isLoaded(mod.id)
     fun isLoaded(mod: String): Boolean
     fun <T> tagEmpty(tag: TagKey<T>, registryKey: ResourceKey<Registry<T>>): Boolean {
         val tag = getTag(tag, registryKey) ?: return true
@@ -45,11 +49,17 @@ class FilteredList<T> {
     }
 }
 
-interface Module {
+fun Item.withDamage(damage: Int): ItemStack {
+    return ItemStack(this).apply {
+        damageValue = damage
+    }
+}
+
+interface ModModule {
 
     companion object {
-        private val MODULES = arrayListOf<Module>()
-        fun register(module: Module) = MODULES.add(module)
+        private val MODULES = arrayListOf<ModModule>()
+        fun register(module: ModModule) = MODULES.add(module)
 
         private val HIDDEN_ITEMS = FilteredList<ItemLike>()
         fun hiddenItems(context: ILoadingContext) = HIDDEN_ITEMS.getValues(context)
@@ -81,6 +91,7 @@ interface Module {
         fun generateTags(builder: TagBuilder) {
             MODULES.forEach { it.generateTags(builder) }
         }
+
     }
 
     fun addConditions(builder: IConditionBuilder) {}

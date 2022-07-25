@@ -1,0 +1,23 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "bigsip:apple_wine",
+      "nbt": "{Damage:1}"
+    },
+    {
+      "fluid": "bigsip:apple_wine",
+      "nbt": {},
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "item": "bigsip:apple_wine",
+      "nbt": {
+        "Damage": 0
+      }
+    }
+  ]
+}

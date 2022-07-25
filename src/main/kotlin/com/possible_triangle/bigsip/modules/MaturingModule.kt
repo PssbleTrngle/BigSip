@@ -15,7 +15,7 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.level.block.entity.BlockEntityType
 import thedarkcolour.kotlinforforge.forge.registerObject
 
-object MaturingModule : Module {
+object MaturingModule : ModModule {
 
     val BARREL by Registration.BLOCKS.registerObject("maturing_barrel") { MaturingBarrelBlock() }
     val BARREL_ITEM by Registration.ITEMS.registerObject("maturing_barrel") {

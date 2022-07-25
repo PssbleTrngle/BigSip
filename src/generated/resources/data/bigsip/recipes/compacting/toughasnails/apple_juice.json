@@ -1,0 +1,42 @@
+{
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/apple"
+    },
+    {
+      "tag": "forge:fruits/apple"
+    },
+    {
+      "tag": "forge:fruits/apple"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "fluidTag": "bigsip:water/purified",
+      "amount": 500
+    }
+  ],
+  "results": [
+    {
+      "fluid": "bigsip:apple_juice",
+      "amount": 750
+    }
+  ],
+  "conditions": [
+    {
+      "values": [
+        {
+          "modid": "toughasnails",
+          "type": "forge:mod_loaded"
+        },
+        {
+          "key": "compat.toughasnails.pure_water",
+          "type": "bigsip:config_option"
+        }
+      ],
+      "type": "forge:and"
+    }
+  ]
+}

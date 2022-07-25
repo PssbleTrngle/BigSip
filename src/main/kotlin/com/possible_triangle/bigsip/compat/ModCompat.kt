@@ -5,10 +5,13 @@ import net.minecraftforge.fml.ModList
 object ModCompat {
 
     enum class Mod(val id: String) {
-        TAN("toughasnails")
+        TAN("toughasnails");
+
+        override fun toString() = id
     }
 
-    fun<T> runIfLoaded(mod: Mod, runner: () -> T): T? {
+
+    fun <T> runIfLoaded(mod: Mod, runner: () -> T): T? {
         if (ModList.get().isLoaded(mod.id)) return runner()
         return null
     }

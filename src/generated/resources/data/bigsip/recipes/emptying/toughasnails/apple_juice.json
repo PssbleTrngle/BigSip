@@ -1,0 +1,27 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "item": "toughasnails:apple_juice"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "bigsip:apple_juice",
+      "amount": 250
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "toughasnails",
+      "type": "forge:mod_loaded"
+    },
+    {
+      "key": "compat.toughasnails.juice_emptying",
+      "type": "bigsip:config_option"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "toughasnails:empty_canteen"
+    },
+    {
+      "fluidTag": "bigsip:water/purified",
+      "amount": 250
+    }
+  ],
+  "results": [
+    {
+      "item": "toughasnails:purified_water_canteen",
+      "nbt": {
+        "Damage": 0
+      }
+    }
+  ]
+}

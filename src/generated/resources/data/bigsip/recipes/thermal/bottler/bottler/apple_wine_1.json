@@ -1,0 +1,21 @@
+{
+  "type": "thermal:bottler",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "bigsip:apple_wine",
+      "nbt": "{Damage:1}"
+    },
+    {
+      "fluid": "bigsip:apple_wine",
+      "nbt": {},
+      "amount": 250
+    }
+  ],
+  "result": [
+    {
+      "item": "bigsip:apple_wine",
+      "count": 1
+    }
+  ]
+}

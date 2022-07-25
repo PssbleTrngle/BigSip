@@ -21,7 +21,7 @@ class ItemModels(generator: DataGenerator, fileHelper: ExistingFileHelper) :
 
     override fun registerModels() {
         val base = mcLoc("item/generated")
-        val basicItems = Registration.DRINKS + GrapesModule.GRAPES
+        val basicItems = Registration.DRINKS + GrapesModule.GRAPES + GrapesModule.GRAPE_SAPLING
 
         val blocks = listOf(MaturingModule.BARREL)
         blocks.forEach { block ->

@@ -17,7 +17,7 @@ object Networking {
         { version == it }
     )
 
-    init {
+    fun register() {
         channel.registerMessage(
             1,
             SyncConfigMessage::class.java,
