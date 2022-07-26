@@ -25,7 +25,7 @@ data class AlcoholEffect(val at: Float, val effect: () -> MobEffect, val chance:
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 object AlcoholHelper {
 
-    private const val ALCOHOL_LEVEL_PER_PERCENT = 0.3F / 13
+    private const val ALCOHOL_LEVEL_PER_PERCENT = 0.04F
 
     val ALCOHOL_LEVEL = CapabilityManager.get(object : CapabilityToken<IAlcoholLevel>() {})!!
 
@@ -88,9 +88,9 @@ object AlcoholHelper {
 
     @SubscribeEvent
     fun livingTick(event: TickEvent.PlayerTickEvent) {
-        if (event.player.level.gameTime % 1200 != 0L) return
+        if (event.player.level.gameTime % 120 != 0L) return
         modifyLevel(event.player) {
-            if (current > 0) current -= 0.1F
+            current = max(0F, current - 0.01F)
         }
     }
 
