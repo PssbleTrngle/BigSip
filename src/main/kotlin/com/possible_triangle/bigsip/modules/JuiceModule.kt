@@ -27,7 +27,7 @@ object JuiceModule : ModModule {
     private val APPLE_JUICE by Registration.withFluid("apple_juice") { Drink(it, 4, 0.5F) }
     private val GRAPE_JUICE by Registration.withFluid("grape_juice") { Drink(it, 4, 0.5F) }
 
-    private val UPRIGHT_ON_BELT = TagKey.create(Registry.ITEM_REGISTRY, ResourceLocation("create", "upright_on_belt"))
+    val UPRIGHT_ON_BELT = TagKey.create(Registry.ITEM_REGISTRY, ResourceLocation("create", "upright_on_belt"))
 
     private val JUICES
         get() = mapOf("grapes" to GRAPE_JUICE, "apple" to APPLE_JUICE)
@@ -37,8 +37,11 @@ object JuiceModule : ModModule {
         val sugar = Items.SUGAR
         JUICES.forEach { (fruit, juice) ->
             val tag = Registration.fruitTag(fruit)
-            val pureWaterCondition = AndCondition(ModLoadedCondition(Mod.TAN.id),
-                ConfigCondition(Configs.SERVER.TAN_PURE_WATER_COMPAT))
+            val pureWaterCondition = AndCondition(
+                ModLoadedCondition(Mod.TAN.id),
+                ConfigCondition(Configs.SERVER.TAN_PURE_WATER_COMPAT),
+                ConfigCondition(Configs.SERVER.TAN_JUICE_PURE_WATER)
+            )
 
             fun ProcessingRecipeBuilder<*>.juiceRecipe() {
                 output(FluidStack(juice.getFluid(), 750))

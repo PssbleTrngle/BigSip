@@ -20,7 +20,7 @@ class Alcohol(
     canAlwaysDrink: Boolean = false,
     container: Item? = Items.GLASS_BOTTLE,
     uses: Int = 1,
-) : Drink(getFluid, thirst, hydration, percentage / 10F, canAlwaysDrink, container, uses) {
+) : Drink(getFluid, thirst, hydration, 0F, canAlwaysDrink, container, uses) {
 
     override fun finishUsingItem(stack: ItemStack, world: Level, entity: LivingEntity): ItemStack {
         AlcoholHelper.applyAlcohol(entity, percentage)

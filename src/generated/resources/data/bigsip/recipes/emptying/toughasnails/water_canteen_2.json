@@ -1,0 +1,29 @@
+{
+  "type": "create:emptying",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "toughasnails:water_canteen",
+      "nbt": "{Damage:2}"
+    }
+  ],
+  "results": [
+    {
+      "item": "toughasnails:empty_canteen"
+    },
+    {
+      "fluid": "minecraft:water",
+      "amount": 750
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "toughasnails",
+      "type": "forge:mod_loaded"
+    },
+    {
+      "key": "compat.toughasnails.pure_water",
+      "type": "bigsip:config_option"
+    }
+  ]
+}

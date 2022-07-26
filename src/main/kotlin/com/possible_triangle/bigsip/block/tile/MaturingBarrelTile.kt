@@ -1,6 +1,7 @@
 package com.possible_triangle.bigsip.block.tile
 
 //import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
+import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.modules.MaturingModule
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation
@@ -8,12 +9,12 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank
 import com.simibubi.create.foundation.tileEntity.IMultiTileContainer
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour
+import com.simibubi.create.foundation.utility.Lang
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.TextComponent
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
@@ -174,7 +175,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
     }
 
     override fun addToGoggleTooltip(tooltip: List<Component>, isPlayerSneaking: Boolean): Boolean {
-        val controllerTE = getControllerTE<MaturingBarrelTile>()
+        val controllerTE = controllerTile
         return if (controllerTE == null) {
             false
         } else {
@@ -184,37 +185,35 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
             if (tooltip is MutableList) {
                 if (progress > 0) {
                     val percentage = (progress * 100F).toInt()
-                    tooltip.add(TextComponent(IHaveGoggleInformation.spacing + "Progress: ${percentage}%"))
+                    Lang.builder(BigSip.MOD_ID).translate(".tooltip.maturing_barrel.progress", percentage).forGoggles(tooltip)
                 }
             }
+
             this.containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability)
         }
     }
 
     private fun refreshCapability() {
-        val controllerTE = getControllerTE<MaturingBarrelTile>()
         val oldFluidCapability = fluidCapability
         val oldMaturingCapability = maturingCapability
 
         fluidCapability = LazyOptional.of {
             if (isController) tank
-            else controllerTE?.tank ?: FluidTank(0)
+            else controllerTile?.tank ?: FluidTank(0)
         }
         oldFluidCapability.invalidate()
 
         maturingCapability = LazyOptional.of {
             if (isController) actor
-            else controllerTE?.actor ?: object : IMaturingActor {
+            else controllerTile?.actor ?: object : IMaturingActor {
                 override val progress = 0
                 override val progressPercentage = 0F
             }
         }
-
-        maturingCapability = if (isController) LazyOptional.of { actor }
-        else controllerTE?.actor?.let { LazyOptional.of { it } } ?: LazyOptional.empty()
         oldMaturingCapability.invalidate()
     }
 
+    private val controllerTile get() = getControllerTE<MaturingBarrelTile>()
     override fun <T> getControllerTE(): T? where T : BlockEntity, T : IMultiTileContainer {
         val tile = if (this.isController) {
             this
@@ -234,6 +233,11 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
         fluidCapability.invalidate()
         maturingCapability.invalidate()
         setChanged()
+        sendData()
+    }
+
+    override fun initialize() {
+        super.initialize()
         sendData()
     }
 

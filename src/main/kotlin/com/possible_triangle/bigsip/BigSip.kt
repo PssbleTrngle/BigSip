@@ -1,6 +1,5 @@
 package com.possible_triangle.bigsip
 
-import com.google.common.graph.Network
 import com.possible_triangle.bigsip.alcohol.IAlcoholLevel
 import com.possible_triangle.bigsip.block.MaturingBarrelCT
 import com.possible_triangle.bigsip.command.AlcoholCommand
@@ -67,8 +66,8 @@ object BigSip {
 
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun registerCTM(event: RegistryEvent.Register<Block>) {
-            val barrel = event.registry.getValue(ResourceLocation(MOD_ID, "maturing_barrel"))
-            CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(MaturingModule.BARREL) } }
+            val barrel = event.registry.getValue(ResourceLocation(MOD_ID, "maturing_barrel")) ?: return
+            CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(barrel) } }
                 .accept(barrel)
         }
 

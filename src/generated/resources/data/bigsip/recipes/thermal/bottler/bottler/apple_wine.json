@@ -1,5 +1,5 @@
 {
-  "type": "create:filling",
+  "type": "thermal:bottler",
   "ingredients": [
     {
       "item": "minecraft:glass_bottle"
@@ -7,15 +7,13 @@
     {
       "fluid": "bigsip:apple_wine",
       "nbt": {},
-      "amount": 500
+      "amount": 250
     }
   ],
-  "results": [
+  "result": [
     {
       "item": "bigsip:apple_wine",
-      "nbt": {
-        "Damage": 0
-      }
+      "count": 1
     }
   ]
 }

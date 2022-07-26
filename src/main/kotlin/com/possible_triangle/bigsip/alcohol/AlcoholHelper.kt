@@ -4,7 +4,9 @@ import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.modules.AlcoholModule
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
@@ -17,31 +19,45 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.math.round
+
+data class AlcoholEffect(val at: Float, val effect: () -> MobEffect, val chance: Float = 1F)
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 object AlcoholHelper {
 
+    private const val ALCOHOL_LEVEL_PER_PERCENT = 0.3F / 13
+
     val ALCOHOL_LEVEL = CapabilityManager.get(object : CapabilityToken<IAlcoholLevel>() {})!!
+
+    private val EFFECTS = arrayListOf<AlcoholEffect>()
+    fun addEffect(effect: AlcoholEffect) {
+        EFFECTS.add(effect)
+    }
+
+    init {
+        addEffect(AlcoholEffect(0.6F, { AlcoholModule.DIZZYNESS }))
+        addEffect(AlcoholEffect(1.0F, { MobEffects.CONFUSION }))
+    }
 
     fun applyAlcohol(entity: LivingEntity, percentage: Int) {
         if (!Configs.SERVER.ENABLE_ALCOHOL.get()) return
 
         if (percentage > 0) with(entity) {
 
-            val level = activeEffectsMap[AlcoholModule.DIZZYNESS]?.amplifier?.plus(1) ?: 0
-            val multiplier = 1F - level.times(0.2F)
-
             modifyLevel(entity) {
-                current += round(percentage * 600 * multiplier).toInt()
-                persistent += percentage * multiplier
+                current += percentage * ALCOHOL_LEVEL_PER_PERCENT
+                persistent += percentage
 
-                val applyLevel = current / 9000
                 val resistance = min(12 * 20, persistent.div(6000).toInt())
 
-                if (applyLevel > level) addEffect(MobEffectInstance(AlcoholModule.DIZZYNESS,
-                    20 * 15 - resistance,
-                    applyLevel - 1))
+                val effects = EFFECTS.filter {
+                    it.at <= current && it.chance >= entity.random.nextFloat()
+                }
+
+                effects.forEach {
+                    val effect = MobEffectInstance(it.effect(), 20 * 15 - resistance, 0)
+                    addEffect(effect)
+                }
             }
 
         }
@@ -58,8 +74,7 @@ object AlcoholHelper {
         if (event.`object` is Player) {
             val alcoholLevel = EntityAlcoholLevel()
             event.addCapability(
-                ResourceLocation(BigSip.MOD_ID, "alcohol_level"),
-                alcoholLevel
+                ResourceLocation(BigSip.MOD_ID, "alcohol_level"), alcoholLevel
             )
         }
     }
@@ -67,14 +82,15 @@ object AlcoholHelper {
     @SubscribeEvent
     fun playerSlept(event: PlayerSleepInBedEvent) {
         modifyLevel(event.player) {
-            current = max(0, current - 600 * 300)
+            current = max(0F, current - 8F)
         }
     }
 
     @SubscribeEvent
     fun livingTick(event: TickEvent.PlayerTickEvent) {
+        if (event.player.level.gameTime % 1200 != 0L) return
         modifyLevel(event.player) {
-            if (current > 0) current -= 1
+            if (current > 0) current -= 0.1F
         }
     }
 

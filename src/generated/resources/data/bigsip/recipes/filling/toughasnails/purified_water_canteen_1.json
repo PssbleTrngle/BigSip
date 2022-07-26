@@ -1,0 +1,33 @@
+{
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "item": "toughasnails:purified_water_canteen",
+      "nbt": "{Damage:2}"
+    },
+    {
+      "fluid": "bigsip:purified_water",
+      "nbt": {},
+      "amount": 500
+    }
+  ],
+  "results": [
+    {
+      "item": "toughasnails:purified_water_canteen",
+      "nbt": {
+        "Damage": 0
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "toughasnails",
+      "type": "forge:mod_loaded"
+    },
+    {
+      "key": "compat.toughasnails.pure_water",
+      "type": "bigsip:config_option"
+    }
+  ]
+}

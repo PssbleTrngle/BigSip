@@ -14,6 +14,8 @@ import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -40,6 +42,7 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
     private val thermalRecipes = ThermalRecipeProvider(generator).also(generator::addProvider)
 
     fun hasItem(item: ItemLike): InventoryChangeTrigger.TriggerInstance = has(item)
+    fun hasItem(item: TagKey<Item>): InventoryChangeTrigger.TriggerInstance = has(item)
 
     fun shapeless(output: ItemLike, amount: Int = 1, builder: ShapelessRecipeBuilder.() -> Unit) {
         val recipe = ShapelessRecipeBuilder(output, amount).apply(builder)

@@ -8,7 +8,7 @@ import net.minecraftforge.common.util.LazyOptional
 
 class EntityAlcoholLevel : IAlcoholLevel, ICapabilitySerializable<CompoundTag> {
 
-    override var current: Int = 0
+    override var current: Float = 0F
 
     override var persistent: Float = 0F
 
@@ -21,13 +21,13 @@ class EntityAlcoholLevel : IAlcoholLevel, ICapabilitySerializable<CompoundTag> {
 
     override fun serializeNBT(): CompoundTag {
         return CompoundTag().apply {
-            putInt("current", current)
+            putFloat("current", current)
             putFloat("persistent", persistent)
         }
     }
 
     override fun deserializeNBT(nbt: CompoundTag) {
-        if (nbt.contains("current", 99)) current = nbt.getInt("current")
+        if (nbt.contains("current", 99)) current = nbt.getFloat("current")
         if (nbt.contains("persistent", 99)) persistent = nbt.getFloat("persistent")
     }
 }

@@ -1,23 +1,31 @@
-modLoader="kotlinforforge"
-loaderVersion="[1.10,)" # Require at least 1.9.x
-license='LGPL'
+modLoader = "kotlinforforge"
+loaderVersion = "[1.10,)" # Require at least 1.9.x
+license = 'LGPL'
 
 [[mods]]
-    modId="bigsip"
-    version="${file.jarVersion}"
-    displayName="Big Sip"
-    authors="possible_triangle"
-    description='''Adds some drinks'''
+modId = "bigsip"
+version = "${file.jarVersion}"
+displayName = "Big Sip"
+authors = "possible_triangle"
+description = '''Adds some drinks'''
 
 [[dependencies.bigsip]]
-    modId="forge"
-    mandatory=true
-    versionRange="[36,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[36,)"
+ordering = "NONE"
+side = "BOTH"
+
 [[dependencies.bigsip]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.18.2,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.bigsip]]
+modId = "create"
+mandatory = true
+versionRange = "[0.5.0a,)"
+ordering = "NONE"
+side = "BOTH"

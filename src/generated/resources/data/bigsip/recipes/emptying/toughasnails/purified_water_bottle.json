@@ -13,5 +13,15 @@
       "fluid": "bigsip:purified_water",
       "amount": 250
     }
+  ],
+  "conditions": [
+    {
+      "modid": "toughasnails",
+      "type": "forge:mod_loaded"
+    },
+    {
+      "key": "compat.toughasnails.pure_water",
+      "type": "bigsip:config_option"
+    }
   ]
 }

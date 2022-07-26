@@ -6,6 +6,11 @@
     "bigsip:wine_bottle",
     "bigsip:beer",
     "bigsip:dark_beer",
-    "bigsip:apple_wine"
+    "bigsip:apple_wine",
+    "toughasnails:purified_water_bottle",
+    "toughasnails:dirty_water_bottle",
+    "toughasnails:water_canteen",
+    "toughasnails:purified_water_canteen",
+    "toughasnails:dirty_water_canteen"
   ]
 }

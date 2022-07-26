@@ -2,9 +2,7 @@
   "type": "create:filling",
   "ingredients": [
     {
-      "type": "forge:partial_nbt",
-      "item": "bigsip:apple_wine",
-      "nbt": "{Damage:1}"
+      "item": "minecraft:glass_bottle"
     },
     {
       "fluid": "bigsip:apple_wine",
@@ -14,10 +12,7 @@
   ],
   "results": [
     {
-      "item": "bigsip:apple_wine",
-      "nbt": {
-        "Damage": 0
-      }
+      "item": "bigsip:apple_wine"
     }
   ]
 }

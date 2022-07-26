@@ -2,29 +2,19 @@
   "item.bigsip.grapes": "Grapes",
   "item.bigsip.grape_sapling": "Grape Sapling",
   "item.bigsip.apple_juice": "Apple Juice",
-  "item.bigsip.apple_juice_bucket": "Bucket of Apple Juice",
   "item.bigsip.tomato_juice": "Tomato Juice",
-  "item.bigsip.tomato_juice_bucket": "Bucket of Tomato Juice",
   "item.bigsip.carrot_juice": "Carrot Juice",
-  "item.bigsip.carrot_juice_bucket": "Bucket of Carrot Juice",
   "item.bigsip.grape_juice": "Grape Juice",
-  "item.bigsip.grape_juice_bucket": "Bucket of Grape Juice",
   "item.bigsip.beer": "Jug of Beer",
-  "item.bigsip.beer_bucket": "Bucket of Beer",
   "item.bigsip.wine_bottle": "Bottle of Wine",
   "item.bigsip.wine_glass": "Glass of Wine",
   "item.bigsip.apple_wine": "Glass of Apple Wine",
-  "item.bigsip.wine_bucket": "Bucket of Wine",
   "item.bigsip.dark_beer": "Jug of Guinness",
-  "item.bigsip.dark_beer_bucket": "Bucket of Guinness",
-
   "item.bigsip.hops": "Hops",
   "fluid.bigsip.mash": "Mash",
   "fluid.bigsip.dark_mash": "Dark Mash",
-
-  "block.bigsip.grape_sapling": "Grapes",
+  "fluid.bigsip.purified_water": "Purified Water",
   "block.bigsip.maturing_barrel": "Maturing Barrel",
-
   "fluid.bigsip.apple_juice": "Apple Juice",
   "fluid.bigsip.tomato_juice": "Tomato Juice",
   "fluid.bigsip.carrot_juice": "Carrot Juice",
@@ -33,13 +23,13 @@
   "fluid.bigsip.apple_wine": "Apple Wine",
   "fluid.bigsip.beer": "Beer",
   "fluid.bigsip.dark_beer": "Guinness",
-
   "effect.bigsip.dizziness": "Dizziness",
-
+  "effect.bigsip.hangover": "Hangover",
+  "effect.bigsip.dizziness.description": "Makes you feel confused and dizzy, missing steps and bluring your sight",
   "command.bigsip.persistent": "%s's persistent alcohol level is %s",
   "command.bigsip.current": "%s's current alcohol level is %s",
-
   "bigsip.recipe.maturing": "Maturing",
   "bigsip.recipe.maturing.time": "%s",
-  "bigsip.tooltip.alcohol.percentage": "%d %"
+  "bigsip.tooltip.alcohol.percentage": "%s%%",
+  "bigsip.tooltip.maturing_barrel.progress": "Progress: %s%%"
 }

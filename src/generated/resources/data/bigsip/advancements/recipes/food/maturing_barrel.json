@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "bigsip:maturing_barrel"
+    ]
+  },
+  "criteria": {
+    "has_hops": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:crops/hops"
+          }
+        ]
+      }
+    },
+    "has_grapes": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:fruits/grapes"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "bigsip:maturing_barrel"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hops",
+      "has_grapes",
+      "has_the_recipe"
+    ]
+  ]
+}

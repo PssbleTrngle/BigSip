@@ -12,5 +12,11 @@
       "amount": 1000
     }
   ],
-  "processingTime": 7200
+  "processingTime": 7200,
+  "conditions": [
+    {
+      "key": "maturing.enabled",
+      "type": "bigsip:config_option"
+    }
+  ]
 }
