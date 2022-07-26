@@ -185,7 +185,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
             if (tooltip is MutableList) {
                 if (progress > 0) {
                     val percentage = (progress * 100F).toInt()
-                    Lang.builder(BigSip.MOD_ID).translate(".tooltip.maturing_barrel.progress", percentage).forGoggles(tooltip)
+                    Lang.builder(BigSip.MOD_ID).translate("tooltip.maturing_barrel.progress", percentage).forGoggles(tooltip)
                 }
             }
 
