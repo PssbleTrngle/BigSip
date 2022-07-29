@@ -31,5 +31,10 @@
   "bigsip.recipe.maturing": "Maturing",
   "bigsip.recipe.maturing.time": "%s",
   "bigsip.tooltip.alcohol.percentage": "%s%%",
-  "bigsip.tooltip.maturing_barrel.progress": "Progress: %s%%"
+  "bigsip.tooltip.maturing_barrel.progress": "Progress: %s%%",
+  "bigsip.ponder.maturing_barrel_construction.header": "Constructing a maturing barrel",
+  "bigsip.ponder.maturing_barrel_construction.text_1": "The Maturing barrel is a multiblock structure",
+  "bigsip.ponder.maturing_barrel_construction.text_2": "It can be up to 2x2x3 blocks big",
+  "bigsip.ponder.maturing_barrel_usage.header": "Fermenting liquids in a barrel",
+  "bigsip.ponder.maturing_barrel_usage.text_1": "Liquids like grape juice can be pumped in to be fermented"
 }

@@ -106,7 +106,7 @@ object MaturingModule : ModModule {
                     .placeNearTarget()
                     .pointAt(util.vector.blockSurface(smallBarrelBase.above(), Direction.WEST))
 
-                scene.idleSeconds(4)
+                scene.idleSeconds(3)
 
                 val bigBarrelBase = util.grid.at(3, 1, 1)
 
@@ -116,6 +116,7 @@ object MaturingModule : ModModule {
                 )
                 scene.overlay.showText(60)
                     .text("It can be up to 2x2x3 blocks big")
+                    .attachKeyFrame()
                     .placeNearTarget()
                     .pointAt(util.vector.blockSurface(bigBarrelBase.above(), Direction.NORTH))
 
@@ -161,22 +162,27 @@ object MaturingModule : ModModule {
                 scene.world.propagatePipeChange(pumpInPos)
 
                 scene.overlay.showText(60)
-                    .text("Fluids like grape juice can be pumped in to mature")
+                    .text("Liquids like grape juice can be pumped in to be fermented")
+                    .attachKeyFrame()
                     .placeNearTarget()
                     .pointAt(util.vector.blockSurface(outputTank.north(), Direction.NORTH))
 
                 scene.idleSeconds(5)
-
-                scene.world.modifyTileEntity(outputTank, MaturingBarrelTile::class.java) {
-                    val wine = FluidStack(AlcoholModule.WINE_BOTTLE.getFluid(), 5000)
-                    it.getTank(0).fill(wine, FluidAction.EXECUTE)
-                }
+                scene.addKeyframe()
 
                 scene.world.showSection(output, Direction.EAST)
                 scene.idleSeconds(1)
                 scene.world.setKineticSpeed(pumpOut, 256F)
                 scene.world.setKineticSpeed(smallCog, -256F)
                 scene.world.setKineticSpeed(bigCog, 128F)
+
+                scene.world.modifyTileEntity(outputTank, MaturingBarrelTile::class.java) {
+                    val wine = FluidStack(AlcoholModule.WINE_BOTTLE.getFluid(), 12000)
+                    val controller = it.getControllerTE<MaturingBarrelTile>() ?: return@modifyTileEntity
+                    val tank = controller.getTank(0)
+                    tank.drain(tank.fluidAmount, FluidAction.EXECUTE)
+                    tank.fill(wine, FluidAction.EXECUTE)
+                }
                 scene.world.propagatePipeChange(pumpOutPos)
 
                 scene.idleSeconds(2)
