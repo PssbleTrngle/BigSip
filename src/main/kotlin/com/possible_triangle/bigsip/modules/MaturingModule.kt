@@ -8,6 +8,7 @@ import com.possible_triangle.bigsip.block.MaturingBarrelCT
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
+import com.possible_triangle.bigsip.item.MaturingBarrelItem
 import com.possible_triangle.bigsip.recipe.ConfigCondition
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.AllBlocks
@@ -19,7 +20,6 @@ import com.simibubi.create.foundation.block.connected.CTSpriteShifter
 import com.simibubi.create.foundation.data.CreateRegistrate
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -32,7 +32,7 @@ object MaturingModule : ModModule {
 
     val BARREL by Registration.BLOCKS.registerObject("maturing_barrel") { MaturingBarrelBlock() }
     val BARREL_ITEM by Registration.ITEMS.registerObject("maturing_barrel") {
-        BlockItem(
+        MaturingBarrelItem(
             BARREL,
             Registration.Properties
         )
