@@ -67,7 +67,7 @@ interface ModModule {
         private val HIDDEN_FLUIDS = FilteredList<Fluid>()
         fun hiddenFluids(context: ILoadingContext) = HIDDEN_FLUIDS.getValues(context)
 
-        fun registerAll() {
+        fun addConditions() {
             HIDDEN_ITEMS.clear()
             HIDDEN_FLUIDS.clear()
 
@@ -84,12 +84,8 @@ interface ModModule {
             MODULES.forEach { it.addConditions(builder) }
         }
 
-        fun generateRecipes(builder: RecipeBuilder) {
-            MODULES.forEach { it.generateRecipes(builder) }
-        }
-
-        fun generateTags(builder: TagBuilder) {
-            MODULES.forEach { it.generateTags(builder) }
+        fun forEach(consumer: (ModModule) -> Unit) {
+            MODULES.forEach(consumer)
         }
 
     }
@@ -99,5 +95,9 @@ interface ModModule {
     fun generateRecipes(builder: RecipeBuilder) {}
 
     fun generateTags(builder: TagBuilder) {}
+
+    fun registerPonders() {}
+
+    fun registerCTM() {}
 
 }

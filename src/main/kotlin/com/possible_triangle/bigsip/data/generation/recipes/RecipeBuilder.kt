@@ -32,7 +32,7 @@ class RecipeBuilder private constructor(generator: DataGenerator) : RecipeProvid
     companion object {
         fun register(generator: DataGenerator) {
             val provider = RecipeBuilder(generator)
-            ModModule.generateRecipes(provider)
+            ModModule.forEach { it.generateRecipes(provider) }
             generator.addProvider(provider)
         }
     }

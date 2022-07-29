@@ -24,8 +24,8 @@ import toughasnails.api.item.TANItems
 
 object JuiceModule : ModModule {
 
-    private val APPLE_JUICE by Registration.withFluid("apple_juice") { Drink(it, 4, 0.5F) }
-    private val GRAPE_JUICE by Registration.withFluid("grape_juice") { Drink(it, 4, 0.5F) }
+    val APPLE_JUICE by Registration.withFluid("apple_juice") { Drink(it, 4, 0.5F) }
+    val GRAPE_JUICE by Registration.withFluid("grape_juice") { Drink(it, 4, 0.5F) }
 
     val UPRIGHT_ON_BELT = TagKey.create(Registry.ITEM_REGISTRY, ResourceLocation("create", "upright_on_belt"))
 

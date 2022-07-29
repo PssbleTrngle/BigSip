@@ -4,6 +4,7 @@ import com.possible_triangle.bigsip.BigSip.MOD_ID
 import com.possible_triangle.bigsip.fluid.ModFluid
 import com.possible_triangle.bigsip.item.Drink
 import com.possible_triangle.bigsip.modules.ModModule
+import com.simibubi.create.foundation.ponder.PonderRegistrationHelper
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -24,6 +25,8 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KFunction0
 
 object Registration {
+
+    val PONDER_HELPER = PonderRegistrationHelper(MOD_ID)
 
     private val TAB = CreativeModeTab.TAB_FOOD
     val Properties: Item.Properties

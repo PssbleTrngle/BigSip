@@ -1,13 +1,11 @@
 package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.alcohol.IAlcoholLevel
-import com.possible_triangle.bigsip.block.MaturingBarrelCT
 import com.possible_triangle.bigsip.command.AlcoholCommand
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.modules.*
 import com.possible_triangle.bigsip.network.Networking
 import com.possible_triangle.bigsip.recipe.ConfigCondition
-import com.simibubi.create.foundation.data.CreateRegistrate
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.item.ItemProperties
@@ -25,8 +23,8 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent
+import net.minecraftforge.registries.ObjectHolderRegistry
 import org.apache.logging.log4j.LogManager
-import thedarkcolour.kotlinforforge.forge.MOD_BUS
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 @Mod(BigSip.MOD_ID)
@@ -41,17 +39,8 @@ object BigSip {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configs.SERVER_SPEC)
 
-        MOD_BUS.addListener { _: FMLClientSetupEvent ->
-            ItemBlockRenderTypes.setRenderLayer(GrapesModule.GRAPE_CROP, RenderType.cutout())
-            Registration.DRINKS.forEach {
-                ItemProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _, _ ->
-                    stack.damageValue.toFloat()
-                }
-            }
-        }
-
-        MOD_BUS.addListener { event: RegisterCapabilitiesEvent ->
-            event.register(IAlcoholLevel::class.java)
+        ObjectHolderRegistry.addHandler {
+            ModModule.forEach { it.registerPonders() }
         }
 
     }
@@ -64,21 +53,34 @@ object BigSip {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
     object ModEvent {
 
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun registerCTM(event: RegistryEvent.Register<Block>) {
-            val barrel = event.registry.getValue(ResourceLocation(MOD_ID, "maturing_barrel")) ?: return
-            CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(barrel) } }
-                .accept(barrel)
+        @SubscribeEvent
+        fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+            event.register(IAlcoholLevel::class.java)
         }
 
         @SubscribeEvent
         fun registerContentConditions(event: FMLLoadCompleteEvent) {
-            ModModule.registerAll()
+            ModModule.addConditions()
+        }
+
+        @SubscribeEvent
+        fun clientSetup(event: FMLClientSetupEvent) {
+            ItemBlockRenderTypes.setRenderLayer(GrapesModule.GRAPE_CROP, RenderType.cutout())
+            Registration.DRINKS.forEach {
+                ItemProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _, _ ->
+                    stack.damageValue.toFloat()
+                }
+            }
         }
 
         @SubscribeEvent(priority = EventPriority.HIGH)
         fun registerRecipeConditions(event: RegistryEvent<RecipeSerializer<*>>) {
             CraftingHelper.register(ConfigCondition.Serializer)
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        fun registerCTM(event: RegistryEvent<Block>) {
+            ModModule.forEach { it.registerCTM() }
         }
 
     }

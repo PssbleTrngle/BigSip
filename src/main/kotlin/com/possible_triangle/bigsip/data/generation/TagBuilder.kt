@@ -33,7 +33,9 @@ class TagBuilder private constructor(private val generator: DataGenerator, priva
 
         override fun getName() = "BigSip Tags (${registry.key().location().path})"
 
-        override fun addTags() = ModModule.generateTags(this@TagBuilder)
+        override fun addTags() = ModModule.forEach {
+            it.generateTags(this@TagBuilder)
+        }
     }
 
 }
