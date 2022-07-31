@@ -17,7 +17,7 @@ class DizzinessEffect : MobEffect(MobEffectCategory.HARMFUL, Color(0x8143BF).rgb
 
     init {
         addAttributeModifier(Attributes.MOVEMENT_SPEED, ATTRIBUTE_ID, -0.1, Operation.MULTIPLY_TOTAL)
-        addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), ATTRIBUTE_ID, 0.4, Operation.MULTIPLY_TOTAL)
+        addAttributeModifier(ForgeMod.ENTITY_GRAVITY.get(), ATTRIBUTE_ID, 0.025, Operation.ADDITION)
         addAttributeModifier(Attributes.ATTACK_SPEED, ATTRIBUTE_ID, -0.05, Operation.MULTIPLY_TOTAL)
     }
 
