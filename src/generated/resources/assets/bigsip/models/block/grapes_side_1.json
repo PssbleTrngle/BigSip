@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:block/block"
+  "parent": "bigsip:block/grapes_connection",
+  "textures": {
+    "plant": "bigsip:block/grapes_connection_0"
+  }
 }

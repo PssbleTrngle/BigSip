@@ -15,6 +15,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_0",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -25,7 +26,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_0",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -36,7 +36,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_0",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -47,7 +47,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_0",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -66,6 +66,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_1",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -76,7 +77,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_1",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -87,7 +87,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_1",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -98,7 +98,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_1",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -117,6 +117,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_2",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -127,7 +128,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_2",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -138,7 +138,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_2",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -149,7 +149,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_2",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -168,6 +168,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_3",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -178,7 +179,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_3",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -189,7 +189,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_3",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -200,7 +200,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_3",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -219,6 +219,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_4",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -229,7 +230,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_4",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -240,7 +240,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_4",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -251,7 +251,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_4",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -270,6 +270,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_5",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -280,7 +281,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_5",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -291,7 +291,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_5",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -302,7 +302,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_5",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -321,6 +321,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_6",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -331,7 +332,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_6",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -342,7 +342,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_6",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -353,7 +353,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_6",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     },
@@ -372,6 +372,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_7",
+        "y": 180,
         "uvlock": true
       }
     },
@@ -382,7 +383,6 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_7",
-        "y": 180,
         "uvlock": true
       }
     },
@@ -393,7 +393,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_7",
-        "y": 270,
+        "y": 90,
         "uvlock": true
       }
     },
@@ -404,7 +404,7 @@
       },
       "apply": {
         "model": "bigsip:block/grapes_side_7",
-        "y": 90,
+        "y": 270,
         "uvlock": true
       }
     }

@@ -9,8 +9,16 @@
     "bigsip:apple_wine",
     "toughasnails:purified_water_bottle",
     "toughasnails:dirty_water_bottle",
+    "toughasnails:empty_canteen",
     "toughasnails:water_canteen",
     "toughasnails:purified_water_canteen",
-    "toughasnails:dirty_water_canteen"
+    "toughasnails:dirty_water_canteen",
+    "toughasnails:apple_juice",
+    "toughasnails:cactus_juice",
+    "toughasnails:chorus_fruit_juice",
+    "toughasnails:melon_juice",
+    "toughasnails:glow_berry_juice",
+    "toughasnails:pumpkin_juice",
+    "toughasnails:sweet_berry_juice"
   ]
 }
