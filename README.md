@@ -9,20 +9,19 @@ This mod is an addon for the [Create Mod](https://www.curseforge.com/minecraft/m
 
 <br>
 <h3 style='background: #d9391133; border-radius: 1em; border: 1px dashed #d93911; padding: 1em; padding-bottom: 0.2em' align='center'>
-This mod is not meant to approve of the excessive consumption of alcoholic drinks.
+⚠️ This mod is not meant to approve of the excessive consumption of alcoholic drinks.
 
-All content refering to alcohol can be disabled in the config.
+All content referring to alcohol can be disabled in the config.
 </h3>
 <br>
 
 ## Drinks
 
-![](https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/docu/juices.png)
 Some fruits can be turned into juices by compacting them in a basin together with water & sugar
+![](https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/docu/juices.png)
 
-
+Alcoholic beverages, like wine & beer can be fermented using a [maturing barrel](#maturing-barrel)
 ![](https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/docu/alcoholic_drinks.png)
-Alcohol beverages, like wine & beer can be fermented using a [maturing barrel](#maturing-barrel)
 
 
 ## Maturing Barrel
@@ -33,6 +32,11 @@ It can store liquids and will slowly ferment some of them.
 ## Structures
 
 This mod adds two village structures, where you can find the new materials and drinks
+
+### Crops
+
+Grapes can be found in the new [village structures](#structures)
+![](https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/docu/grapes.png)
 
 ## Mod Compatibility
 
