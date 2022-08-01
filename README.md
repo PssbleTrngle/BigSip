@@ -17,15 +17,12 @@ All content refering to alcohol can be disabled in the config.
 
 ## Drinks
 
+![](https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/docu/juices.png)
 Some fruits can be turned into juices by compacting them in a basin together with water & sugar
 
-<img src="https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/textures/item/apple_juice.png" style="image-rendering: pixelated" width="100"/>
-<img src="https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/textures/item/grape_juice.png" style="image-rendering: pixelated" width="100"/>
 
+![](https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/docu/alcoholic_drinks.png)
 Alcohol beverages, like wine & beer can be fermented using a [maturing barrel](#maturing-barrel)
-
-<img src="https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/textures/item/beer_0.png" style="image-rendering: pixelated" width="100"/>
-<img src="https://raw.githubusercontent.com/PssbleTrngle/BigSip/1.18.x/src/main/resources/assets/bigsip/textures/item/wine_bottle_0.png" style="image-rendering: pixelated" width="100"/>
 
 
 ## Maturing Barrel
