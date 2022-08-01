@@ -18,6 +18,7 @@ object DataGenerators {
         if (event.includeServer()) {
             RecipeBuilder.register(event.generator)
             TagBuilder.register(event.generator, event.existingFileHelper)
+            event.generator.addProvider(LootBuilder(event.generator))
         }
     }
 

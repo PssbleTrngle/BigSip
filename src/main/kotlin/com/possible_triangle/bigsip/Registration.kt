@@ -1,6 +1,7 @@
 package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.BigSip.MOD_ID
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigLootCondition
 import com.possible_triangle.bigsip.fluid.ModFluid
 import com.possible_triangle.bigsip.item.Drink
 import com.possible_triangle.bigsip.modules.ModModule
@@ -16,6 +17,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
@@ -39,6 +41,9 @@ object Registration {
     internal val FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, MOD_ID)
     internal val RECIPES = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, MOD_ID)
     internal val RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID)
+    private val LOOT_CONDITION_TYPES = DeferredRegister.create(Registry.LOOT_CONDITION_TYPE.key(), MOD_ID)
+
+    val CONFIG_LOOT_CONDITION = LOOT_CONDITION_TYPES.register("config_option") { LootItemConditionType(ConfigLootCondition) }
 
     fun <T> modTag(name: String, registryKey: ResourceKey<Registry<T>>): TagKey<T> {
         return TagKey.create(registryKey, ResourceLocation(MOD_ID, name))
@@ -48,14 +53,14 @@ object Registration {
         return TagKey.create(registryKey, ResourceLocation("forge", "${type}s/$value"))
     }
 
-    fun cropTag(value:String) = forgeTag("crop", value, Registry.ITEM_REGISTRY)
-    fun fruitTag(value:String) = forgeTag("fruit", value, Registry.ITEM_REGISTRY)
-    fun juiceTag(value:String) = forgeTag("juice", value, Registry.ITEM_REGISTRY)
-    fun juiceFluidTag(value:String) = forgeTag("juice", value, Registry.FLUID_REGISTRY)
+    fun cropTag(value: String) = forgeTag("crop", value, Registry.ITEM_REGISTRY)
+    fun fruitTag(value: String) = forgeTag("fruit", value, Registry.ITEM_REGISTRY)
+    fun juiceTag(value: String) = forgeTag("juice", value, Registry.ITEM_REGISTRY)
+    fun juiceFluidTag(value: String) = forgeTag("juice", value, Registry.FLUID_REGISTRY)
 
     fun register(vararg modules: ModModule) {
         modules.forEach { ModModule.register(it) }
-        listOf(FLUIDS, ITEMS, BLOCKS, TILES, EFFECTS, RECIPES, RECIPE_SERIALIZERS).forEach {
+        listOf(FLUIDS, ITEMS, BLOCKS, TILES, EFFECTS, RECIPES, RECIPE_SERIALIZERS, LOOT_CONDITION_TYPES).forEach {
             it.register(MOD_BUS)
         }
     }

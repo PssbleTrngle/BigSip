@@ -1,4 +1,4 @@
-package com.possible_triangle.bigsip.recipe
+package com.possible_triangle.bigsip.data.generation.conditions
 
 import com.google.gson.JsonObject
 import com.possible_triangle.bigsip.config.Configs
@@ -7,7 +7,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue
 import net.minecraftforge.common.crafting.conditions.ICondition
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer
 
-class ConfigCondition private constructor(private val key: String) : ICondition {
+class ConfigRecipeCondition private constructor(private val key: String) : ICondition {
 
     constructor(key: BooleanValue) : this(key.path.joinToString("."))
 
@@ -22,16 +22,16 @@ class ConfigCondition private constructor(private val key: String) : ICondition 
         return value.get()
     }
 
-    object Serializer : IConditionSerializer<ConfigCondition> {
+    object Serializer : IConditionSerializer<ConfigRecipeCondition> {
         override fun getID(): ResourceLocation = ID
 
-        override fun write(json: JsonObject, value: ConfigCondition) {
+        override fun write(json: JsonObject, value: ConfigRecipeCondition) {
             json.addProperty("key", value.key)
         }
 
-        override fun read(json: JsonObject): ConfigCondition {
+        override fun read(json: JsonObject): ConfigRecipeCondition {
             val key = json.get("key").asString
-            return ConfigCondition(key)
+            return ConfigRecipeCondition(key)
         }
     }
 

@@ -9,7 +9,7 @@ import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import com.possible_triangle.bigsip.item.MaturingBarrelItem
-import com.possible_triangle.bigsip.recipe.ConfigCondition
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.AllBlocks
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankTileEntity
@@ -65,7 +65,7 @@ object MaturingModule : ModModule {
         ProcessingRecipeSerializer(::MaturingRecipe)
     }
 
-    val isEnabled = ConfigCondition(Configs.SERVER.ENABLE_MATURING)
+    val isEnabled = ConfigRecipeCondition(Configs.SERVER.ENABLE_MATURING)
 
     override fun addConditions(builder: IConditionBuilder) {
         builder.register(BARREL_ITEM) { isEnabled.test() }

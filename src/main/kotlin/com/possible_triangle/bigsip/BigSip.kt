@@ -3,9 +3,9 @@ package com.possible_triangle.bigsip
 import com.possible_triangle.bigsip.alcohol.IAlcoholLevel
 import com.possible_triangle.bigsip.command.AlcoholCommand
 import com.possible_triangle.bigsip.config.Configs
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.modules.*
 import com.possible_triangle.bigsip.network.Networking
-import com.possible_triangle.bigsip.recipe.ConfigCondition
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.item.ItemProperties
@@ -22,6 +22,7 @@ import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent
 import net.minecraftforge.registries.ObjectHolderRegistry
 import org.apache.logging.log4j.LogManager
@@ -34,7 +35,7 @@ object BigSip {
     val LOGGER = LogManager.getLogger()!!
 
     init {
-        Registration.register(GrapesModule, JuiceModule, AlcoholModule, MaturingModule, FluidCompatModule)
+        Registration.register(GrapesModule, JuiceModule, AlcoholModule, MaturingModule, FluidCompatModule, StructureModule)
         Networking.register()
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configs.SERVER_SPEC)
@@ -64,6 +65,11 @@ object BigSip {
         }
 
         @SubscribeEvent
+        fun setup(event: FMLCommonSetupEvent) {
+            StructureModule.registerVillageHouses()
+        }
+
+        @SubscribeEvent
         fun clientSetup(event: FMLClientSetupEvent) {
             ItemBlockRenderTypes.setRenderLayer(GrapesModule.GRAPE_CROP, RenderType.cutout())
             Registration.DRINKS.forEach {
@@ -75,7 +81,7 @@ object BigSip {
 
         @SubscribeEvent(priority = EventPriority.HIGH)
         fun registerRecipeConditions(event: RegistryEvent<RecipeSerializer<*>>) {
-            CraftingHelper.register(ConfigCondition.Serializer)
+            CraftingHelper.register(ConfigRecipeCondition.Serializer)
         }
 
         @SubscribeEvent(priority = EventPriority.LOWEST)

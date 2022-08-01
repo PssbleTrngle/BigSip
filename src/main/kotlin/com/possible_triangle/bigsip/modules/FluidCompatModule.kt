@@ -7,7 +7,7 @@ import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.TagBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.ingredient
-import com.possible_triangle.bigsip.recipe.ConfigCondition
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.simibubi.create.AllRecipeTypes
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import net.minecraft.core.Registry
@@ -32,7 +32,7 @@ object FluidCompatModule : ModModule {
     override fun generateRecipes(builder: RecipeBuilder) {
         fun ProcessingRecipeBuilder<*>.condition() {
             withCondition(ModLoadedCondition(ModCompat.Mod.TAN.id))
-            withCondition(ConfigCondition(Configs.SERVER.TAN_PURE_WATER_COMPAT))
+            withCondition(ConfigRecipeCondition(Configs.SERVER.TAN_PURE_WATER_COMPAT))
         }
 
         builder.processing(AllRecipeTypes.MIXING, "${ModCompat.Mod.TAN}/purified_water") {

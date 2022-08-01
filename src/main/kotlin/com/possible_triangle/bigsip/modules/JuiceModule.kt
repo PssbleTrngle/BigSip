@@ -4,10 +4,10 @@ import com.possible_triangle.bigsip.Registration
 import com.possible_triangle.bigsip.compat.ModCompat.Mod
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.TagBuilder
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.ingredient
 import com.possible_triangle.bigsip.item.Drink
-import com.possible_triangle.bigsip.recipe.ConfigCondition
 import com.simibubi.create.AllRecipeTypes
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import net.minecraft.core.Registry
@@ -39,8 +39,8 @@ object JuiceModule : ModModule {
             val tag = Registration.fruitTag(fruit)
             val pureWaterCondition = AndCondition(
                 ModLoadedCondition(Mod.TAN.id),
-                ConfigCondition(Configs.SERVER.TAN_PURE_WATER_COMPAT),
-                ConfigCondition(Configs.SERVER.TAN_JUICE_PURE_WATER)
+                ConfigRecipeCondition(Configs.SERVER.TAN_PURE_WATER_COMPAT),
+                ConfigRecipeCondition(Configs.SERVER.TAN_JUICE_PURE_WATER)
             )
 
             fun ProcessingRecipeBuilder<*>.juiceRecipe() {
@@ -71,7 +71,7 @@ object JuiceModule : ModModule {
                 output(Items.GLASS_BOTTLE)
                 require(bottle)
                 withCondition(ModLoadedCondition(Mod.TAN.id))
-                withCondition(ConfigCondition(Configs.SERVER.TAN_JUICE_COMPAT))
+                withCondition(ConfigRecipeCondition(Configs.SERVER.TAN_JUICE_COMPAT))
             }
         }
 

@@ -1,6 +1,7 @@
 package com.possible_triangle.bigsip.modules
 
 import com.possible_triangle.bigsip.compat.ModCompat
+import com.possible_triangle.bigsip.data.generation.LootBuilder
 import com.possible_triangle.bigsip.data.generation.TagBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import net.minecraft.core.HolderSet
@@ -95,6 +96,8 @@ interface ModModule {
     fun generateRecipes(builder: RecipeBuilder) {}
 
     fun generateTags(builder: TagBuilder) {}
+
+    fun generateLoot(builder: LootBuilder) {}
 
     fun registerPonders() {}
 

@@ -2,6 +2,7 @@ package com.possible_triangle.bigsip.modules
 
 import com.possible_triangle.bigsip.Registration
 import com.possible_triangle.bigsip.block.GrapeCrop
+import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.TagBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import net.minecraft.world.food.Foods
@@ -18,6 +19,14 @@ object GrapesModule : ModModule {
     val GRAPE_SAPLING by Registration.ITEMS.registerObject("grape_sapling") {
         ItemNameBlockItem(GRAPE_CROP,
             Registration.Properties)
+    }
+
+    private val CONDITION = Configs.SERVER.ENABLE_GRAPES
+
+    override fun addConditions(builder: IConditionBuilder) {
+        listOf(GRAPES, GRAPE_SAPLING).forEach {
+            builder.register(it) { CONDITION.get() }
+        }
     }
 
     override fun generateRecipes(builder: RecipeBuilder) {
