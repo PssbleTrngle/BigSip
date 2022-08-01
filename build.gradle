@@ -203,13 +203,16 @@ if (ENV.CURSEFORGE_TOKEN) curseforge {
     project {
         id = project.curseforge_project_id
         addGameVersion project.minecraft_version
-        addGameVersion 'Fabric'
+        addGameVersion 'Forge'
         changelog = ENV.CHANGELOG
         changelogType = 'markdown'
         releaseType = project.release_type
         mainArtifact(jar) {
             displayName = "Version ${project.mod_version}"
         }
+        requiredDependency 'create'
+        requiredDependency 'kotlin-for-forge'
+        optionalDependency 'thermal-cultivation'
     }
 }
 
@@ -220,10 +223,15 @@ if (ENV.MODRINTH_TOKEN) modrinth {
     versionName = "Version ${project.mod_version}"
     changelog = ENV.CHANGELOG
     gameVersions = [project.minecraft_version]
-    loaders = ["fabric"]
+    loaders = ["forge"]
     versionType = project.release_type
     uploadFile = jar
     syncBodyFrom = project.file("README.md").text
+    dependencies {
+        required.project "ordsPcFz"
+        required.project "LNytGWDc"
+        optional.project "5beJoehw"
+    }
 }
 
 tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
