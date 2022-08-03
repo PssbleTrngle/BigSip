@@ -202,7 +202,7 @@ if (ENV.CURSEFORGE_TOKEN) curseforge {
     apiKey = ENV.CURSEFORGE_TOKEN
     project {
         id = project.curseforge_project_id
-        addGameVersion project.minecraft_version
+        addGameVersion project.mc_version
         addGameVersion 'Forge'
         changelog = ENV.CHANGELOG
         changelogType = 'markdown'
@@ -222,7 +222,7 @@ if (ENV.MODRINTH_TOKEN) modrinth {
     versionNumber = version
     versionName = "Version ${project.mod_version}"
     changelog = ENV.CHANGELOG
-    gameVersions = [project.minecraft_version]
+    gameVersions = [project.mc_version]
     loaders = ["forge"]
     versionType = project.release_type
     uploadFile = jar
