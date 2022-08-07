@@ -7,9 +7,10 @@ import com.possible_triangle.bigsip.block.MaturingBarrelBlock
 import com.possible_triangle.bigsip.block.MaturingBarrelCT
 import com.possible_triangle.bigsip.block.tile.MaturingBarrelTile
 import com.possible_triangle.bigsip.config.Configs
+import com.possible_triangle.bigsip.data.generation.LootBuilder
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import com.possible_triangle.bigsip.item.MaturingBarrelItem
-import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
 import com.simibubi.create.AllBlocks
 import com.simibubi.create.content.contraptions.fluids.tank.FluidTankTileEntity
@@ -23,6 +24,10 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.storage.loot.LootPool
+import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.LootItem
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraftforge.common.Tags
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
@@ -82,6 +87,14 @@ object MaturingModule : ModModule {
 
     override fun registerCTM() {
         CreateRegistrate.connectedTextures<Block> { MaturingBarrelCT { it.`is`(BARREL) } }.accept(BARREL)
+    }
+
+    override fun generateLoot(builder: LootBuilder) {
+        builder.add("blocks/maturing_barrel", LootTable.lootTable()
+            .withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(BARREL_ITEM))
+            ),
+        LootContextParamSets.BLOCK)
     }
 
     override fun registerPonders() {
