@@ -34,7 +34,6 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
 
     private val tank = SmartFluidTank(LITERS, ::onFluidChanged)
     private var fluidCapability = LazyOptional.of<FluidTank> { tank }
-    private var maturingCapability = LazyOptional.of<IMaturingActor> { actor }
     private var controllerPos: BlockPos? = null
     private var updateConnectivity = false
     private var radius = 1
@@ -180,7 +179,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
             false
         } else {
             val fluidCapability = controllerTE.getCapability(FLUID_HANDLER_CAPABILITY)
-            val progress = controllerTE.maturingCapability.map { it.progressPercentage }.orElse(0F)
+            val progress = controllerTE.actor.progressPercentage
 
             if (tooltip is MutableList) {
                 if (progress > 0) {
@@ -195,22 +194,12 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
 
     private fun refreshCapability() {
         val oldFluidCapability = fluidCapability
-        val oldMaturingCapability = maturingCapability
 
         fluidCapability = LazyOptional.of {
             if (isController) tank
             else controllerTile?.tank ?: FluidTank(0)
         }
         oldFluidCapability.invalidate()
-
-        maturingCapability = LazyOptional.of {
-            if (isController) actor
-            else controllerTile?.actor ?: object : IMaturingActor {
-                override val progress = 0
-                override val progressPercentage = 0F
-            }
-        }
-        oldMaturingCapability.invalidate()
     }
 
     private val controllerTile get() = getControllerTE<MaturingBarrelTile>()
@@ -231,7 +220,6 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
 
     private fun invalidate() {
         fluidCapability.invalidate()
-        maturingCapability.invalidate()
         setChanged()
         sendData()
     }
