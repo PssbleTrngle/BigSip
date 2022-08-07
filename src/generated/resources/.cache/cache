@@ -34,6 +34,8 @@ c807acb7e1e4120378f1df1e0c0f8bbef67dda04 assets/bigsip/models/item/grape_sapling
 ac42cfcc63a0c7e211f2375ff33bcd80928ce0ab assets/bigsip/models/item/wine_bottle_2.json
 5f629a3e5d7b5b9a21eb72a4127141da74abf2f3 data/bigsip/advancements/recipes/food/grape_sapling.json
 1992b4a3803b6fd677c1224cad7a62f0ff8e83a5 data/bigsip/advancements/recipes/food/maturing_barrel.json
+4b91ce20ac51ee95f4c2416609498ed9a215e0a6 data/bigsip/loot_tables/blocks/grapes.json
+26d86037c31537bbaccd9852a32688eef7d4b513 data/bigsip/loot_tables/blocks/maturing_barrel.json
 ec698711b0fae561ce8f81c932e996dd9adcfea4 data/bigsip/loot_tables/chests/village/pub.json
 6ec2924da259ea3ddcc27b3ec38767d1fd08b89f data/bigsip/loot_tables/chests/village/wine_cellar.json
 2899bc697c0b972e8acf2984cd057137361b216f data/bigsip/recipes/compacting/apple_juice.json

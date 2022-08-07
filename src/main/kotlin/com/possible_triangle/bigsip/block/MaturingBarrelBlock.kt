@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 
-class MaturingBarrelBlock : Block(Properties.copy(Blocks.SPRUCE_PLANKS)), ITE<MaturingBarrelTile>, IWrenchable {
+class MaturingBarrelBlock : Block(Properties.copy(Blocks.BARREL)), ITE<MaturingBarrelTile>, IWrenchable {
 
     init {
         //this.registerDefaultState(this.defaultBlockState().setValue(LARGE, false))
