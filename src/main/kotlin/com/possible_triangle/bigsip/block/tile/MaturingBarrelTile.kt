@@ -8,8 +8,6 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank
 import com.simibubi.create.foundation.tileEntity.IMultiTileContainer
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour
-import com.simibubi.create.foundation.utility.Lang
-import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
@@ -24,7 +22,6 @@ import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 import net.minecraftforge.fluids.capability.templates.FluidTank
-import kotlin.math.ceil
 
 class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(MaturingModule.BARREL_TILE, pos, state),
     IMultiTileContainer.Fluid, IHaveGoggleInformation {
@@ -174,6 +171,8 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
         }
     }
 
+    val progress: MaturingActor? get() = controllerTile?.actor
+
     override fun addToGoggleTooltip(tooltip: List<Component>, isPlayerSneaking: Boolean): Boolean {
         val controllerTE = controllerTile
         return if (controllerTE == null) {
@@ -185,22 +184,7 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
             val progress = controllerTE.actor.progressPercentage
 
             if (tooltip is MutableList) {
-                if (progress > 0) {
-                    val percentage = (progress * 100F).toInt()
-                    val barWidth = 40
-                    val stripes = ceil(barWidth * progress).toInt()
-                    Lang.builder()
-                        .text(" ")
-                        .text("|".repeat(stripes))
-                        .add(
-                            Lang.builder()
-                                .text("|".repeat(barWidth - stripes))
-                                .style(ChatFormatting.DARK_GRAY)
-                        )
-                        .text(" $percentage%")
-                        .forGoggles(tooltip)
-                }
-
+                controllerTE.actor.createProgressBar()?.forGoggles(tooltip)
             }
 
             hasFluid || progress > 0

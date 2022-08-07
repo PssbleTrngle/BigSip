@@ -2,6 +2,9 @@ package com.possible_triangle.bigsip.block.tile
 
 import com.possible_triangle.bigsip.modules.MaturingModule
 import com.possible_triangle.bigsip.recipe.MaturingRecipe
+import com.simibubi.create.foundation.utility.Lang
+import com.simibubi.create.foundation.utility.LangBuilder
+import net.minecraft.ChatFormatting
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -9,6 +12,7 @@ import net.minecraft.world.level.Level
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.items.ItemStackHandler
 import net.minecraftforge.items.wrapper.RecipeWrapper
+import kotlin.math.ceil
 
 interface IMaturingActor {
     val progress: Int
@@ -31,6 +35,24 @@ abstract class MaturingActor : IMaturingContainer, RecipeWrapper(ItemStackHandle
         get() = requiredDuration?.let {
             progress.toFloat() / it.toFloat()
         } ?: 0F
+
+    fun createProgressBar(): LangBuilder? {
+        val progress = progressPercentage
+        if(progress <= 0) return null
+
+        val percentage = (progress * 100F).toInt()
+        val barWidth = 40
+        val stripes = ceil(barWidth * progress).toInt()
+        return Lang.builder()
+            .text(" ")
+            .text("|".repeat(stripes))
+            .add(
+                Lang.builder()
+                    .text("|".repeat(barWidth - stripes))
+                    .style(ChatFormatting.DARK_GRAY)
+            )
+            .text(" $percentage%")
+    }
 
     private var clientRequiredDuration: Int? = null
 

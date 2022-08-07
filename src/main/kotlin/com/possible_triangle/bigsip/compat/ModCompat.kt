@@ -5,7 +5,8 @@ import net.minecraftforge.fml.ModList
 object ModCompat {
 
     enum class Mod(val id: String) {
-        TAN("toughasnails");
+        TAN("toughasnails"),
+        TOP("theoneprobe");
 
         override fun toString() = id
     }

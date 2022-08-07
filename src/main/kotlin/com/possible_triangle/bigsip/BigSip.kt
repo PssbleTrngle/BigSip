@@ -2,6 +2,8 @@ package com.possible_triangle.bigsip
 
 import com.possible_triangle.bigsip.alcohol.IAlcoholLevel
 import com.possible_triangle.bigsip.command.AlcoholCommand
+import com.possible_triangle.bigsip.compat.ModCompat
+import com.possible_triangle.bigsip.compat.top.TOPCompat
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.modules.*
@@ -18,12 +20,14 @@ import net.minecraftforge.event.RegisterCommandsEvent
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.config.ModConfig
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent
 import net.minecraftforge.registries.ObjectHolderRegistry
 import org.apache.logging.log4j.LogManager
 
@@ -35,7 +39,14 @@ object BigSip {
     val LOGGER = LogManager.getLogger()!!
 
     init {
-        Registration.register(GrapesModule, JuiceModule, AlcoholModule, MaturingModule, FluidCompatModule, StructureModule)
+        Registration.register(
+            GrapesModule,
+            JuiceModule,
+            AlcoholModule,
+            MaturingModule,
+            FluidCompatModule,
+            StructureModule
+        )
         Networking.register()
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configs.SERVER_SPEC)
@@ -87,6 +98,11 @@ object BigSip {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         fun registerCTM(event: RegistryEvent<Block>) {
             ModModule.forEach { it.registerCTM() }
+        }
+
+        @SubscribeEvent
+        fun registerTOPAddon(event: InterModEnqueueEvent) {
+            InterModComms.sendTo(ModCompat.Mod.TOP.id, "getTheOneProbe") { TOPCompat }
         }
 
     }
