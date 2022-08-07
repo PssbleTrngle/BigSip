@@ -2,9 +2,11 @@ package com.possible_triangle.bigsip.item
 
 import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.alcohol.AlcoholHelper
+import com.possible_triangle.bigsip.config.Configs
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.TranslatableComponent
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -24,6 +26,12 @@ class Alcohol(
 
     override fun finishUsingItem(stack: ItemStack, world: Level, entity: LivingEntity): ItemStack {
         AlcoholHelper.applyAlcohol(entity, percentage)
+        if (entity is Player) {
+            val cooldown = Configs.SERVER.ALCOHOL_COOLDOWN.get()
+            if (cooldown > 0) {
+                entity.cooldowns.addCooldown(this, cooldown)
+            }
+        }
         return super.finishUsingItem(stack, world, entity)
     }
 
@@ -36,4 +44,5 @@ class Alcohol(
         tooltip.add(TranslatableComponent("${BigSip.MOD_ID}.tooltip.alcohol.percentage", percentage))
         super.appendHoverText(stack, world, tooltip, flag)
     }
+
 }

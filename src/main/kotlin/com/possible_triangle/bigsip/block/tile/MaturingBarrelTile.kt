@@ -1,7 +1,6 @@
 package com.possible_triangle.bigsip.block.tile
 
 //import com.simibubi.create.content.logistics.block.vault.ItemVaultBlock.LARGE
-import com.possible_triangle.bigsip.BigSip
 import com.possible_triangle.bigsip.modules.MaturingModule
 import com.simibubi.create.api.connectivity.ConnectivityHandler
 import com.simibubi.create.content.contraptions.goggles.IHaveGoggleInformation
@@ -10,6 +9,7 @@ import com.simibubi.create.foundation.tileEntity.IMultiTileContainer
 import com.simibubi.create.foundation.tileEntity.SmartTileEntity
 import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour
 import com.simibubi.create.foundation.utility.Lang
+import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 import net.minecraftforge.fluids.capability.templates.FluidTank
+import kotlin.math.ceil
 
 class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(MaturingModule.BARREL_TILE, pos, state),
     IMultiTileContainer.Fluid, IHaveGoggleInformation {
@@ -179,16 +180,30 @@ class MaturingBarrelTile(pos: BlockPos, state: BlockState) : SmartTileEntity(Mat
             false
         } else {
             val fluidCapability = controllerTE.getCapability(FLUID_HANDLER_CAPABILITY)
+            val hasFluid = this.containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability)
+
             val progress = controllerTE.actor.progressPercentage
 
             if (tooltip is MutableList) {
                 if (progress > 0) {
                     val percentage = (progress * 100F).toInt()
-                    Lang.builder(BigSip.MOD_ID).translate("tooltip.maturing_barrel.progress", percentage).forGoggles(tooltip)
+                    val barWidth = 40
+                    val stripes = ceil(barWidth * progress).toInt()
+                    Lang.builder()
+                        .text(" ")
+                        .text("|".repeat(stripes))
+                        .add(
+                            Lang.builder()
+                                .text("|".repeat(barWidth - stripes))
+                                .style(ChatFormatting.DARK_GRAY)
+                        )
+                        .text(" $percentage%")
+                        .forGoggles(tooltip)
                 }
+
             }
 
-            this.containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability)
+            hasFluid || progress > 0
         }
     }
 

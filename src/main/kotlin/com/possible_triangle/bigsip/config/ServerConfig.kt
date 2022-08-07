@@ -6,6 +6,7 @@ class ServerConfig(builder: ForgeConfigSpec.Builder) {
 
     val ENABLE_ALCOHOL = builder.define("alcohol.enable", true)
     val CAN_ALWAYS_DRINK_ALCOHOL = builder.define("alcohol.can_always_drink", false)
+    val ALCOHOL_COOLDOWN = builder.defineInRange("alcohol.cooldown", 20, 0, 20 * 60 * 60)
 
     val ENCHANTABLE_DRINKS = builder.define("enchantable_drinks", false)
 
