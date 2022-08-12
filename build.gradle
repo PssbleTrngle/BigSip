@@ -214,9 +214,11 @@ if (ENV.CURSEFORGE_TOKEN) curseforge {
         mainArtifact(jar) {
             displayName = "Version ${project.mod_version}"
         }
-        requiredDependency 'create'
-        requiredDependency 'kotlin-for-forge'
-        optionalDependency 'thermal-cultivation'
+        relations {
+            requiredDependency 'create'
+            requiredDependency 'kotlin-for-forge'
+            optionalDependency 'thermal-cultivation'
+        }
     }
 }
 
