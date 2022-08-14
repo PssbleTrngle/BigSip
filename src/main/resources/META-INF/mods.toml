@@ -29,10 +29,3 @@ mandatory = true
 versionRange = "[0.5.0a,)"
 ordering = "NONE"
 side = "BOTH"
-
-[[dependencies.bigsip]]
-modId = "kotlinforforge"
-mandatory = true
-versionRange = "*"
-ordering = "NONE"
-side = "BOTH"
