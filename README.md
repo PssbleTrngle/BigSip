@@ -9,11 +9,11 @@
 
 <!-- modrinth_exclude.start -->
 # Big Sip
-[![Release](https://img.shields.io/github/v/release/PssbleTrngle/SliceAndDice?label=Version&sort=semver)][DOWNLOAD]
-[![Downloads](http://cf.way2muchnoise.eu/full_slice-and-dice_downloads.svg)][CURSEFORGE]
-[![Version](http://cf.way2muchnoise.eu/versions/slice-and-dice.svg)][DOWNLOAD]
-[![Issues](https://img.shields.io/github/issues/PssbleTrngle/SliceAndDice?label=Issues)][ISSUES]
-[![Modrinth](https://modrinth-utils.vercel.app/api/badge/downloads?id=GmjmRQ0A&logo=true)][MODRINTH]
+[![Release](https://img.shields.io/github/v/release/PssbleTrngle/BigSip?label=Version&sort=semver)][DOWNLOAD]
+[![Downloads](http://cf.way2muchnoise.eu/full_big-sip_downloads.svg)][CURSEFORGE]
+[![Version](http://cf.way2muchnoise.eu/versions/big-sip.svg)][DOWNLOAD]
+[![Issues](https://img.shields.io/github/issues/PssbleTrngle/BigSip?label=Issues)][ISSUES]
+[![Modrinth](https://modrinth-utils.vercel.app/api/badge/downloads?id=xypSdkxf&logo=true)][MODRINTH]
 <!-- modrinth_exclude.end -->
 
 This is an addon for the [Create Mod][CREATE] and introduces various drinks and other content surrounding them.
