@@ -1,4 +1,5 @@
 [JEI]: https://www.curseforge.com/minecraft/mc-mods/jei
+[KOTLIN_FORGE_FORGE]: https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge
 [CREATE]: https://www.curseforge.com/minecraft/mc-mods/create
 [THERMAL_CULTIVATION]: https://www.curseforge.com/minecraft/mc-mods/jei
 [TAN]: https://www.curseforge.com/minecraft/mc-mods/tough-as-nails
@@ -15,6 +16,9 @@
 [![Issues](https://img.shields.io/github/issues/PssbleTrngle/BigSip?label=Issues)][ISSUES]
 [![Modrinth](https://modrinth-utils.vercel.app/api/badge/downloads?id=xypSdkxf&logo=true)][MODRINTH]
 <!-- modrinth_exclude.end -->
+
+[![](https://img.shields.io/badge/REQUIRES%20KOTLIN%20FOR%20FORGE-blue?logo=curseforge&labelColor=gray&style=for-the-badge)][KOTLIN_FORGE_FORGE]
+[![](https://img.shields.io/badge/REQUIRES%20CREATE-gold?logo=curseforge&labelColor=gray&style=for-the-badge)][CREATE]
 
 This is an addon for the [Create Mod][CREATE] and introduces various drinks and other content surrounding them.
 
