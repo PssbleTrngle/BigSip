@@ -10,8 +10,8 @@
 <!-- modrinth_exclude.start -->
 # Big Sip
 [![Release](https://img.shields.io/github/v/release/PssbleTrngle/BigSip?label=Version&sort=semver)][DOWNLOAD]
-[![Downloads](http://cf.way2muchnoise.eu/full_big-sip_downloads.svg)][CURSEFORGE]
-[![Version](http://cf.way2muchnoise.eu/versions/big-sip.svg)][DOWNLOAD]
+[![Downloads](http://cf.way2muchnoise.eu/full_653777_downloads.svg)][CURSEFORGE]
+[![Version](http://cf.way2muchnoise.eu/versions/653777.svg)][DOWNLOAD]
 [![Issues](https://img.shields.io/github/issues/PssbleTrngle/BigSip?label=Issues)][ISSUES]
 [![Modrinth](https://modrinth-utils.vercel.app/api/badge/downloads?id=xypSdkxf&logo=true)][MODRINTH]
 <!-- modrinth_exclude.end -->
