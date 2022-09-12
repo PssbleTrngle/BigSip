@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.block.Block
+import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent
 import net.minecraftforge.common.crafting.CraftingHelper
 import net.minecraftforge.event.RegisterCommandsEvent
@@ -50,11 +51,6 @@ object BigSip {
         Networking.register()
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configs.SERVER_SPEC)
-
-        ObjectHolderRegistry.addHandler {
-            ModModule.forEach { it.registerPonders() }
-        }
-
     }
 
     @SubscribeEvent
@@ -62,8 +58,32 @@ object BigSip {
         AlcoholCommand.register(event.dispatcher)
     }
 
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = [Dist.CLIENT])
+    object ClientEvents {
+
+        @SubscribeEvent
+        fun clientSetup(event: FMLClientSetupEvent) {
+            ItemBlockRenderTypes.setRenderLayer(GrapesModule.GRAPE_CROP, RenderType.cutout())
+
+            Registration.DRINKS.forEach {
+                ItemProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _, _ ->
+                    stack.damageValue.toFloat()
+                }
+            }
+
+            ObjectHolderRegistry.addHandler {
+                ModModule.forEach { it.registerPonders() }
+            }
+        }
+
+        @SubscribeEvent(priority = EventPriority.LOWEST)
+        fun registerCTM(event: RegistryEvent<Block>) {
+            ModModule.forEach { it.registerCTM() }
+        }
+    }
+
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    object ModEvent {
+    object ModEvents {
 
         @SubscribeEvent
         fun registerCapabilities(event: RegisterCapabilitiesEvent) {
@@ -80,24 +100,9 @@ object BigSip {
             StructureModule.registerVillageHouses()
         }
 
-        @SubscribeEvent
-        fun clientSetup(event: FMLClientSetupEvent) {
-            ItemBlockRenderTypes.setRenderLayer(GrapesModule.GRAPE_CROP, RenderType.cutout())
-            Registration.DRINKS.forEach {
-                ItemProperties.register(it, ResourceLocation(MOD_ID, "level")) { stack, _, _, _ ->
-                    stack.damageValue.toFloat()
-                }
-            }
-        }
-
         @SubscribeEvent(priority = EventPriority.HIGH)
         fun registerRecipeConditions(event: RegistryEvent<RecipeSerializer<*>>) {
             CraftingHelper.register(ConfigRecipeCondition.Serializer)
-        }
-
-        @SubscribeEvent(priority = EventPriority.LOWEST)
-        fun registerCTM(event: RegistryEvent<Block>) {
-            ModModule.forEach { it.registerCTM() }
         }
 
         @SubscribeEvent

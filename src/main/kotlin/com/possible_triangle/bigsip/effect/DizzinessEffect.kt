@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation
 import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.client.event.MovementInputUpdateEvent
 import net.minecraftforge.common.ForgeMod
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -29,7 +30,7 @@ class DizzinessEffect : MobEffect(MobEffectCategory.HARMFUL, Color(0x8143BF).rgb
         return true
     }
 
-    @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE)
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, value = [Dist.CLIENT])
     companion object {
 
         private const val ATTRIBUTE_ID = "6c841002-41c3-4733-ae90-56c814e5e2e7"
