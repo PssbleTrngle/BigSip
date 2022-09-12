@@ -13,7 +13,9 @@ class ServerConfig(builder: ForgeConfigSpec.Builder) {
     val ENABLE_MATURING = builder.define("maturing.enabled", true)
 
     val ENABLE_GRAPES = builder.define("grapes.enabled", true)
-    val ENABLE_WINE_CELLAR = builder.define("grapes.generate_wine_cellar", true)
+
+    val WINE_CELLAR_CHANCE = builder.defineInRange("grapes.structures.wine_cellar_chance", 50, 0, 2048)
+    val PUB_CHANCE = builder.defineInRange("grapes.structures.pub_chance", 5, 0, 2048)
 
     val TAN_JUICE_COMPAT = builder.define("compat.toughasnails.juice_emptying", true)
     val TAN_JUICE_PURE_WATER = builder.define("compat.toughasnails.juices_use_pure_water", true)

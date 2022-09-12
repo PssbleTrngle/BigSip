@@ -34,13 +34,20 @@ class VillageHouse(id: String) :
 
 object StructureModule : ModModule {
 
+    private enum class InjectedBiome(val cellar: Boolean = true, val pub: Boolean = true) {
+        TAIGA,
+        PLAINS,
+        SNOWY(cellar = false)
+    }
+
     fun registerVillageHouses() {
         VillagePools.bootstrap()
 
         val pools = BuiltinRegistries.TEMPLATE_POOL as WritableRegistry<StructureTemplatePool>
-        val biomes = listOf("taiga")
-        val villages = biomes.associateWith { pools.get(ResourceLocation("village/$it/houses"))!! }
-        villages.forEach { (biome, pool) ->
+
+        InjectedBiome.values().forEach { inject ->
+            val biome = inject.name.lowercase()
+            val pool = pools.get(ResourceLocation("village/$biome/houses"))!!
             val id = pools.getId(pool)
 
             val structures = pool.getShuffledTemplates(Random(0L))
@@ -49,13 +56,14 @@ object StructureModule : ModModule {
                 pieces.computeInt(it) { _, i -> (i ?: 0) + 1 }
             }
 
-            pieces[VillageHouse("village/$biome/pub")] = 10
-            pieces[VillageHouse("village/$biome/wine_cellar")] = 100
+            if (inject.pub) pieces[VillageHouse("village/$biome/pub")] = Configs.SERVER.PUB_CHANCE.get()
+            if (inject.cellar) pieces[VillageHouse("village/$biome/wine_cellar")] =
+                Configs.SERVER.WINE_CELLAR_CHANCE.get()
 
             val newPool = StructureTemplatePool(
                 pool.name,
                 pool.fallback,
-                pieces.object2IntEntrySet().map { Pair(it.key, it.intValue) })
+                pieces.object2IntEntrySet().filter { it.intValue > 0 }.map { Pair(it.key, it.intValue) })
             pools.registerOrOverride(
                 OptionalInt.of(id),
                 ResourceKey.create(pools.key(), pool.name),
