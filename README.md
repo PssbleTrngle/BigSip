@@ -1,11 +1,26 @@
 [JEI]: https://www.curseforge.com/minecraft/mc-mods/jei
+[KOTLIN_FORGE_FORGE]: https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge
+[CREATE]: https://www.curseforge.com/minecraft/mc-mods/create
 [THERMAL_CULTIVATION]: https://www.curseforge.com/minecraft/mc-mods/jei
 [TAN]: https://www.curseforge.com/minecraft/mc-mods/tough-as-nails
 [ISSUES]: https://github.com/PssbleTrngle/BigSip/issues
+[DOWNLOAD]: https://www.curseforge.com/minecraft/mc-mods/big-sip/files
+[CURSEFORGE]: https://www.curseforge.com/minecraft/mc-mods/big-sip
+[MODRINTH]: https://modrinth.com/mod/big-sip
 
+<!-- modrinth_exclude.start -->
 # Big Sip
+[![Release](https://img.shields.io/github/v/release/PssbleTrngle/BigSip?label=Version&sort=semver)][DOWNLOAD]
+[![Downloads](http://cf.way2muchnoise.eu/full_653777_downloads.svg)][CURSEFORGE]
+[![Version](http://cf.way2muchnoise.eu/versions/653777.svg)][DOWNLOAD]
+[![Issues](https://img.shields.io/github/issues/PssbleTrngle/BigSip?label=Issues)][ISSUES]
+[![Modrinth](https://modrinth-utils.vercel.app/api/badge/downloads?id=xypSdkxf&logo=true)][MODRINTH]
+<!-- modrinth_exclude.end -->
 
-This mod is an addon for the [Create Mod](https://www.curseforge.com/minecraft/mc-mods/create) and introduces various drinks and other content surrounding them.
+[![](https://img.shields.io/badge/REQUIRES%20KOTLIN%20FOR%20FORGE-blue?logo=curseforge&labelColor=gray&style=for-the-badge)][KOTLIN_FORGE_FORGE]
+[![](https://img.shields.io/badge/REQUIRES%20CREATE-gold?logo=curseforge&labelColor=gray&style=for-the-badge)][CREATE]
+
+This is an addon for the [Create Mod][CREATE] and introduces various drinks and other content surrounding them.
 
 <br>
 <h3 style='background: #d9391133; border-radius: 1em; border: 1px dashed #d93911; padding: 1em; padding-bottom: 0.2em' align='center'>
