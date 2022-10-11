@@ -7,18 +7,57 @@
     "bigsip:beer",
     "bigsip:dark_beer",
     "bigsip:apple_wine",
-    "toughasnails:purified_water_bottle",
-    "toughasnails:dirty_water_bottle",
-    "toughasnails:empty_canteen",
-    "toughasnails:water_canteen",
-    "toughasnails:purified_water_canteen",
-    "toughasnails:dirty_water_canteen",
-    "toughasnails:apple_juice",
-    "toughasnails:cactus_juice",
-    "toughasnails:chorus_fruit_juice",
-    "toughasnails:melon_juice",
-    "toughasnails:glow_berry_juice",
-    "toughasnails:pumpkin_juice",
-    "toughasnails:sweet_berry_juice"
+    {
+      "id": "toughasnails:purified_water_bottle",
+      "required": false
+    },
+    {
+      "id": "toughasnails:dirty_water_bottle",
+      "required": false
+    },
+    {
+      "id": "toughasnails:empty_canteen",
+      "required": false
+    },
+    {
+      "id": "toughasnails:water_canteen",
+      "required": false
+    },
+    {
+      "id": "toughasnails:purified_water_canteen",
+      "required": false
+    },
+    {
+      "id": "toughasnails:dirty_water_canteen",
+      "required": false
+    },
+    {
+      "id": "toughasnails:apple_juice",
+      "required": false
+    },
+    {
+      "id": "toughasnails:cactus_juice",
+      "required": false
+    },
+    {
+      "id": "toughasnails:chorus_fruit_juice",
+      "required": false
+    },
+    {
+      "id": "toughasnails:melon_juice",
+      "required": false
+    },
+    {
+      "id": "toughasnails:glow_berry_juice",
+      "required": false
+    },
+    {
+      "id": "toughasnails:pumpkin_juice",
+      "required": false
+    },
+    {
+      "id": "toughasnails:sweet_berry_juice",
+      "required": false
+    }
   ]
 }

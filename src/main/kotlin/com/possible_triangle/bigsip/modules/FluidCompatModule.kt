@@ -5,9 +5,10 @@ import com.possible_triangle.bigsip.Registration
 import com.possible_triangle.bigsip.compat.ModCompat
 import com.possible_triangle.bigsip.config.Configs
 import com.possible_triangle.bigsip.data.generation.TagBuilder
+import com.possible_triangle.bigsip.data.generation.addOptional
+import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.possible_triangle.bigsip.data.generation.recipes.RecipeBuilder
 import com.possible_triangle.bigsip.data.generation.recipes.ingredient
-import com.possible_triangle.bigsip.data.generation.conditions.ConfigRecipeCondition
 import com.simibubi.create.AllRecipeTypes
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder
 import net.minecraft.core.Registry
@@ -91,22 +92,23 @@ object FluidCompatModule : ModModule {
             add(PURE_WATER.get())
         }
 
+
         builder.items.create(JuiceModule.UPRIGHT_ON_BELT) {
-            add(TANItems.PURIFIED_WATER_BOTTLE)
-            add(TANItems.DIRTY_WATER_BOTTLE)
+            addOptional(TANItems.PURIFIED_WATER_BOTTLE)
+            addOptional(TANItems.DIRTY_WATER_BOTTLE)
 
-            add(TANItems.EMPTY_CANTEEN)
-            add(TANItems.WATER_CANTEEN)
-            add(TANItems.PURIFIED_WATER_CANTEEN)
-            add(TANItems.DIRTY_WATER_CANTEEN)
+            addOptional(TANItems.EMPTY_CANTEEN)
+            addOptional(TANItems.WATER_CANTEEN)
+            addOptional(TANItems.PURIFIED_WATER_CANTEEN)
+            addOptional(TANItems.DIRTY_WATER_CANTEEN)
 
-            add(TANItems.APPLE_JUICE)
-            add(TANItems.CACTUS_JUICE)
-            add(TANItems.CHORUS_FRUIT_JUICE)
-            add(TANItems.MELON_JUICE)
-            add(TANItems.GLOW_BERRY_JUICE)
-            add(TANItems.PUMPKIN_JUICE)
-            add(TANItems.SWEET_BERRY_JUICE)
+            addOptional(TANItems.APPLE_JUICE)
+            addOptional(TANItems.CACTUS_JUICE)
+            addOptional(TANItems.CHORUS_FRUIT_JUICE)
+            addOptional(TANItems.MELON_JUICE)
+            addOptional(TANItems.GLOW_BERRY_JUICE)
+            addOptional(TANItems.PUMPKIN_JUICE)
+            addOptional(TANItems.SWEET_BERRY_JUICE)
         }
     }
 }

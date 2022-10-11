@@ -8,6 +8,10 @@ import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraftforge.common.data.ExistingFileHelper
 
+fun <T> TagsProvider.TagAppender<T>.addOptional(value: T) {
+    addOptional(registry.getKey(value) ?: throw NullPointerException())
+}
+
 class TagBuilder private constructor(private val generator: DataGenerator, private val fileHelper: ExistingFileHelper) {
 
     companion object {

@@ -101,7 +101,7 @@ ad7ff549939b017e5c107f1ca4e8d9b94b662669 data/bigsip/recipes/thermal/bottler/bot
 e869fa4b116183d768547380855643954bbf0d93 data/bigsip/recipes/thermal/bottler/insolator/grapes.json
 8ca2d2ca665cedf452dc0643a0a9a9b89544be0a data/bigsip/tags/fluids/water/purified.json
 50b01980f5e4ce4ed88a0fa6df1c6abe500df65e data/bigsip/tags/items/bitterness_factor.json
-981928d8b80432335c50e8fc090000dd0ddec2e3 data/create/tags/items/upright_on_belt.json
+a2937a0b561045e52abe218ba4ccce16f16239b6 data/create/tags/items/upright_on_belt.json
 a8b4d4a569f4c4b60f9374a428f2ab7b8a9f3176 data/forge/tags/fluids/juices/apple.json
 51120d79b333bcd535bc0d8dc3f9706115544a3c data/forge/tags/fluids/juices/grapes.json
 ce784c5b1d322537d7f8c8bfda32114638f07d1a data/forge/tags/items/crops/hops.json
